@@ -1,19 +1,9 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Phone, Instagram, Linkedin, Github, Twitter, FileText } from 'lucide-react';
+
+import React from 'react';
+import { motion } from 'framer-motion';
+import { FileText } from 'lucide-react';
 
 const Contact: React.FC = () => {
-  const [showForm, setShowForm] = useState(false);
-
-  const phoneVariants = {
-    initial: { pathLength: 0, opacity: 0 },
-    animate: { 
-      pathLength: 1, 
-      opacity: 1,
-      transition: { duration: 2, ease: "easeInOut" }
-    }
-  };
-
   const handleDownloadResume = () => {
     // Replace with your actual resume file path
     const link = document.createElement('a');
@@ -49,91 +39,62 @@ const Contact: React.FC = () => {
         </motion.div>
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          {/* Animated Phone Icon */}
-          {!showForm && (
-            <motion.div 
-              className="mx-auto w-64 h-64"
-              onClick={() => setShowForm(true)}
-              whileHover={{ scale: 1.1 }}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-            >
-              <svg 
-                viewBox="0 0 100 100" 
-                className="w-full h-full stroke-primary"
-                strokeWidth="2"
-                fill="none"
-              >
-                <motion.path
-                  d="M20,80 L80,20 M30,20 H80 V70"
-                  variants={phoneVariants}
-                  initial="initial"
-                  animate="animate"
-                />
-              </svg>
-            </motion.div>
-          )}
-
           {/* Contact Form */}
-          <AnimatePresence>
-            {showForm && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.5 }}
-                className="bg-card border border-border rounded-2xl p-8 glassmorphism"
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="bg-card border border-border rounded-2xl p-8 glassmorphism"
+          >
+            <form className="space-y-6">
+              <div>
+                <label htmlFor="name" className="block text-foreground/80 mb-2 text-sm">
+                  Your Name
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  className="w-full px-4 py-3 bg-secondary/20 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
+                  placeholder="John Doe"
+                />
+              </div>
+              
+              <div>
+                <label htmlFor="email" className="block text-foreground/80 mb-2 text-sm">
+                  Your Email
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  className="w-full px-4 py-3 bg-secondary/20 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
+                  placeholder="john@example.com"
+                />
+              </div>
+              
+              <div>
+                <label htmlFor="message" className="block text-foreground/80 mb-2 text-sm">
+                  Your Message
+                </label>
+                <textarea
+                  id="message"
+                  rows={5}
+                  className="w-full px-4 py-3 bg-secondary/20 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all resize-none"
+                  placeholder="Hello, I'd like to discuss a project..."
+                ></textarea>
+              </div>
+              
+              <motion.button
+                type="submit"
+                className="w-full px-8 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-colors"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
               >
-                <form className="space-y-6">
-                  <div>
-                    <label htmlFor="name" className="block text-foreground/80 mb-2 text-sm">
-                      Your Name
-                    </label>
-                    <input
-                      type="text"
-                      id="name"
-                      className="w-full px-4 py-3 bg-secondary/20 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
-                      placeholder="John Doe"
-                    />
-                  </div>
-                  
-                  <div>
-                    <label htmlFor="email" className="block text-foreground/80 mb-2 text-sm">
-                      Your Email
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      className="w-full px-4 py-3 bg-secondary/20 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
-                      placeholder="john@example.com"
-                    />
-                  </div>
-                  
-                  <div>
-                    <label htmlFor="message" className="block text-foreground/80 mb-2 text-sm">
-                      Your Message
-                    </label>
-                    <textarea
-                      id="message"
-                      rows={5}
-                      className="w-full px-4 py-3 bg-secondary/20 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all resize-none"
-                      placeholder="Hello, I'd like to discuss a project..."
-                    ></textarea>
-                  </div>
-                  
-                  <button
-                    type="submit"
-                    className="w-full px-8 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-colors"
-                  >
-                    Send Message
-                  </button>
-                </form>
-              </motion.div>
-            )}
-          </AnimatePresence>
+                Send Message
+              </motion.button>
+            </form>
+          </motion.div>
 
-          {/* Contact Information & Social Links */}
+          {/* Contact Information */}
           <motion.div 
             className="space-y-8"
             initial={{ opacity: 0, x: 20 }}
@@ -142,57 +103,18 @@ const Contact: React.FC = () => {
           >
             <div className="flex flex-col space-y-4">
               <h3 className="text-2xl font-bold text-gradient">Let's Connect</h3>
-              <p className="text-foreground/70">Feel free to reach out through any platform</p>
+              <p className="text-foreground/70">Feel free to reach out if you have any questions or want to work together.</p>
             </div>
 
-            <div className="flex space-x-4">
-              <motion.a
-                href="https://instagram.com/yourusername"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-3 rounded-full bg-secondary/20 hover:bg-primary/20 transition-colors"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-              >
-                <Instagram className="w-6 h-6 text-primary" />
-              </motion.a>
-              <motion.a
-                href="https://linkedin.com/in/yourusername"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-3 rounded-full bg-secondary/20 hover:bg-primary/20 transition-colors"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-              >
-                <Linkedin className="w-6 h-6 text-primary" />
-              </motion.a>
-              <motion.a
-                href="https://github.com/yourusername"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-3 rounded-full bg-secondary/20 hover:bg-primary/20 transition-colors"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-              >
-                <Github className="w-6 h-6 text-primary" />
-              </motion.a>
-              <motion.a
-                href="https://twitter.com/yourusername"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-3 rounded-full bg-secondary/20 hover:bg-primary/20 transition-colors"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-              >
-                <Twitter className="w-6 h-6 text-primary" />
-              </motion.a>
+            <div className="flex items-center space-x-4">
               <motion.button
                 onClick={handleDownloadResume}
-                className="p-3 rounded-full bg-secondary/20 hover:bg-primary/20 transition-colors"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
+                className="flex items-center space-x-2 px-6 py-3 rounded-lg bg-primary/10 hover:bg-primary/20 transition-colors"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
-                <FileText className="w-6 h-6 text-primary" />
+                <FileText className="w-5 h-5 text-primary" />
+                <span className="text-foreground font-medium">Download Resume</span>
               </motion.button>
             </div>
           </motion.div>

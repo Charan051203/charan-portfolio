@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Instagram, Linkedin, Github, Twitter } from 'lucide-react';
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
@@ -8,14 +9,21 @@ const Footer: React.FC = () => {
   const footerLinks = [
     { name: 'Home', href: '#home' },
     { name: 'Projects', href: '#projects' },
-    { name: 'Testimonials', href: '#testimonials' },
+    { name: 'Education', href: '#education' },
     { name: 'Contact', href: '#contact' }
   ];
   
+  const socialLinks = [
+    { name: 'LinkedIn', href: 'https://linkedin.com/in/yourusername', icon: <Linkedin /> },
+    { name: 'Twitter', href: 'https://twitter.com/yourusername', icon: <Twitter /> },
+    { name: 'GitHub', href: 'https://github.com/yourusername', icon: <Github /> },
+    { name: 'Instagram', href: 'https://instagram.com/yourusername', icon: <Instagram /> }
+  ];
+
   return (
     <footer className="py-12 relative bg-background border-t border-border/30">
       <div className="container mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           {/* Logo and description */}
           <div className="md:col-span-2">
             <a href="#home" className="text-2xl font-bold text-gradient mb-4 inline-block">
@@ -26,34 +34,18 @@ const Footer: React.FC = () => {
             </p>
             
             <div className="mt-6 flex space-x-4">
-              <a 
-                href="#" 
-                className="w-10 h-10 rounded-full glassmorphism flex items-center justify-center hover:bg-primary/20 transition-colors"
-                aria-label="LinkedIn"
-              >
-                <span className="i-lucide-linkedin text-foreground" />
-              </a>
-              <a 
-                href="#" 
-                className="w-10 h-10 rounded-full glassmorphism flex items-center justify-center hover:bg-primary/20 transition-colors"
-                aria-label="Twitter"
-              >
-                <span className="i-lucide-twitter text-foreground" />
-              </a>
-              <a 
-                href="#" 
-                className="w-10 h-10 rounded-full glassmorphism flex items-center justify-center hover:bg-primary/20 transition-colors"
-                aria-label="GitHub"
-              >
-                <span className="i-lucide-github text-foreground" />
-              </a>
-              <a 
-                href="#" 
-                className="w-10 h-10 rounded-full glassmorphism flex items-center justify-center hover:bg-primary/20 transition-colors"
-                aria-label="Instagram"
-              >
-                <span className="i-lucide-instagram text-foreground" />
-              </a>
+              {socialLinks.map((link, index) => (
+                <a 
+                  key={index}
+                  href={link.href} 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 rounded-full glassmorphism flex items-center justify-center hover:bg-primary/20 transition-colors"
+                  aria-label={link.name}
+                >
+                  {link.icon}
+                </a>
+              ))}
             </div>
           </div>
           
@@ -71,33 +63,6 @@ const Footer: React.FC = () => {
                   </a>
                 </li>
               ))}
-            </ul>
-          </div>
-          
-          {/* Services */}
-          <div className="md:col-span-1">
-            <h4 className="text-lg font-semibold mb-6 text-gradient">Services</h4>
-            <ul className="space-y-3">
-              <li>
-                <a href="#" className="text-foreground/70 hover:text-primary transition-colors">
-                  Web Development
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-foreground/70 hover:text-primary transition-colors">
-                  UI/UX Design
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-foreground/70 hover:text-primary transition-colors">
-                  Mobile Development
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-foreground/70 hover:text-primary transition-colors">
-                  Consultation
-                </a>
-              </li>
             </ul>
           </div>
           

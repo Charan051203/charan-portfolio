@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { Instagram, Linkedin, Github, Twitter } from 'lucide-react';
 
 const Navbar: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -24,15 +25,15 @@ const Navbar: React.FC = () => {
   const navLinks = [
     { name: 'Home', href: '#home' },
     { name: 'Projects', href: '#projects' },
-    { name: 'Testimonials', href: '#testimonials' },
+    { name: 'Education', href: '#education' },
     { name: 'Contact', href: '#contact' }
   ];
   
   const socialLinks = [
-    { name: 'LinkedIn', href: '#', icon: 'linkedin' },
-    { name: 'Twitter', href: '#', icon: 'twitter' },
-    { name: 'GitHub', href: '#', icon: 'github' },
-    { name: 'Email', href: '#', icon: 'mail' }
+    { name: 'Instagram', href: 'https://instagram.com/yourusername', icon: <Instagram className="w-5 h-5" /> },
+    { name: 'LinkedIn', href: 'https://linkedin.com/in/yourusername', icon: <Linkedin className="w-5 h-5" /> },
+    { name: 'GitHub', href: 'https://github.com/yourusername', icon: <Github className="w-5 h-5" /> },
+    { name: 'Twitter', href: 'https://twitter.com/yourusername', icon: <Twitter className="w-5 h-5" /> }
   ];
 
   return (
@@ -69,13 +70,15 @@ const Navbar: React.FC = () => {
             <motion.a
               key={index}
               href={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
               className="w-8 h-8 rounded-full glassmorphism flex items-center justify-center hover:bg-primary/20 transition-colors"
               initial={{ opacity: 0, scale: 0 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.3, delay: 0.2 + 0.05 * index }}
               aria-label={link.name}
             >
-              <span className={`i-lucide-${link.icon} text-foreground`} />
+              {link.icon}
             </motion.a>
           ))}
         </div>
