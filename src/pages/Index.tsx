@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import CursorEffect from '../components/CursorEffect';
@@ -8,6 +7,7 @@ import Projects from '../components/Projects';
 import Testimonials from '../components/Testimonials';
 import Contact from '../components/Contact';
 import Footer from '../components/Footer';
+import ThemeToggle from '../components/ThemeToggle';
 import { toast } from 'sonner';
 
 const Index: React.FC = () => {
@@ -23,30 +23,19 @@ const Index: React.FC = () => {
 
   return (
     <div className="relative">
-      {/* Cursor effect */}
       <CursorEffect />
-      
-      {/* Navbar */}
       <Navbar />
+      <ThemeToggle />
       
       <main>
-        {/* Hero section */}
         <Hero />
-        
-        {/* Projects section */}
         <Projects />
-        
-        {/* Testimonials section */}
         <Testimonials />
-        
-        {/* Contact section */}
         <Contact />
       </main>
       
-      {/* Footer */}
       <Footer />
       
-      {/* Back to top button */}
       <motion.a
         href="#home"
         className="fixed bottom-6 right-6 w-12 h-12 rounded-full bg-primary flex items-center justify-center hover:bg-primary/90 transition-all z-30"
