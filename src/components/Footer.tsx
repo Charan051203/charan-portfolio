@@ -1,27 +1,39 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Instagram, Linkedin, Github, Twitter } from 'lucide-react';
-
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
-  
-  const footerLinks = [
-    { name: 'Home', href: '#home' },
-    { name: 'Projects', href: '#projects' },
-    { name: 'Education', href: '#education' },
-    { name: 'Contact', href: '#contact' }
-  ];
-  
-  const socialLinks = [
-    { name: 'LinkedIn', href: 'https://linkedin.com/in/yourusername', icon: <Linkedin /> },
-    { name: 'Twitter', href: 'https://twitter.com/yourusername', icon: <Twitter /> },
-    { name: 'GitHub', href: 'https://github.com/yourusername', icon: <Github /> },
-    { name: 'Instagram', href: 'https://instagram.com/yourusername', icon: <Instagram /> }
-  ];
-
-  return (
-    <footer className="py-12 relative bg-background border-t border-border/30">
+  const footerLinks = [{
+    name: 'Home',
+    href: '#home'
+  }, {
+    name: 'Projects',
+    href: '#projects'
+  }, {
+    name: 'Education',
+    href: '#education'
+  }, {
+    name: 'Contact',
+    href: '#contact'
+  }];
+  const socialLinks = [{
+    name: 'LinkedIn',
+    href: 'https://linkedin.com/in/yourusername',
+    icon: <Linkedin />
+  }, {
+    name: 'Twitter',
+    href: 'https://twitter.com/yourusername',
+    icon: <Twitter />
+  }, {
+    name: 'GitHub',
+    href: 'https://github.com/yourusername',
+    icon: <Github />
+  }, {
+    name: 'Instagram',
+    href: 'https://instagram.com/yourusername',
+    icon: <Instagram />
+  }];
+  return <footer className="py-12 relative bg-background border-t border-border/30">
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           {/* Logo and description */}
@@ -34,18 +46,9 @@ const Footer: React.FC = () => {
             </p>
             
             <div className="mt-6 flex space-x-4">
-              {socialLinks.map((link, index) => (
-                <a 
-                  key={index}
-                  href={link.href} 
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full glassmorphism flex items-center justify-center hover:bg-primary/20 transition-colors"
-                  aria-label={link.name}
-                >
+              {socialLinks.map((link, index) => <a key={index} href={link.href} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full glassmorphism flex items-center justify-center hover:bg-primary/20 transition-colors" aria-label={link.name}>
                   {link.icon}
-                </a>
-              ))}
+                </a>)}
             </div>
           </div>
           
@@ -53,16 +56,11 @@ const Footer: React.FC = () => {
           <div className="md:col-span-1">
             <h4 className="text-lg font-semibold mb-6 text-gradient">Quick Links</h4>
             <ul className="space-y-3">
-              {footerLinks.map((link, index) => (
-                <li key={index}>
-                  <a 
-                    href={link.href} 
-                    className="text-foreground/70 hover:text-primary transition-colors"
-                  >
+              {footerLinks.map((link, index) => <li key={index}>
+                  <a href={link.href} className="text-foreground/70 hover:text-primary transition-colors">
                     {link.name}
                   </a>
-                </li>
-              ))}
+                </li>)}
             </ul>
           </div>
           
@@ -100,26 +98,16 @@ const Footer: React.FC = () => {
           <div className="mt-4 md:mt-0">
             <ul className="flex space-x-6 text-sm">
               <li>
-                <a href="#" className="text-foreground/50 hover:text-primary transition-colors">
-                  Privacy Policy
-                </a>
+                
               </li>
               <li>
-                <a href="#" className="text-foreground/50 hover:text-primary transition-colors">
-                  Terms of Service
-                </a>
+                
               </li>
-              <li>
-                <a href="#" className="text-foreground/50 hover:text-primary transition-colors">
-                  Cookies
-                </a>
-              </li>
+              
             </ul>
           </div>
         </div>
       </div>
-    </footer>
-  );
+    </footer>;
 };
-
 export default Footer;
