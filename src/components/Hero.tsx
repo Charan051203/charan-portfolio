@@ -1,34 +1,38 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-
 const Hero: React.FC = () => {
   const logoRef = useRef<HTMLDivElement>(null);
   const [greetingIndex, setGreetingIndex] = useState(0);
   const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
-  
   const roles = ["AI Engineer", "Data Scientist", "Game Developer", "Prompt Engineer"];
-  
-  const greetings = [
-    { text: "Hello", language: "English" },
-    { text: "Hola", language: "Spanish" },
-    { text: "Bonjour", language: "French" },
-    { text: "Namaste", language: "Hindi" },
-    { text: "Konnichiwa", language: "Japanese" }
-  ];
+  const greetings = [{
+    text: "Hello",
+    language: "English"
+  }, {
+    text: "Hola",
+    language: "Spanish"
+  }, {
+    text: "Bonjour",
+    language: "French"
+  }, {
+    text: "Namaste",
+    language: "Hindi"
+  }, {
+    text: "Konnichiwa",
+    language: "Japanese"
+  }];
 
   // Set random greeting on page load
   useEffect(() => {
     const randomIndex = Math.floor(Math.random() * greetings.length);
     setGreetingIndex(randomIndex);
   }, []);
-  
+
   // Cycle through roles
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentRoleIndex(prev => (prev + 1) % roles.length);
     }, 3000);
-    
     return () => clearInterval(interval);
   }, []);
 
@@ -58,7 +62,6 @@ const Hero: React.FC = () => {
       window.removeEventListener('mousemove', handleMouseMove);
     };
   }, []);
-  
   return <section id="home" className="min-h-screen flex items-center justify-center pt-24 pb-16 relative overflow-hidden">
       {/* Background geometric shapes */}
       <div className="absolute inset-0 -z-10">
@@ -113,41 +116,33 @@ const Hero: React.FC = () => {
           }} transition={{
             delay: 0.6,
             duration: 0.8
-          }}>
-              Charan Nandyala
-            </motion.h1>
+          }}>CHARAN RK</motion.h1>
             
             <motion.div className="h-8 mb-6">
-              {roles.map((role, index) => (
-                <motion.p 
-                  key={role}
-                  className="text-xl text-muted-foreground"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ 
-                    opacity: currentRoleIndex === index ? 1 : 0,
-                    y: currentRoleIndex === index ? 0 : 20
-                  }}
-                  transition={{ duration: 0.5 }}
-                  style={{ 
-                    position: currentRoleIndex === index ? 'relative' : 'absolute',
-                    display: currentRoleIndex === index ? 'block' : 'none' 
-                  }}
-                >
+              {roles.map((role, index) => <motion.p key={role} initial={{
+              opacity: 0,
+              y: 20
+            }} animate={{
+              opacity: currentRoleIndex === index ? 1 : 0,
+              y: currentRoleIndex === index ? 0 : 20
+            }} transition={{
+              duration: 0.5
+            }} style={{
+              position: currentRoleIndex === index ? 'relative' : 'absolute',
+              display: currentRoleIndex === index ? 'block' : 'none'
+            }} className="text-xl text-sky-600">
                   {role}
-                </motion.p>
-              ))}
+                </motion.p>)}
             </motion.div>
             
-            <motion.p className="text-foreground/80 mb-8 max-w-xl" initial={{
+            <motion.p initial={{
             opacity: 0
           }} animate={{
             opacity: 1
           }} transition={{
             delay: 1,
             duration: 0.8
-          }}>
-              AI Engineer and Data Scientist skilled in Machine Learning, Deep Learning, and Data Analytics. Proficient in predictive modeling, AI-driven solutions, and optimization techniques.
-            </motion.p>
+          }} className="mb-8 max-w-xl text-slate-50">AI Engineer and Data Scientist skilled in Machine Learning, Deep Learning, Prompt Engineering and Data Analytics. Proficient in predictive modeling, AI-driven solutions, and optimization techniques.</motion.p>
             
             <motion.div className="flex flex-wrap gap-4" initial={{
             opacity: 0,
@@ -180,42 +175,39 @@ const Hero: React.FC = () => {
           duration: 0.8
         }}>
             <div ref={logoRef} className="relative perspective-800 w-[280px] h-[280px] transition-transform duration-300 ease-out">
-              <motion.div 
-                className="absolute inset-0 w-full h-full rounded-full overflow-hidden border-4 border-primary/30"
-                animate={{ y: [0, -10, 0] }}
-                transition={{ 
-                  repeat: Infinity, 
-                  duration: 5,
-                  ease: "easeInOut"
-                }}
-                whileHover={{ scale: 1.05 }}
-              >
-                <img 
-                  src="/profile.jpg" 
-                  alt="Charan Nandyala" 
-                  className="w-full h-full object-cover"
-                  onError={(e) => {
-                    // Fallback if image doesn't load
-                    const target = e.target as HTMLImageElement;
-                    target.src = "https://via.placeholder.com/280x280.png?text=Charan+Nandyala";
-                  }}
-                />
+              <motion.div className="absolute inset-0 w-full h-full rounded-full overflow-hidden border-4 border-primary/30" animate={{
+              y: [0, -10, 0]
+            }} transition={{
+              repeat: Infinity,
+              duration: 5,
+              ease: "easeInOut"
+            }} whileHover={{
+              scale: 1.05
+            }}>
+                <img src="/profile.jpg" alt="Charan Nandyala" className="w-full h-full object-cover" onError={e => {
+                // Fallback if image doesn't load
+                const target = e.target as HTMLImageElement;
+                target.src = "https://via.placeholder.com/280x280.png?text=Charan+Nandyala";
+              }} />
                 
                 {/* Overlay gradient */}
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/30 to-transparent opacity-70" />
               </motion.div>
               
               {/* Decorative elements around the photo */}
-              <motion.div 
-                className="absolute -top-4 -right-4 w-8 h-8 bg-primary/40 rounded-full blur-sm"
-                animate={{ scale: [1, 1.2, 1] }}
-                transition={{ repeat: Infinity, duration: 3, delay: 0.5 }}
-              />
-              <motion.div 
-                className="absolute -bottom-4 -left-4 w-12 h-12 bg-primary/30 rounded-full blur-sm"
-                animate={{ scale: [1, 1.3, 1] }}
-                transition={{ repeat: Infinity, duration: 4 }}
-              />
+              <motion.div className="absolute -top-4 -right-4 w-8 h-8 bg-primary/40 rounded-full blur-sm" animate={{
+              scale: [1, 1.2, 1]
+            }} transition={{
+              repeat: Infinity,
+              duration: 3,
+              delay: 0.5
+            }} />
+              <motion.div className="absolute -bottom-4 -left-4 w-12 h-12 bg-primary/30 rounded-full blur-sm" animate={{
+              scale: [1, 1.3, 1]
+            }} transition={{
+              repeat: Infinity,
+              duration: 4
+            }} />
             </div>
           </motion.div>
         </div>
