@@ -27,17 +27,21 @@ const CursorEffect: React.FC = () => {
   
   // Generate random shapes for the follower
   const shapes = Array.from({ length: 20 }, (_, i) => {
-    const size = Math.random() * 40 + 10;
+    const size = Math.random() * 50 + 20; // Larger shapes
     const xPos = Math.random() * 300 - 150;
     const yPos = Math.random() * 300 - 150;
-    const opacity = Math.random() * 0.5 + 0.1;
+    const opacity = Math.random() * 0.3 + 0.05; // More subtle opacity
     
     return {
       size,
       x: xPos,
       y: yPos,
       opacity,
-      rotate: Math.random() * 360
+      rotate: Math.random() * 360,
+      // Add more fluid animation properties
+      floatAmplitude: Math.random() * 20 + 10,
+      floatSpeed: Math.random() * 3 + 2,
+      delay: Math.random() * 5
     };
   });
 
@@ -109,18 +113,22 @@ const CursorEffect: React.FC = () => {
         cursorOutlineRef.current.style.transform = `translate(${position.x - 12}px, ${position.y - 12}px) scale(1.5)`;
       }
       
-      // Follower effect with more delay
-      followerRef.current.style.transform = `translate(${position.x - 130}px, ${position.y - 130}px)`;
+      // Follower effect with more subtle delay - more fluid movement
+      followerRef.current.style.transform = `translate(${position.x - 150}px, ${position.y - 150}px)`;
     }
     
-    // Update polygon positions
+    // Update polygon positions for more fluid movement
     followerPolygonsRef.current.forEach((polygon, index) => {
       if (polygon) {
-        const delay = index * 0.02;
+        // Create more variation in the movement
+        const shape = shapes[index];
+        const delay = shape.delay * 0.01;
         polygon.style.transitionDelay = `${delay}s`;
+        polygon.style.transitionDuration = `0.7s`;
+        polygon.style.transitionTimingFunction = `cubic-bezier(0.34, 1.56, 0.64, 1)`;
       }
     });
-  }, [position, isPointer]);
+  }, [position, isPointer, shapes]);
 
   return (
     <>
@@ -141,27 +149,38 @@ const CursorEffect: React.FC = () => {
       {/* Follower geometric shapes */}
       <div 
         ref={followerRef} 
-        className={`cursor-follower w-[260px] h-[260px] ${hidden ? 'opacity-0' : 'opacity-100'}`}
-        style={{ transform: `translate(${position.x - 130}px, ${position.y - 130}px)` }}
+        className={`cursor-follower w-[300px] h-[300px] ${hidden ? 'opacity-0' : 'opacity-100'}`}
+        style={{ transform: `translate(${position.x - 150}px, ${position.y - 150}px)` }}
       >
         {shapes.map((shape, index) => {
-          // Create random geometric shapes
-          const isSquare = Math.random() > 0.7;
+          // Create more triangular shapes
+          const isTriangle = Math.random() > 0.4;
+          const isShard = Math.random() > 0.7;
+          
+          let shapeClass = "";
+          if (isTriangle) {
+            shapeClass = "clip-path-triangle";
+          } else if (isShard) {
+            shapeClass = "clip-path-shard";
+          } else {
+            shapeClass = "rounded-full";
+          }
           
           return (
             <div
               key={index}
               ref={el => followerPolygonsRef.current[index] = el}
-              className={`absolute ${isSquare ? '' : 'rounded-full'} animate-float blur-[1px]`}
+              className={`absolute ${shapeClass} animate-float blur-[1px]`}
               style={{
                 width: `${shape.size}px`,
                 height: `${shape.size}px`,
                 backgroundColor: `hsla(${191}, 82%, 59%, ${shape.opacity})`,
-                left: `${shape.x + 130}px`,
-                top: `${shape.y + 130}px`,
+                left: `${shape.x + 150}px`,
+                top: `${shape.y + 150}px`,
                 opacity: shape.opacity,
                 transform: `rotate(${shape.rotate}deg)`,
-                animationDelay: `${index * 0.2}s`
+                animationDuration: `${shape.floatSpeed}s`,
+                animationDelay: `${shape.delay}s`
               }}
             />
           );

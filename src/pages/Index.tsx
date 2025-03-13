@@ -8,7 +8,7 @@ import Projects from '../components/Projects';
 import Education from '../components/Education';
 import Contact from '../components/Contact';
 import Footer from '../components/Footer';
-import ThemeToggle from '../components/ThemeToggle';
+import TechnicalSkills from '../components/TechnicalSkills';
 import { toast } from 'sonner';
 import { Home } from 'lucide-react';
 
@@ -46,10 +46,10 @@ const Index: React.FC = () => {
     <div className="relative">
       <CursorEffect />
       <Navbar />
-      <ThemeToggle />
       
       <main>
         <Hero />
+        <TechnicalSkills />
         <Projects />
         <Education />
         <Contact />

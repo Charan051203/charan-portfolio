@@ -1,7 +1,36 @@
-import React, { useEffect, useRef } from 'react';
+
+import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
+
 const Hero: React.FC = () => {
   const logoRef = useRef<HTMLDivElement>(null);
+  const [greetingIndex, setGreetingIndex] = useState(0);
+  const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
+  
+  const roles = ["AI Engineer", "Data Scientist", "Game Developer"];
+  
+  const greetings = [
+    { text: "Hello", language: "English" },
+    { text: "Hola", language: "Spanish" },
+    { text: "Bonjour", language: "French" },
+    { text: "Namaste", language: "Hindi" },
+    { text: "Konnichiwa", language: "Japanese" }
+  ];
+
+  // Set random greeting on page load
+  useEffect(() => {
+    const randomIndex = Math.floor(Math.random() * greetings.length);
+    setGreetingIndex(randomIndex);
+  }, []);
+  
+  // Cycle through roles
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentRoleIndex(prev => (prev + 1) % roles.length);
+    }, 3000);
+    
+    return () => clearInterval(interval);
+  }, []);
 
   // Handle logo animation on mousemove
   useEffect(() => {
@@ -29,6 +58,7 @@ const Hero: React.FC = () => {
       window.removeEventListener('mousemove', handleMouseMove);
     };
   }, []);
+  
   return <section id="home" className="min-h-screen flex items-center justify-center pt-24 pb-16 relative overflow-hidden">
       {/* Background geometric shapes */}
       <div className="absolute inset-0 -z-10">
@@ -73,7 +103,7 @@ const Hero: React.FC = () => {
             delay: 0.4,
             duration: 0.8
           }}>
-              Hello, I'm
+              {greetings[greetingIndex].text}, I'm
             </motion.p>
             
             <motion.h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 text-gradient" initial={{
@@ -84,21 +114,27 @@ const Hero: React.FC = () => {
             delay: 0.6,
             duration: 0.8
           }}>
-              Your Name
+              Charan Nandyala
             </motion.h1>
             
-            <motion.p className="text-xl text-muted-foreground mb-6" initial={{
-            opacity: 0
-          }} animate={{
-            opacity: 1
-          }} transition={{
-            delay: 0.8,
-            duration: 0.8
-          }}>
-              MERN Stack Developer
-            </motion.p>
+            <motion.div className="h-8 overflow-hidden">
+              {roles.map((role, index) => (
+                <motion.p 
+                  key={role}
+                  className="text-xl text-muted-foreground mb-6"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ 
+                    opacity: currentRoleIndex === index ? 1 : 0,
+                    y: currentRoleIndex === index ? 0 : 20
+                  }}
+                  transition={{ duration: 0.5 }}
+                >
+                  {role}
+                </motion.p>
+              ))}
+            </motion.div>
             
-            <motion.p className="text-foreground/80 mb-8 max-w-xl" initial={{
+            <motion.p className="text-foreground/80 mb-8 max-w-xl mt-6" initial={{
             opacity: 0
           }} animate={{
             opacity: 1
@@ -106,7 +142,7 @@ const Hero: React.FC = () => {
             delay: 1,
             duration: 0.8
           }}>
-              Crafting digital experiences with precision and creativity. Specialized in building modern, responsive, and performant web applications.
+              Computer science student at SRM University, passionate about AI, machine learning, and game development. Focused on building innovative solutions with cutting-edge technologies.
             </motion.p>
             
             <motion.div className="flex flex-wrap gap-4" initial={{
@@ -123,13 +159,13 @@ const Hero: React.FC = () => {
                 View Work
               </a>
               
-              <a href="#contact" className="px-6 py-3 border border-primary/30 text-foreground rounded-full font-medium hover:bg-primary/10 transition-colors">
-                Let's Connect
+              <a href="/Charan_Resume.pdf" download className="px-6 py-3 border border-primary/30 text-foreground rounded-full font-medium hover:bg-primary/10 transition-colors">
+                Download Resume
               </a>
             </motion.div>
           </motion.div>
           
-          {/* Right content - Logo */}
+          {/* Right content - Profile Photo */}
           <motion.div className="w-full lg:w-1/2 flex justify-center" initial={{
           opacity: 0,
           scale: 0.8
@@ -139,13 +175,43 @@ const Hero: React.FC = () => {
         }} transition={{
           duration: 0.8
         }}>
-            <div ref={logoRef} className="relative perspective-800 w-[300px] h-[300px] transition-transform duration-300 ease-out">
-              <div className="absolute inset-0 w-full h-full">
+            <div ref={logoRef} className="relative perspective-800 w-[280px] h-[280px] transition-transform duration-300 ease-out">
+              <motion.div 
+                className="absolute inset-0 w-full h-full rounded-full overflow-hidden border-4 border-primary/30"
+                animate={{ y: [0, -10, 0] }}
+                transition={{ 
+                  repeat: Infinity, 
+                  duration: 5,
+                  ease: "easeInOut"
+                }}
+                whileHover={{ scale: 1.05 }}
+              >
+                <img 
+                  src="/profile.jpg" 
+                  alt="Charan Nandyala" 
+                  className="w-full h-full object-cover"
+                  onError={(e) => {
+                    // Fallback if image doesn't load
+                    const target = e.target as HTMLImageElement;
+                    target.src = "https://via.placeholder.com/280x280.png?text=Charan+Nandyala";
+                  }}
+                />
                 
-              </div>
+                {/* Overlay gradient */}
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/30 to-transparent opacity-70" />
+              </motion.div>
               
-              {/* Center logo element */}
-              
+              {/* Decorative elements around the photo */}
+              <motion.div 
+                className="absolute -top-4 -right-4 w-8 h-8 bg-primary/40 rounded-full blur-sm"
+                animate={{ scale: [1, 1.2, 1] }}
+                transition={{ repeat: Infinity, duration: 3, delay: 0.5 }}
+              />
+              <motion.div 
+                className="absolute -bottom-4 -left-4 w-12 h-12 bg-primary/30 rounded-full blur-sm"
+                animate={{ scale: [1, 1.3, 1] }}
+                transition={{ repeat: Infinity, duration: 4 }}
+              />
             </div>
           </motion.div>
         </div>
