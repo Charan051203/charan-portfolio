@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Linkedin, Github, Instagram, FileText } from 'lucide-react';
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
@@ -17,12 +18,12 @@ const Footer: React.FC = () => {
     {
       name: 'LinkedIn',
       href: 'https://www.linkedin.com/in/charan051203/',
-      icon: <span className="i-lucide-linkedin" />
+      icon: <Linkedin className="w-5 h-5" />
     },
     {
       name: 'GitHub',
       href: 'https://github.com/Charan051203',
-      icon: <span className="i-lucide-github" />
+      icon: <Github className="w-5 h-5" />
     },
     {
       name: 'Twitter',
@@ -41,9 +42,18 @@ const Footer: React.FC = () => {
     {
       name: 'Instagram',
       href: 'https://www.instagram.com/chrn_._/',
-      icon: <span className="i-lucide-instagram" />
+      icon: <Instagram className="w-5 h-5" />
     }
   ];
+
+  const downloadResume = () => {
+    const link = document.createElement('a');
+    link.href = '/Charan_Resume.pdf';
+    link.download = 'Charan_Resume.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
   
   return (
     <footer className="py-12 relative bg-background border-t border-border/30">
@@ -55,22 +65,34 @@ const Footer: React.FC = () => {
               Charan Nandyala
             </a>
             <p className="text-foreground/70 mt-4 max-w-md">
-              Computer science student specializing in AI, data science, and game development. Building elegant digital experiences with attention to detail.
+              AI Engineer and Data Scientist skilled in Machine Learning, Deep Learning, and Data Analytics. Proficient in predictive modeling, AI-driven solutions, and optimization techniques.
             </p>
             
             <div className="mt-6 flex space-x-4">
               {socialLinks.map((link, index) => (
-                <a 
+                <motion.a 
                   key={index} 
                   href={link.href} 
                   target="_blank" 
                   rel="noopener noreferrer" 
                   className="w-10 h-10 rounded-full glassmorphism flex items-center justify-center hover:bg-primary/20 transition-colors" 
                   aria-label={link.name}
+                  whileHover={{ scale: 1.1, rotate: 5 }}
+                  whileTap={{ scale: 0.9 }}
                 >
                   {link.icon}
-                </a>
+                </motion.a>
               ))}
+              
+              <motion.button
+                onClick={downloadResume}
+                className="w-10 h-10 rounded-full glassmorphism flex items-center justify-center hover:bg-primary/20 transition-colors"
+                aria-label="Download Resume"
+                whileHover={{ scale: 1.1, rotate: 5 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                <FileText className="w-5 h-5" />
+              </motion.button>
             </div>
           </div>
           
@@ -93,21 +115,29 @@ const Footer: React.FC = () => {
             <h4 className="text-lg font-semibold mb-6 text-gradient">Contact</h4>
             <ul className="space-y-3">
               <li className="flex items-center">
-                <span className="i-lucide-mail-check mr-2 text-primary" />
-                <a href="mailto:charan052003@gmail.com" className="text-foreground/70 hover:text-primary transition-colors">
-                  charan052003@gmail.com
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 mr-2 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                  <polyline points="22,6 12,13 2,6" />
+                </svg>
+                <a href="mailto:charanrk5123@gmail.com" className="text-foreground/70 hover:text-primary transition-colors">
+                  charanrk5123@gmail.com
                 </a>
               </li>
               <li className="flex items-center">
-                <span className="i-lucide-phone mr-2 text-primary" />
-                <a href="tel:+918639408013" className="text-foreground/70 hover:text-primary transition-colors">
-                  +91 8639408013
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 mr-2 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                </svg>
+                <a href="tel:+918660570019" className="text-foreground/70 hover:text-primary transition-colors">
+                  +91 8660570019
                 </a>
               </li>
               <li className="flex items-start">
-                <span className="i-lucide-map-pin mt-1 mr-2 text-primary" />
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 mt-1 mr-2 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
+                  <circle cx="12" cy="10" r="3"/>
+                </svg>
                 <span className="text-foreground/70">
-                  Chennai, Tamil Nadu, India
+                  Bengaluru, Karnataka, India
                 </span>
               </li>
             </ul>

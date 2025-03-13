@@ -7,7 +7,7 @@ const Hero: React.FC = () => {
   const [greetingIndex, setGreetingIndex] = useState(0);
   const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
   
-  const roles = ["AI Engineer", "Data Scientist", "Game Developer"];
+  const roles = ["AI Engineer", "Data Scientist", "Game Developer", "Prompt Engineer"];
   
   const greetings = [
     { text: "Hello", language: "English" },
@@ -117,24 +117,28 @@ const Hero: React.FC = () => {
               Charan Nandyala
             </motion.h1>
             
-            <motion.div className="h-8 overflow-hidden">
+            <motion.div className="h-8 mb-6">
               {roles.map((role, index) => (
                 <motion.p 
                   key={role}
-                  className="text-xl text-muted-foreground mb-6"
+                  className="text-xl text-muted-foreground"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ 
                     opacity: currentRoleIndex === index ? 1 : 0,
                     y: currentRoleIndex === index ? 0 : 20
                   }}
                   transition={{ duration: 0.5 }}
+                  style={{ 
+                    position: currentRoleIndex === index ? 'relative' : 'absolute',
+                    display: currentRoleIndex === index ? 'block' : 'none' 
+                  }}
                 >
                   {role}
                 </motion.p>
               ))}
             </motion.div>
             
-            <motion.p className="text-foreground/80 mb-8 max-w-xl mt-6" initial={{
+            <motion.p className="text-foreground/80 mb-8 max-w-xl" initial={{
             opacity: 0
           }} animate={{
             opacity: 1
@@ -142,7 +146,7 @@ const Hero: React.FC = () => {
             delay: 1,
             duration: 0.8
           }}>
-              Computer science student at SRM University, passionate about AI, machine learning, and game development. Focused on building innovative solutions with cutting-edge technologies.
+              AI Engineer and Data Scientist skilled in Machine Learning, Deep Learning, and Data Analytics. Proficient in predictive modeling, AI-driven solutions, and optimization techniques.
             </motion.p>
             
             <motion.div className="flex flex-wrap gap-4" initial={{

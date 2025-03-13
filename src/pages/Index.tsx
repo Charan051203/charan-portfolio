@@ -10,7 +10,7 @@ import Contact from '../components/Contact';
 import Footer from '../components/Footer';
 import TechnicalSkills from '../components/TechnicalSkills';
 import { toast } from 'sonner';
-import { Home } from 'lucide-react';
+import { Home, Linkedin, Github, Instagram } from 'lucide-react';
 
 const jokes = [
   "Why do programmers prefer dark mode? Because light attracts bugs.",
@@ -57,6 +57,44 @@ const Index: React.FC = () => {
       
       <Footer />
       
+      {/* Fixed social media sidebar */}
+      <div className="fixed left-6 bottom-1/2 transform translate-y-1/2 flex flex-col gap-4 z-30 hidden md:flex">
+        {[
+          { icon: <Linkedin />, href: "https://www.linkedin.com/in/charan051203/", label: "LinkedIn" },
+          { icon: <Github />, href: "https://github.com/Charan051203", label: "GitHub" },
+          { icon: <Instagram />, href: "https://www.instagram.com/chrn_._/", label: "Instagram" },
+          { 
+            icon: <svg viewBox="0 0 24 24" className="w-5 h-5" fill="currentColor">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+            </svg>, 
+            href: "https://x.com/charan_5123", 
+            label: "Twitter" 
+          }
+        ].map((item, i) => (
+          <motion.a
+            key={i}
+            href={item.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-10 h-10 rounded-full glassmorphism flex items-center justify-center text-foreground hover:text-primary hover:border-primary border border-border/50 transition-all"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: i * 0.1 + 1.5 }}
+            whileHover={{ scale: 1.2, y: -5 }}
+            aria-label={item.label}
+          >
+            {item.icon}
+          </motion.a>
+        ))}
+        <motion.div 
+          className="w-px h-24 bg-border/50 mx-auto mt-2"
+          initial={{ height: 0 }}
+          animate={{ height: 96 }}
+          transition={{ delay: 2 }}
+        />
+      </div>
+      
+      {/* Back to top button */}
       <motion.a
         href="#home"
         className="fixed bottom-6 right-6 w-12 h-12 rounded-full bg-primary flex items-center justify-center hover:bg-primary/90 transition-all z-30"

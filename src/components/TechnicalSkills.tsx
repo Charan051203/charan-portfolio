@@ -8,10 +8,10 @@ const TechnicalSkills: React.FC = () => {
       category: "Programming Languages",
       items: [
         { name: "Python", icon: "/icons/python.svg" },
-        { name: "Java", icon: "/icons/java.svg" },
-        { name: "JavaScript", icon: "/icons/javascript.svg" },
+        { name: "SQL", icon: "/icons/sql.svg" },
+        { name: "C#", icon: "/icons/csharp.svg" },
         { name: "C++", icon: "/icons/cpp.svg" },
-        { name: "C#", icon: "/icons/csharp.svg" }
+        { name: "Java", icon: "/icons/java.svg" }
       ]
     },
     {
@@ -21,7 +21,20 @@ const TechnicalSkills: React.FC = () => {
         { name: "PyTorch", icon: "/icons/pytorch.svg" },
         { name: "Scikit-learn", icon: "/icons/scikit-learn.svg" },
         { name: "OpenCV", icon: "/icons/opencv.svg" },
-        { name: "NLTK", icon: "/icons/nltk.svg" }
+        { name: "NLTK", icon: "/icons/nltk.svg" },
+        { name: "Pandas", icon: "/icons/pandas.svg" },
+        { name: "NumPy", icon: "/icons/numpy.svg" },
+        { name: "Keras", icon: "/icons/keras.svg" },
+        { name: "Matplotlib", icon: "/icons/matplotlib.svg" }
+      ]
+    },
+    {
+      category: "Prompt Engineering",
+      items: [
+        { name: "ChatGPT", icon: "/icons/chatgpt.svg" },
+        { name: "LLMs", icon: "/icons/llm.svg" },
+        { name: "LIME", icon: "/icons/lime.svg" },
+        { name: "SHAP", icon: "/icons/shap.svg" }
       ]
     },
     {
@@ -34,21 +47,16 @@ const TechnicalSkills: React.FC = () => {
       ]
     },
     {
-      category: "Web Development",
-      items: [
-        { name: "React", icon: "/icons/react.svg" },
-        { name: "Node.js", icon: "/icons/nodejs.svg" },
-        { name: "HTML5", icon: "/icons/html5.svg" },
-        { name: "CSS3", icon: "/icons/css3.svg" },
-        { name: "Tailwind CSS", icon: "/icons/tailwind.svg" }
-      ]
-    },
-    {
       category: "Tools & Platforms",
       items: [
         { name: "Git", icon: "/icons/git.svg" },
+        { name: "GitHub", icon: "/icons/github.svg" },
         { name: "Docker", icon: "/icons/docker.svg" },
-        { name: "AWS", icon: "/icons/aws.svg" },
+        { name: "Excel", icon: "/icons/excel.svg" },
+        { name: "MySQL", icon: "/icons/mysql.svg" },
+        { name: "PowerBI", icon: "/icons/powerbi.svg" },
+        { name: "Tableau", icon: "/icons/tableau.svg" },
+        { name: "Microsoft Azure", icon: "/icons/azure.svg" },
         { name: "Google Cloud", icon: "/icons/gcp.svg" },
         { name: "Jupyter", icon: "/icons/jupyter.svg" }
       ]
@@ -107,7 +115,10 @@ const TechnicalSkills: React.FC = () => {
         >
           {skills.map((category, catIndex) => (
             <motion.div key={catIndex} variants={itemVariants} className="mb-10">
-              <h4 className="text-xl font-semibold mb-4 text-primary/90">{category.category}</h4>
+              <h4 className="text-xl font-semibold mb-4 text-primary/90 flex items-center">
+                <span className="mr-2">{category.category}</span>
+                <span className="h-px bg-primary/30 flex-grow ml-4"></span>
+              </h4>
               
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
                 {category.items.map((skill, skillIndex) => (
