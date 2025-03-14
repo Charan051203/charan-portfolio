@@ -1,5 +1,7 @@
+
 import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
+
 const Hero: React.FC = () => {
   const logoRef = useRef<HTMLDivElement>(null);
   const [greetingIndex, setGreetingIndex] = useState(0);
@@ -62,6 +64,7 @@ const Hero: React.FC = () => {
       window.removeEventListener('mousemove', handleMouseMove);
     };
   }, []);
+  
   return <section id="home" className="min-h-screen flex items-center justify-center pt-24 pb-16 relative overflow-hidden">
       {/* Background geometric shapes */}
       <div className="absolute inset-0 -z-10">
@@ -184,10 +187,10 @@ const Hero: React.FC = () => {
             }} whileHover={{
               scale: 1.05
             }}>
-                <img src="/profile.jpg" alt="Charan Nandyala" className="w-full h-full object-cover" onError={e => {
+                <img src="/profile.jpg" alt="Charan RK" className="w-full h-full object-cover" onError={e => {
                 // Fallback if image doesn't load
                 const target = e.target as HTMLImageElement;
-                target.src = "https://via.placeholder.com/280x280.png?text=Charan+Nandyala";
+                target.src = "https://via.placeholder.com/280x280.png?text=Charan+RK";
               }} />
                 
                 {/* Overlay gradient */}

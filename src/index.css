@@ -107,8 +107,12 @@
     clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
   }
   
-  .clip-path-shard {
+  .clip-path-diamond {
     clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+  }
+  
+  .clip-path-shard {
+    clip-path: polygon(50% 0%, 80% 50%, 50% 100%, 20% 50%);
   }
   
   .perspective-800 {

@@ -89,8 +89,8 @@ const CursorEffect: React.FC = () => {
       const dy = clientY - prevPositionRef.current.y;
       
       // Smooth velocity with damping
-      velocityRef.current.x = velocityRef.current.x * 0.9 + dx * 0.1;
-      velocityRef.current.y = velocityRef.current.y * 0.9 + dy * 0.1;
+      velocityRef.current.x = velocityRef.current.x * 0.8 + dx * 0.2;
+      velocityRef.current.y = velocityRef.current.y * 0.8 + dy * 0.2;
       
       prevPositionRef.current = { x: clientX, y: clientY };
     };
@@ -104,25 +104,25 @@ const CursorEffect: React.FC = () => {
           const dy = position.y - particle.y;
           const distance = Math.sqrt(dx * dx + dy * dy);
           
-          // Attraction radius
-          const attractionRadius = 300;
+          // Attraction radius - increased for more prominent effect
+          const attractionRadius = 350;
           const isInRange = distance < attractionRadius;
           
-          // Calculate attraction force (inverse to distance)
-          const force = isInRange ? (1 - distance / attractionRadius) * 0.2 : 0;
+          // Calculate attraction force (inverse to distance) - strengthened
+          const force = isInRange ? (1 - distance / attractionRadius) * 0.35 : 0;
           
           // Calculate spring force to return to original position
-          const springFactor = 0.02;
+          const springFactor = 0.025;
           const springX = (particle.originX - particle.x) * springFactor;
           const springY = (particle.originY - particle.y) * springFactor;
           
           // Apply forces with damping
-          const damping = 0.92;
+          const damping = 0.9;
           let vx = particle.vx * damping;
           let vy = particle.vy * damping;
           
           if (isInRange) {
-            // Add attraction force
+            // Add attraction force with more pronounced effect
             vx += dx * force;
             vy += dy * force;
           }
@@ -142,8 +142,8 @@ const CursorEffect: React.FC = () => {
             vx,
             vy,
             isAttracted: isInRange,
-            // Rotate particles based on attraction
-            rotation: particle.rotation + (isInRange ? force * 5 : 0.1)
+            // Rotate particles based on attraction - more dramatic rotation
+            rotation: particle.rotation + (isInRange ? force * 10 : 0.1)
           };
         })
       );
@@ -191,17 +191,18 @@ const CursorEffect: React.FC = () => {
       // Main cursor dot follows exactly
       cursorDotRef.current.style.transform = `translate(${position.x}px, ${position.y}px)`;
       
-      // Cursor outline follows with slight delay
-      cursorOutlineRef.current.style.transform = `translate(${position.x - 12}px, ${position.y - 12}px)`;
+      // Cursor outline follows with slight delay and affected by velocity
+      const velocityFactor = 0.1;
+      const velocityX = velocityRef.current.x * velocityFactor;
+      const velocityY = velocityRef.current.y * velocityFactor;
+      
+      cursorOutlineRef.current.style.transform = `translate(${position.x - 12 + velocityX}px, ${position.y - 12 + velocityY}px)`;
       
       // Scale effect when hovering interactive elements
       if (isPointer) {
         cursorDotRef.current.style.transform = `translate(${position.x}px, ${position.y}px) scale(1.5)`;
-        cursorOutlineRef.current.style.transform = `translate(${position.x - 12}px, ${position.y - 12}px) scale(1.5)`;
+        cursorOutlineRef.current.style.transform = `translate(${position.x - 12 + velocityX}px, ${position.y - 12 + velocityY}px) scale(1.5)`;
       }
-      
-      // Apply velocity-based trailing effect to cursor outline
-      cursorOutlineRef.current.style.transition = 'transform 0.2s ease-out';
     }
   }, [position, isPointer]);
 
@@ -213,7 +214,7 @@ const CursorEffect: React.FC = () => {
       case 'square':
         return 'rounded-md';
       case 'diamond':
-        return 'clip-path-shard';
+        return 'clip-path-diamond';
       case 'shard':
         return 'clip-path-shard';
       default:
@@ -253,10 +254,11 @@ const CursorEffect: React.FC = () => {
             width: `${particle.size}px`,
             height: `${particle.size}px`,
             backgroundColor: particle.color,
-            opacity: particle.isAttracted ? particle.opacity * 1.5 : particle.opacity,
+            opacity: particle.isAttracted ? particle.opacity * 2 : particle.opacity,
             transform: `translate(${particle.x}px, ${particle.y}px) rotate(${particle.rotation}deg)`,
-            boxShadow: particle.isAttracted ? '0 0 15px rgba(100, 255, 255, 0.3)' : 'none',
-            zIndex: -1
+            boxShadow: particle.isAttracted ? '0 0 20px rgba(100, 255, 255, 0.4)' : 'none',
+            zIndex: -1,
+            transition: particle.isAttracted ? 'box-shadow 0.3s ease-out' : 'none'
           }}
         />
       ))}

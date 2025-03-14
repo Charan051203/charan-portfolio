@@ -130,7 +130,7 @@ const Education: React.FC = () => {
           ))}
         </motion.div>
         
-        {/* Mobile Timeline - Vertical only */}
+        {/* Mobile Timeline - Vertical only - FIXED for mobile view */}
         <motion.div
           className="md:hidden space-y-8"
           variants={containerVariants}
@@ -138,8 +138,8 @@ const Education: React.FC = () => {
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
         >
-          {/* Timeline line */}
-          <div className="absolute left-8 top-[22rem] bottom-32 w-0.5 bg-primary/20" />
+          {/* Timeline line - fixed positioning */}
+          <div className="absolute left-8 top-[22rem] bottom-24 w-0.5 bg-primary/20 z-0" />
           
           {timelineItems.map((item, index) => (
             <motion.div
@@ -164,7 +164,7 @@ const Education: React.FC = () => {
               
               {/* Mobile Content */}
               <motion.div
-                className="bg-card border border-border rounded-xl p-6 shadow-lg glassmorphism"
+                className="bg-card border border-border rounded-xl p-6 shadow-lg glassmorphism relative z-10"
                 whileHover={{ 
                   x: 5,
                   boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
@@ -179,7 +179,7 @@ const Education: React.FC = () => {
               
               {/* Connector line with animation */}
               <motion.div 
-                className="absolute top-7 left-7 w-8 h-0.5 bg-primary/40"
+                className="absolute top-7 left-7 w-8 h-0.5 bg-primary/40 z-5"
                 initial={{ width: 0 }}
                 whileInView={{ width: 32 }}
                 transition={{ delay: 0.3, duration: 0.5 }}
