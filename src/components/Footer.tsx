@@ -8,6 +8,7 @@ const Footer: React.FC = () => {
   const footerLinks = [
     { name: 'Home', href: '#home' },
     { name: 'Skills', href: '#skills' },
+    { name: 'Experience', href: '#experience' },
     { name: 'Projects', href: '#projects' },
     { name: 'Education', href: '#education' },
     { name: 'Contact', href: '#contact' }
@@ -31,7 +32,7 @@ const Footer: React.FC = () => {
         
         <div className="mt-8 pt-6 border-t border-border/30 flex flex-col md:flex-row justify-center items-center">
           <p className="text-foreground/50 text-sm">
-            © {currentYear} Charan RK. All rights reserved.
+            © {currentYear} CHARAN RK. All rights reserved.
           </p>
         </div>
       </div>

@@ -1,10 +1,10 @@
-
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import CursorEffect from '../components/CursorEffect';
 import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
 import Projects from '../components/Projects';
+import WorkExperience from '../components/WorkExperience';
 import Education from '../components/Education';
 import Contact from '../components/Contact';
 import Footer from '../components/Footer';
@@ -50,6 +50,7 @@ const Index: React.FC = () => {
       <main>
         <Hero />
         <TechnicalSkills />
+        <WorkExperience />
         <Projects />
         <Education />
         <Contact />
