@@ -83,7 +83,7 @@ const TechnicalSkills: React.FC = () => {
   };
 
   return (
-    <section id="skills" className="py-24 relative">
+    <section id="skills" className="py-16 relative">
       {/* Background elements */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-background to-background/50 opacity-80" />
@@ -93,7 +93,7 @@ const TechnicalSkills: React.FC = () => {
       
       <div className="container mx-auto px-6">
         <motion.div 
-          className="text-center mb-16"
+          className="text-center mb-10"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
@@ -111,24 +111,24 @@ const TechnicalSkills: React.FC = () => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
-          className="space-y-12"
+          className="space-y-8"
         >
           {skills.map((category, catIndex) => (
-            <motion.div key={catIndex} variants={itemVariants} className="mb-10">
-              <h4 className="text-xl font-semibold mb-4 text-primary/90 flex items-center">
+            <motion.div key={catIndex} variants={itemVariants} className="mb-6">
+              <h4 className="text-xl font-semibold mb-3 text-primary/90 flex items-center">
                 <span className="mr-2">{category.category}</span>
                 <span className="h-px bg-primary/30 flex-grow ml-4"></span>
               </h4>
               
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+              <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-3">
                 {category.items.map((skill, skillIndex) => (
                   <motion.div
                     key={skillIndex}
-                    className="glassmorphism rounded-xl p-4 flex flex-col items-center justify-center aspect-square"
+                    className="glassmorphism rounded-lg p-2 flex flex-col items-center justify-center"
                     whileHover={{ y: -5, scale: 1.05 }}
                     transition={{ duration: 0.2 }}
                   >
-                    <div className="w-12 h-12 mb-3 flex items-center justify-center">
+                    <div className="w-8 h-8 mb-2 flex items-center justify-center">
                       <img 
                         src={skill.icon} 
                         alt={skill.name} 
@@ -136,11 +136,11 @@ const TechnicalSkills: React.FC = () => {
                         onError={(e) => {
                           // Fallback if image doesn't load
                           const target = e.target as HTMLImageElement;
-                          target.src = `https://via.placeholder.com/48x48.png?text=${skill.name.charAt(0)}`;
+                          target.src = `https://via.placeholder.com/32x32.png?text=${skill.name.charAt(0)}`;
                         }}
                       />
                     </div>
-                    <p className="text-sm text-center">{skill.name}</p>
+                    <p className="text-xs text-center">{skill.name}</p>
                   </motion.div>
                 ))}
               </div>

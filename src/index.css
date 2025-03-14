@@ -77,6 +77,10 @@
   .text-gradient {
     @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-sky-300;
   }
+
+  .shadow-glow {
+    text-shadow: 0 0 5px rgba(255,255,255,0.7), 0 0 10px rgba(255,255,255,0.5);
+  }
   
   .glassmorphism {
     @apply bg-white/5 backdrop-blur-md border border-white/10 shadow-lg;

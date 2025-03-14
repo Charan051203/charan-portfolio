@@ -42,8 +42,9 @@ const Navbar: React.FC = () => {
         }`}
       >
         <div className="container mx-auto px-6 flex justify-between items-center">
-          <a href="#home" className="text-2xl font-bold text-gradient">
-            CHARANRK
+          <a href="#home" className="text-2xl font-bold">
+            <span className="text-gradient">CHARAN</span>
+            <span className="text-white animate-pulse-light shadow-glow">RK</span>
           </a>
           
           <div className="hidden md:flex space-x-8">
