@@ -43,7 +43,7 @@ const Navbar: React.FC = () => {
       >
         <div className="container mx-auto px-6 flex justify-between items-center">
           <a href="#home" className="text-2xl font-bold text-gradient">
-            Charan RK
+            CHARANRK
           </a>
           
           <div className="hidden md:flex space-x-8">
