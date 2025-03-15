@@ -269,8 +269,6 @@ const Contact: React.FC = () => {
                 className="relative z-10 w-full max-w-md md:max-w-sm rounded-2xl overflow-hidden border-2 border-primary/20"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-                viewport={{ once: true }}
                 animate={{ 
                   y: [0, -15, 0],
                   rotate: [0, 1, 0]
@@ -325,7 +323,7 @@ const Contact: React.FC = () => {
                   }}
                   transition={{ 
                     repeat: Infinity,
-                    duration: 4,
+                    duration: 4
                   }}
                 />
               </motion.div>
@@ -339,7 +337,7 @@ const Contact: React.FC = () => {
                 }}
                 transition={{ 
                   repeat: Infinity,
-                  duration: 3,
+                  duration: 3
                 }}
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

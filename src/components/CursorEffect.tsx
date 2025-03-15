@@ -53,12 +53,18 @@ const CursorEffect: React.FC = () => {
   const lastMousePositionRef = useRef({ x: 0, y: 0 });
   const mouseSpeedRef = useRef(0);
   
-  // Scale based on mouse speed
+  // Scale based on mouse speed - Fix: convert number to MotionValue
+  const mouseSpeedMotionValue = useMotionValue(0);
   const cursorScale = useTransform(
-    mouseSpeedRef.current > 0.5 ? 0.5 : mouseSpeedRef.current,
+    mouseSpeedMotionValue,
     [0, 0.5],
     [1, 1.5]
   );
+
+  // Update the MotionValue whenever mouseSpeed changes
+  useEffect(() => {
+    mouseSpeedMotionValue.set(mouseSpeedRef.current > 0.5 ? 0.5 : mouseSpeedRef.current);
+  }, [mouseSpeed, mouseSpeedMotionValue]);
 
   // Generate enhanced background particles
   useEffect(() => {
