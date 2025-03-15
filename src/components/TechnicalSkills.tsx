@@ -7,58 +7,52 @@ const TechnicalSkills: React.FC = () => {
     {
       category: "Programming Languages",
       items: [
-        { name: "Python", icon: "/icons/python.svg" },
-        { name: "SQL", icon: "/icons/sql.svg" },
-        { name: "C#", icon: "/icons/csharp.svg" },
-        { name: "C++", icon: "/icons/cpp.svg" },
-        { name: "Java", icon: "/icons/java.svg" }
+        { name: "Python", icon: "/python-svgrepo-com.svg" },
+        { name: "C", icon: "/C.png" },
+        { name: "C#", icon: "/C_sharp.png" },
+        { name: "SQL", icon: "/SQL.svg" }
+        
       ]
     },
     {
       category: "AI & Machine Learning",
       items: [
-        { name: "TensorFlow", icon: "/icons/tensorflow.svg" },
-        { name: "PyTorch", icon: "/icons/pytorch.svg" },
-        { name: "Scikit-learn", icon: "/icons/scikit-learn.svg" },
-        { name: "OpenCV", icon: "/icons/opencv.svg" },
-        { name: "NLTK", icon: "/icons/nltk.svg" },
-        { name: "Pandas", icon: "/icons/pandas.svg" },
-        { name: "NumPy", icon: "/icons/numpy.svg" },
-        { name: "Keras", icon: "/icons/keras.svg" },
-        { name: "Matplotlib", icon: "/icons/matplotlib.svg" }
+        { name: "TensorFlow", icon: "/Tensorflow_logo.png" },
+        { name: "PyTorch", icon: "/Pytorch.png" },
+        { name: "Scikit-learn", icon: "/scikit-learn.png" },
+        { name: "NLTK", icon: "/NLTK.png" },
+        { name: "Pandas", icon: "/Pandas.png" },
+        { name: "NumPy", icon: "/Numpy.png" },
+        { name: "Keras", icon: "/Keras.png" },
+        { name: "Matplotlib", icon: "/Matplotlib.png" },
+        { name: "LIME", icon: "/LIME.png" },
+        { name: "SHAP", icon: "/SHaP.svg" }
       ]
     },
-    {
-      category: "Prompt Engineering",
-      items: [
-        { name: "ChatGPT", icon: "/icons/chatgpt.svg" },
-        { name: "LLMs", icon: "/icons/llm.svg" },
-        { name: "LIME", icon: "/icons/lime.svg" },
-        { name: "SHAP", icon: "/icons/shap.svg" }
-      ]
-    },
+
     {
       category: "Game Development",
       items: [
-        { name: "Unity", icon: "/icons/unity.svg" },
-        { name: "Unreal Engine", icon: "/icons/unreal.svg" },
-        { name: "Godot", icon: "/icons/godot.svg" },
-        { name: "Blender", icon: "/icons/blender.svg" },
+        { name: "PyGame", icon: "/PyGame" },
+        { name: "Unity", icon: "/Unity.png" },
+        { name: "Unreal Engine", icon: "/Unreal.jpg" },
+        { name: "Blender", icon: "/Blender.png" },
       ]
     },
     {
       category: "Tools & Platforms",
       items: [
-        { name: "Git", icon: "/icons/git.svg" },
-        { name: "GitHub", icon: "/icons/github.svg" },
-        { name: "Docker", icon: "/icons/docker.svg" },
-        { name: "Excel", icon: "/icons/excel.svg" },
-        { name: "MySQL", icon: "/icons/mysql.svg" },
-        { name: "PowerBI", icon: "/icons/powerbi.svg" },
-        { name: "Tableau", icon: "/icons/tableau.svg" },
-        { name: "Microsoft Azure", icon: "/icons/azure.svg" },
-        { name: "Google Cloud", icon: "/icons/gcp.svg" },
-        { name: "Jupyter", icon: "/icons/jupyter.svg" }
+        { name: "Git", icon: "/GIt.png" },
+        { name: "GitHub", icon: "/GitHub-logo.png" },
+        { name: "Copilot", icon: "/Copilot.jpg" },
+        { name: "ChatGPT", icon: "/Chatgpt.png" },
+        { name: "Excel", icon: "/Excel.png" },
+        { name: "MySQL", icon: "/mysql.png" },
+        { name: "PowerBI", icon: "/PowerBI.png" },
+        { name: "Tableau", icon: "/Tableau-Logo.png" },
+        { name: "Microsoft Azure", icon: "/azure.png" },
+        { name: "Google Cloud", icon: "/Google Cloud.svg" },
+        { name: "Jupyter", icon: "/Jupyter.svg" }
       ]
     }
   ];
