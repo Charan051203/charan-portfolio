@@ -7,11 +7,11 @@ import { BadgeCheck, Calendar, Building } from 'lucide-react';
 // This data structure allows for easy addition of more experiences in the future
 const experiences = [
   {
-    title: "Internship Position",
-    company: "Company Name",
+    title: "AI Engineer",
+    company: "GTRE, DRDO, Ministry of Defence, Govt. of India",
     duration: "September 2024 - December 2024",
-    description: "Description of your responsibilities and achievements during the internship.",
-    skills: ["Skill 1", "Skill 2", "Skill 3"],
+    description: "Developing AI/ML models for predictive analytics to improve turbine efficiency and safety.Leveraging skills in data science, machine learning, and signal processing to optimize engine diagnostics.",
+    skills: ["HyperParameter Tuning", "Deep Learning", "Boosting Techniques"],
   },
   // Structure ready for more experiences to be added in the future
 ];
