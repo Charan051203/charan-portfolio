@@ -12,6 +12,7 @@ import Footer from '../components/Footer';
 import TechnicalSkills from '../components/TechnicalSkills';
 import { toast } from 'sonner';
 import { Home, Linkedin, Github, Instagram, Twitter } from 'lucide-react';
+import { useIsMobile } from '../hooks/use-mobile';
 
 const jokes = [
   "Why do programmers prefer dark mode? Because light attracts bugs.",
@@ -28,6 +29,7 @@ const jokes = [
 
 const Index: React.FC = () => {
   const [randomJoke, setRandomJoke] = useState('');
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     // Get random joke
@@ -60,39 +62,41 @@ const Index: React.FC = () => {
       <Footer />
       
       {/* Fixed social media sidebar - Only visible on desktop */}
-      <div className="fixed left-6 bottom-1/2 transform translate-y-1/2 flex flex-col gap-4 z-30 hidden lg:flex">
-        {[
-          { icon: <Linkedin className="w-5 h-5" />, href: "https://www.linkedin.com/in/charan051203/", label: "LinkedIn" },
-          { icon: <Github className="w-5 h-5" />, href: "https://github.com/Charan051203", label: "GitHub" },
-          { icon: <Instagram className="w-5 h-5" />, href: "https://www.instagram.com/chrn_._/", label: "Instagram" },
-          { 
-            icon: <Twitter className="w-5 h-5" />, 
-            href: "https://x.com/charan_5123", 
-            label: "Twitter" 
-          }
-        ].map((item, i) => (
-          <motion.a
-            key={i}
-            href={item.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-10 h-10 rounded-full glassmorphism flex items-center justify-center text-foreground hover:text-primary hover:border-primary border border-border/50 transition-all"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: i * 0.1 + 1.5 }}
-            whileHover={{ scale: 1.2, y: -5 }}
-            aria-label={item.label}
-          >
-            {item.icon}
-          </motion.a>
-        ))}
-        <motion.div 
-          className="w-px h-24 bg-border/50 mx-auto mt-2"
-          initial={{ height: 0 }}
-          animate={{ height: 96 }}
-          transition={{ delay: 2 }}
-        />
-      </div>
+      {!isMobile && (
+        <div className="fixed left-6 bottom-1/2 transform translate-y-1/2 flex flex-col gap-4 z-30 hidden lg:flex">
+          {[
+            { icon: <Linkedin className="w-5 h-5" />, href: "https://www.linkedin.com/in/charan051203/", label: "LinkedIn" },
+            { icon: <Github className="w-5 h-5" />, href: "https://github.com/Charan051203", label: "GitHub" },
+            { icon: <Instagram className="w-5 h-5" />, href: "https://www.instagram.com/chrn_._/", label: "Instagram" },
+            { 
+              icon: <Twitter className="w-5 h-5" />, 
+              href: "https://x.com/charan_5123", 
+              label: "Twitter" 
+            }
+          ].map((item, i) => (
+            <motion.a
+              key={i}
+              href={item.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-10 h-10 rounded-full glassmorphism flex items-center justify-center text-foreground hover:text-primary hover:border-primary border border-border/50 transition-all"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: i * 0.1 + 1.5 }}
+              whileHover={{ scale: 1.2, y: -5 }}
+              aria-label={item.label}
+            >
+              {item.icon}
+            </motion.a>
+          ))}
+          <motion.div 
+            className="w-px h-24 bg-border/50 mx-auto mt-2"
+            initial={{ height: 0 }}
+            animate={{ height: 96 }}
+            transition={{ delay: 2 }}
+          />
+        </div>
+      )}
       
       {/* Back to top button */}
       <motion.a

@@ -2,10 +2,12 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Menu, X, Linkedin, Github, Instagram, Twitter } from 'lucide-react';
+import { useIsMobile } from '../hooks/use-mobile';
 
 const Navbar: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -43,6 +45,9 @@ const Navbar: React.FC = () => {
     }
   ];
 
+  // Check if we should show social icons in navbar based on screen size and scroll position
+  const shouldShowSocialIcons = !isMobile;
+
   return (
     <>
       <motion.nav
@@ -77,24 +82,26 @@ const Navbar: React.FC = () => {
             </div>
           </div>
 
-          {/* Desktop Social Icons - Only visible on larger screens */}
-          <div className="hidden md:flex items-center space-x-4">
-            {socialLinks.map((item, i) => (
-              <motion.a
-                key={i}
-                href={item.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-foreground hover:text-primary transition-all"
-                initial={{ opacity: 0, x: 10 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: i * 0.1 }}
-                aria-label={item.label}
-              >
-                {item.icon}
-              </motion.a>
-            ))}
-          </div>
+          {/* Desktop Social Icons - Only visible on larger screens when sidebar icons are not visible */}
+          {shouldShowSocialIcons && (
+            <div className="hidden md:flex items-center space-x-4">
+              {socialLinks.map((item, i) => (
+                <motion.a
+                  key={i}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-foreground hover:text-primary transition-all"
+                  initial={{ opacity: 0, x: 10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.1 }}
+                  aria-label={item.label}
+                >
+                  {item.icon}
+                </motion.a>
+              ))}
+            </div>
+          )}
           
           {/* Mobile menu button */}
           <div className="md:hidden">

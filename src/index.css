@@ -162,23 +162,7 @@
   animation: float-small 4s ease-in-out infinite;
 }
 
-/* Magnetic mouse hover effect */
-@keyframes magnetic-glow {
-  0%, 100% {
-    box-shadow: 0 0 5px 2px rgba(29, 209, 237, 0.2);
-  }
-  50% {
-    box-shadow: 0 0 15px 5px rgba(29, 209, 237, 0.4);
-  }
-}
-
-.magnetic-hover {
-  transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-.magnetic-hover:hover {
-  animation: magnetic-glow 2s infinite;
-}
+/* Removed magnetic mouse hover effect, keeping the section for reference */
 
 /* Shimmer effect for skills */
 @keyframes shimmer {
