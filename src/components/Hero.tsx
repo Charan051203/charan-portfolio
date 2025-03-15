@@ -161,7 +161,7 @@ const Hero: React.FC = () => {
                 View Work
               </a>
               
-              <a href="/Charan_Resume.pdf" download className="px-6 py-3 border border-primary/30 text-foreground rounded-full font-medium hover:bg-primary/10 transition-colors">
+              <a href="public/Resume CHARAN RK.pdf" download className="px-6 py-3 border border-primary/30 text-foreground rounded-full font-medium hover:bg-primary/10 transition-colors">
                 Download Resume
               </a>
             </motion.div>
@@ -187,7 +187,7 @@ const Hero: React.FC = () => {
             }} whileHover={{
               scale: 1.05
             }}>
-                <img src="/profile.jpg" alt="Charan RK" className="w-full h-full object-cover" onError={e => {
+                <img src="public/profile.jpeg" alt="Charan RK" className="w-full h-full object-cover" onError={e => {
                 // Fallback if image doesn't load
                 const target = e.target as HTMLImageElement;
                 target.src = "https://via.placeholder.com/280x280.png?text=Charan+RK";
