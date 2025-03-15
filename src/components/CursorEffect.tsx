@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect, useRef } from 'react';
+import { motion, useSpring, useMotionValue, useTransform } from 'framer-motion';
 
 interface Position {
   x: number;
@@ -26,27 +27,61 @@ const CursorEffect: React.FC = () => {
   const [position, setPosition] = useState<Position>({ x: 0, y: 0 });
   const [isPointer, setIsPointer] = useState(false);
   const [hidden, setHidden] = useState(true);
+  
+  // Cursor framer-motion values
+  const cursorX = useMotionValue(0);
+  const cursorY = useMotionValue(0);
+  
+  // Spring physics for smoother cursor movement
+  const springConfig = { damping: 25, stiffness: 700 };
+  const cursorXSpring = useSpring(cursorX, springConfig);
+  const cursorYSpring = useSpring(cursorY, springConfig);
+  
+  // Trail effects
+  const [trails, setTrails] = useState<Position[]>([]);
+  const trailLength = 8;
+  
+  // Enhanced particles system
   const [particles, setParticles] = useState<Particle[]>([]);
-  const cursorDotRef = useRef<HTMLDivElement>(null);
-  const cursorOutlineRef = useRef<HTMLDivElement>(null);
   const particlesRef = useRef<{[key: string]: HTMLDivElement | null}>({});
   const animationFrameIdRef = useRef<number | null>(null);
   const velocityRef = useRef({ x: 0, y: 0 });
   const prevPositionRef = useRef({ x: 0, y: 0 });
+  
+  // Mouse speed tracking
+  const [mouseSpeed, setMouseSpeed] = useState(0);
+  const lastMousePositionRef = useRef({ x: 0, y: 0 });
+  const mouseSpeedRef = useRef(0);
+  
+  // Scale based on mouse speed
+  const cursorScale = useTransform(
+    mouseSpeedRef.current > 0.5 ? 0.5 : mouseSpeedRef.current,
+    [0, 0.5],
+    [1, 1.5]
+  );
 
-  // Generate background particles
+  // Generate enhanced background particles
   useEffect(() => {
     const generateParticles = () => {
       const windowWidth = window.innerWidth;
       const windowHeight = window.innerHeight;
-      const shapes = ['circle', 'triangle', 'square', 'diamond', 'shard'];
+      const shapes = ['circle', 'triangle', 'square', 'diamond', 'star', 'hexagon'];
+      const colorPalette = [
+        'hsla(210, 100%, 70%, opacity)',
+        'hsla(240, 100%, 70%, opacity)',
+        'hsla(270, 100%, 70%, opacity)',
+        'hsla(300, 100%, 70%, opacity)',
+        'hsla(330, 100%, 70%, opacity)'
+      ];
       
-      const newParticles: Particle[] = Array.from({ length: 40 }, (_, i) => {
+      const newParticles: Particle[] = Array.from({ length: 50 }, (_, i) => {
         const x = Math.random() * windowWidth;
         const y = Math.random() * windowHeight;
-        const size = Math.random() * 60 + 20;
+        const size = Math.random() * 70 + 30;
         const opacity = Math.random() * 0.2 + 0.05;
         const shapeIndex = Math.floor(Math.random() * shapes.length);
+        const colorIndex = Math.floor(Math.random() * colorPalette.length);
+        const color = colorPalette[colorIndex].replace('opacity', opacity.toString());
         
         return {
           id: `particle-${i}`,
@@ -55,7 +90,7 @@ const CursorEffect: React.FC = () => {
           originX: x,
           originY: y,
           size,
-          color: `hsla(${Math.random() * 50 + 180}, 80%, 60%, ${opacity})`,
+          color,
           shape: shapes[shapeIndex],
           rotation: Math.random() * 360,
           opacity,
@@ -77,25 +112,47 @@ const CursorEffect: React.FC = () => {
     };
   }, []);
 
-  // Handle mouse movement and particle attraction
+  // Handle mouse movement with enhanced effects
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       const { clientX, clientY } = e;
       setHidden(false);
       setPosition({ x: clientX, y: clientY });
       
+      // Update spring values
+      cursorX.set(clientX);
+      cursorY.set(clientY);
+      
+      // Calculate mouse speed
+      const dx = clientX - lastMousePositionRef.current.x;
+      const dy = clientY - lastMousePositionRef.current.y;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+      
+      // Smooth mouse speed
+      mouseSpeedRef.current = mouseSpeedRef.current * 0.8 + (distance * 0.2);
+      setMouseSpeed(mouseSpeedRef.current);
+      
+      // Update trail
+      setTrails(prev => {
+        const newTrail = { x: clientX, y: clientY };
+        const updatedTrails = [newTrail, ...prev].slice(0, trailLength);
+        return updatedTrails;
+      });
+      
       // Calculate velocity
-      const dx = clientX - prevPositionRef.current.x;
-      const dy = clientY - prevPositionRef.current.y;
+      const velX = clientX - prevPositionRef.current.x;
+      const velY = clientY - prevPositionRef.current.y;
       
       // Smooth velocity with damping
-      velocityRef.current.x = velocityRef.current.x * 0.8 + dx * 0.2;
-      velocityRef.current.y = velocityRef.current.y * 0.8 + dy * 0.2;
+      velocityRef.current.x = velocityRef.current.x * 0.8 + velX * 0.2;
+      velocityRef.current.y = velocityRef.current.y * 0.8 + velY * 0.2;
       
+      // Update position references
       prevPositionRef.current = { x: clientX, y: clientY };
+      lastMousePositionRef.current = { x: clientX, y: clientY };
     };
 
-    // Animate particles based on cursor position
+    // Enhanced particle animation with fluid physics
     const animateParticles = () => {
       setParticles(prevParticles => 
         prevParticles.map(particle => {
@@ -104,25 +161,30 @@ const CursorEffect: React.FC = () => {
           const dy = position.y - particle.y;
           const distance = Math.sqrt(dx * dx + dy * dy);
           
-          // Attraction radius - increased for more prominent effect
-          const attractionRadius = 350;
+          // Enhanced attraction radius - increases with mouse speed
+          const baseRadius = 400;
+          const attractionRadius = baseRadius + (mouseSpeedRef.current * 100);
           const isInRange = distance < attractionRadius;
           
-          // Calculate attraction force (inverse to distance) - strengthened
-          const force = isInRange ? (1 - distance / attractionRadius) * 0.35 : 0;
+          // Calculate dynamic attraction force based on mouse speed
+          const baseForce = 0.4;
+          const speedMultiplier = 1 + (mouseSpeedRef.current * 2);
+          const force = isInRange 
+            ? (1 - distance / attractionRadius) * baseForce * speedMultiplier 
+            : 0;
           
-          // Calculate spring force to return to original position
-          const springFactor = 0.025;
+          // Improved spring physics
+          const springFactor = 0.03;
           const springX = (particle.originX - particle.x) * springFactor;
           const springY = (particle.originY - particle.y) * springFactor;
           
-          // Apply forces with damping
-          const damping = 0.9;
+          // Apply forces with improved damping
+          const damping = 0.92;
           let vx = particle.vx * damping;
           let vy = particle.vy * damping;
           
           if (isInRange) {
-            // Add attraction force with more pronounced effect
+            // Add attraction force with more dynamic effect
             vx += dx * force;
             vy += dy * force;
           }
@@ -131,9 +193,23 @@ const CursorEffect: React.FC = () => {
           vx += springX;
           vy += springY;
           
+          // Add slight random movement for more organic feel
+          vx += (Math.random() - 0.5) * 0.3;
+          vy += (Math.random() - 0.5) * 0.3;
+          
           // Update position with velocity
           const x = particle.x + vx;
           const y = particle.y + vy;
+          
+          // Dynamic rotation based on velocity and attraction
+          const rotationSpeed = isInRange 
+            ? Math.sqrt(vx * vx + vy * vy) * 5 + force * 15
+            : 0.2;
+          
+          // Dynamic opacity based on attraction
+          const targetOpacity = isInRange 
+            ? particle.opacity * 2.5 * force
+            : particle.opacity;
           
           return {
             ...particle,
@@ -142,8 +218,8 @@ const CursorEffect: React.FC = () => {
             vx,
             vy,
             isAttracted: isInRange,
-            // Rotate particles based on attraction - more dramatic rotation
-            rotation: particle.rotation + (isInRange ? force * 10 : 0.1)
+            rotation: particle.rotation + rotationSpeed,
+            opacity: targetOpacity
           };
         })
       );
@@ -183,30 +259,9 @@ const CursorEffect: React.FC = () => {
         cancelAnimationFrame(animationFrameIdRef.current);
       }
     };
-  }, [position]);
+  }, [position, cursorX, cursorY]);
 
-  // Apply cursor movement
-  useEffect(() => {
-    if (cursorDotRef.current && cursorOutlineRef.current) {
-      // Main cursor dot follows exactly
-      cursorDotRef.current.style.transform = `translate(${position.x}px, ${position.y}px)`;
-      
-      // Cursor outline follows with slight delay and affected by velocity
-      const velocityFactor = 0.1;
-      const velocityX = velocityRef.current.x * velocityFactor;
-      const velocityY = velocityRef.current.y * velocityFactor;
-      
-      cursorOutlineRef.current.style.transform = `translate(${position.x - 12 + velocityX}px, ${position.y - 12 + velocityY}px)`;
-      
-      // Scale effect when hovering interactive elements
-      if (isPointer) {
-        cursorDotRef.current.style.transform = `translate(${position.x}px, ${position.y}px) scale(1.5)`;
-        cursorOutlineRef.current.style.transform = `translate(${position.x - 12 + velocityX}px, ${position.y - 12 + velocityY}px) scale(1.5)`;
-      }
-    }
-  }, [position, isPointer]);
-
-  // Get shape CSS class based on shape type
+  // Get shape CSS class based on shape type with enhanced shapes
   const getShapeClass = (shape: string): string => {
     switch(shape) {
       case 'triangle':
@@ -215,8 +270,10 @@ const CursorEffect: React.FC = () => {
         return 'rounded-md';
       case 'diamond':
         return 'clip-path-diamond';
-      case 'shard':
-        return 'clip-path-shard';
+      case 'star':
+        return 'clip-path-star';
+      case 'hexagon':
+        return 'clip-path-hexagon';
       default:
         return 'rounded-full';
     }
@@ -224,27 +281,75 @@ const CursorEffect: React.FC = () => {
 
   return (
     <>
-      {/* Main cursor dot */}
-      <div 
-        ref={cursorDotRef} 
-        className={`cursor-dot bg-primary ${hidden ? 'opacity-0' : 'opacity-100'}`}
-        style={{ 
-          transform: `translate(${position.x}px, ${position.y}px)`,
-          zIndex: 9999 
+      {/* Enhanced cursor trail effect */}
+      {trails.map((trail, index) => {
+        const size = 10 - index * 1;
+        const opacity = 1 - (index / trailLength);
+        
+        return (
+          <motion.div
+            key={`trail-${index}`}
+            className="fixed top-0 left-0 rounded-full pointer-events-none z-[10000] mix-blend-screen"
+            style={{
+              width: size,
+              height: size,
+              backgroundColor: `rgba(255, 255, 255, ${opacity * 0.6})`,
+              x: trail.x - size/2,
+              y: trail.y - size/2,
+              boxShadow: `0 0 ${10 + index * 2}px rgba(255, 255, 255, ${opacity * 0.4})`,
+            }}
+          />
+        );
+      })}
+      
+      {/* Main cursor dot - with spring physics for smoother movement */}
+      <motion.div 
+        className={`fixed top-0 left-0 w-3 h-3 bg-primary rounded-full pointer-events-none ${hidden ? 'opacity-0' : 'opacity-100'}`}
+        style={{
+          x: cursorXSpring,
+          y: cursorYSpring,
+          translateX: '-50%',
+          translateY: '-50%',
+          zIndex: 9999,
+          scale: isPointer ? 1.5 : 1,
+          transition: 'scale 0.2s ease',
+          mixBlendMode: 'screen',
+          boxShadow: '0 0 10px rgba(255, 255, 255, 0.7)'
         }}
       />
       
-      {/* Cursor outline */}
-      <div 
-        ref={cursorOutlineRef} 
-        className={`cursor-outline border-primary ${hidden ? 'opacity-0' : 'opacity-100'}`}
-        style={{ 
-          transform: `translate(${position.x - 12}px, ${position.y - 12}px)`,
-          zIndex: 9998
+      {/* Enhanced cursor outline with glow effect */}
+      <motion.div 
+        className={`fixed top-0 left-0 w-8 h-8 border-2 border-primary rounded-full pointer-events-none ${hidden ? 'opacity-0' : 'opacity-100'}`}
+        style={{
+          x: cursorXSpring,
+          y: cursorYSpring,
+          translateX: '-50%',
+          translateY: '-50%',
+          zIndex: 9998,
+          scale: isPointer ? 1.5 : mouseSpeed > 0.5 ? 0.8 : 1,
+          boxShadow: '0 0 20px rgba(255, 255, 255, 0.3)',
+          transition: 'scale 0.3s ease'
         }}
       />
       
-      {/* Background particle elements */}
+      {/* Enhanced central glow */}
+      <motion.div 
+        className={`fixed top-0 left-0 w-4 h-4 rounded-full pointer-events-none ${hidden ? 'opacity-0' : 'opacity-60'}`}
+        style={{
+          x: cursorXSpring,
+          y: cursorYSpring,
+          translateX: '-50%',
+          translateY: '-50%',
+          zIndex: 9997,
+          background: 'radial-gradient(circle, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0) 70%)',
+          filter: 'blur(2px)',
+          width: '40px',
+          height: '40px'
+        }}
+      />
+      
+      {/* Enhanced background particle elements */}
       {particles.map((particle) => (
         <div
           key={particle.id}
@@ -254,11 +359,14 @@ const CursorEffect: React.FC = () => {
             width: `${particle.size}px`,
             height: `${particle.size}px`,
             backgroundColor: particle.color,
-            opacity: particle.isAttracted ? particle.opacity * 2 : particle.opacity,
+            opacity: particle.opacity,
             transform: `translate(${particle.x}px, ${particle.y}px) rotate(${particle.rotation}deg)`,
-            boxShadow: particle.isAttracted ? '0 0 20px rgba(100, 255, 255, 0.4)' : 'none',
+            boxShadow: particle.isAttracted 
+              ? `0 0 ${20 + particle.size/5}px ${particle.color.replace('opacity', '0.4')}`
+              : 'none',
             zIndex: -1,
-            transition: particle.isAttracted ? 'box-shadow 0.3s ease-out' : 'none'
+            transition: particle.isAttracted ? 'box-shadow 0.3s ease-out' : 'none',
+            filter: particle.isAttracted ? 'blur(1px)' : 'blur(0px)'
           }}
         />
       ))}

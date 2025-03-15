@@ -202,7 +202,7 @@ const Contact: React.FC = () => {
               </form>
             </motion.div>
 
-            {/* Gaming setup animated image */}
+            {/* Gaming setup animated image - Improved for all screen sizes */}
             <div className="relative flex items-center justify-center">
               {/* Floating orbs around the image for effect */}
               <motion.div 
@@ -264,12 +264,12 @@ const Contact: React.FC = () => {
                 }}
               />
 
-              {/* The animated floating image */}
+              {/* The animated floating image - Made to stay visible on all screen sizes */}
               <motion.div
-                className="relative z-10 w-full max-w-md rounded-2xl overflow-hidden border-2 border-primary/20"
+                className="relative z-10 w-full max-w-md md:max-w-sm rounded-2xl overflow-hidden border-2 border-primary/20"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: this }} 
+                transition={{ duration: 0.8 }}
                 viewport={{ once: true }}
                 animate={{ 
                   y: [0, -15, 0],

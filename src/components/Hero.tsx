@@ -167,7 +167,7 @@ const Hero: React.FC = () => {
             </motion.div>
           </motion.div>
           
-          {/* Right content - Profile Photo */}
+          {/* Right content - Profile Photo with Enhanced Effects */}
           <motion.div className="w-full lg:w-1/2 flex justify-center" initial={{
           opacity: 0,
           scale: 0.8
@@ -177,40 +177,131 @@ const Hero: React.FC = () => {
         }} transition={{
           duration: 0.8
         }}>
-            <div ref={logoRef} className="relative perspective-800 w-[280px] h-[280px] transition-transform duration-300 ease-out">
-              <motion.div className="absolute inset-0 w-full h-full rounded-full overflow-hidden border-4 border-primary/30" animate={{
-              y: [0, -10, 0]
-            }} transition={{
-              repeat: Infinity,
-              duration: 5,
-              ease: "easeInOut"
-            }} whileHover={{
-              scale: 1.05
-            }}>
+            <div ref={logoRef} className="relative perspective-800 w-[320px] h-[320px] transition-transform duration-300 ease-out">
+              {/* Enhanced glowing effects */}
+              <motion.div 
+                className="absolute inset-0 bg-gradient-to-r from-primary/30 via-blue-500/20 to-purple-500/30 rounded-full blur-3xl"
+                animate={{ 
+                  scale: [1, 1.1, 1],
+                  opacity: [0.4, 0.7, 0.4],
+                  rotate: [0, 15, 0]
+                }}
+                transition={{ 
+                  repeat: Infinity,
+                  duration: 8,
+                  ease: "easeInOut"
+                }}
+              />
+              
+              {/* Orbital particles */}
+              {Array.from({length: 8}).map((_, i) => {
+                const angle = (i / 8) * Math.PI * 2;
+                const delay = i * 0.2;
+                return (
+                  <motion.div
+                    key={`orbit-${i}`}
+                    className="absolute w-2 h-2 bg-primary/70 rounded-full"
+                    style={{
+                      left: '50%',
+                      top: '50%',
+                      margin: '-1px'
+                    }}
+                    animate={{
+                      x: [Math.cos(angle) * 160, Math.cos(angle + Math.PI) * 160, Math.cos(angle + Math.PI * 2) * 160],
+                      y: [Math.sin(angle) * 160, Math.sin(angle + Math.PI) * 160, Math.sin(angle + Math.PI * 2) * 160],
+                      opacity: [0.4, 1, 0.4],
+                      scale: [1, 1.5, 1]
+                    }}
+                    transition={{
+                      repeat: Infinity,
+                      duration: 8,
+                      delay,
+                      ease: "linear"
+                    }}
+                  />
+                )
+              })}
+
+              <motion.div className="absolute inset-0 w-full h-full rounded-full overflow-hidden border-4 border-primary/30" 
+                animate={{
+                  y: [0, -10, 0]
+                }} 
+                transition={{
+                  repeat: Infinity,
+                  duration: 5,
+                  ease: "easeInOut"
+                }} 
+                whileHover={{
+                  scale: 1.05
+                }}
+              >
                 <img src="public/profile.jpeg" alt="Charan RK" className="w-full h-full object-cover" onError={e => {
                 // Fallback if image doesn't load
                 const target = e.target as HTMLImageElement;
                 target.src = "https://via.placeholder.com/280x280.png?text=Charan+RK";
               }} />
                 
-                {/* Overlay gradient */}
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/30 to-transparent opacity-70" />
+                {/* Enhanced overlay gradient with dynamic effect */}
+                <motion.div 
+                  className="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent" 
+                  animate={{
+                    opacity: [0.6, 0.8, 0.6],
+                    backgroundPosition: ['0% 0%', '100% 100%', '0% 0%']
+                  }}
+                  transition={{
+                    repeat: Infinity,
+                    duration: 8,
+                    ease: "easeInOut"
+                  }}
+                />
+
+                {/* Scan line effect */}
+                <motion.div
+                  className="absolute w-full h-8 bg-primary/10 blur-sm"
+                  animate={{
+                    y: [-320, 320],
+                    opacity: [0, 0.8, 0]
+                  }}
+                  transition={{
+                    repeat: Infinity,
+                    duration: 4,
+                    ease: "linear"
+                  }}
+                />
               </motion.div>
               
-              {/* Decorative elements around the photo */}
-              <motion.div className="absolute -top-4 -right-4 w-8 h-8 bg-primary/40 rounded-full blur-sm" animate={{
-              scale: [1, 1.2, 1]
-            }} transition={{
-              repeat: Infinity,
-              duration: 3,
-              delay: 0.5
-            }} />
-              <motion.div className="absolute -bottom-4 -left-4 w-12 h-12 bg-primary/30 rounded-full blur-sm" animate={{
-              scale: [1, 1.3, 1]
-            }} transition={{
-              repeat: Infinity,
-              duration: 4
-            }} />
+              {/* Enhanced decorative elements around the photo */}
+              <motion.div className="absolute -top-4 -right-4 w-12 h-12 bg-primary/40 rounded-full blur-md" animate={{
+                scale: [1, 1.5, 1],
+                opacity: [0.5, 1, 0.5]
+              }} transition={{
+                repeat: Infinity,
+                duration: 3,
+                delay: 0.5
+              }} />
+              <motion.div className="absolute -bottom-4 -left-4 w-16 h-16 bg-primary/30 rounded-full blur-md" animate={{
+                scale: [1, 1.3, 1],
+                opacity: [0.5, 1, 0.5]
+              }} transition={{
+                repeat: Infinity,
+                duration: 4
+              }} />
+              <motion.div className="absolute top-1/2 -right-6 w-8 h-8 bg-blue-500/40 rounded-full blur-sm" animate={{
+                scale: [1, 1.4, 1],
+                opacity: [0.3, 0.7, 0.3]
+              }} transition={{
+                repeat: Infinity,
+                duration: 2,
+                delay: 1
+              }} />
+              <motion.div className="absolute bottom-1/4 -left-8 w-10 h-10 bg-purple-500/30 rounded-full blur-sm" animate={{
+                scale: [1, 1.2, 1],
+                opacity: [0.3, 0.6, 0.3]
+              }} transition={{
+                repeat: Infinity,
+                duration: 3,
+                delay: 1.5
+              }} />
             </div>
           </motion.div>
         </div>
