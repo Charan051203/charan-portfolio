@@ -6,7 +6,7 @@ const Hero: React.FC = () => {
   const logoRef = useRef<HTMLDivElement>(null);
   const [greetingIndex, setGreetingIndex] = useState(0);
   const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
-  const roles = ["AI Engineer", "Data Scientist", "Game Developer", "Prompt Engineer"];
+  const roles = ["AI Engineer", "Data Scientist", "Game Developer", "Prompt Engineer", "Gamer"];
   const greetings = [{
     text: "Hello",
     language: "English"
@@ -145,7 +145,7 @@ const Hero: React.FC = () => {
           }} transition={{
             delay: 1,
             duration: 0.8
-          }} className="mb-8 max-w-xl text-slate-50">AI Engineer and Data Scientist skilled in Machine Learning, Deep Learning, Prompt Engineering and Data Analytics. Proficient in predictive modeling, AI-driven solutions, and optimization techniques.</motion.p>
+          }} className="mb-8 max-w-xl text-slate-50">AI Engineer and Data Scientist skilled in Machine Learning, Deep Learning, Prompt Engineering and Data Analytics. Proficient in predictive modeling, AI-driven solutions, and optimization techniques. As a game enthusiast, I love spending my free time exploring virtual worlds and playing video games.</motion.p>
             
             <motion.div className="flex flex-wrap gap-4" initial={{
             opacity: 0,

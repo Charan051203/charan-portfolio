@@ -10,7 +10,7 @@ import Contact from '../components/Contact';
 import Footer from '../components/Footer';
 import TechnicalSkills from '../components/TechnicalSkills';
 import { toast } from 'sonner';
-import { Home, Linkedin, Github, Instagram } from 'lucide-react';
+import { Home } from 'lucide-react';
 
 const jokes = [
   "Why do programmers prefer dark mode? Because light attracts bugs.",
@@ -58,8 +58,8 @@ const Index: React.FC = () => {
       
       <Footer />
       
-      {/* Fixed social media sidebar */}
-      <div className="fixed left-6 bottom-1/2 transform translate-y-1/2 flex flex-col gap-4 z-30 hidden md:flex">
+      {/* Fixed social media sidebar - Only visible on desktop */}
+      <div className="fixed left-6 bottom-1/2 transform translate-y-1/2 flex flex-col gap-4 z-30 hidden lg:flex">
         {[
           { icon: <Linkedin />, href: "https://www.linkedin.com/in/charan051203/", label: "LinkedIn" },
           { icon: <Github />, href: "https://github.com/Charan051203", label: "GitHub" },

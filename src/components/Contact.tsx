@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Send, FileText, Mail, Github, Linkedin, Instagram, Twitter } from 'lucide-react';
+import { Send, FileText, Mail, MapPin } from 'lucide-react';
 import { toast } from 'sonner';
 
 const Contact: React.FC = () => {
@@ -28,18 +28,6 @@ const Contact: React.FC = () => {
       // Email service would send to charanrk5123@gmail.com
       console.log('Sending email to charanrk5123@gmail.com', formData);
       
-      // In a real implementation, you'd connect to a backend service or use a service like EmailJS
-      // const serviceId = 'your_service_id';
-      // const templateId = 'your_template_id';
-      // const userId = 'your_user_id';
-      // await emailjs.send(serviceId, templateId, { 
-      //   to_name: 'Charan',
-      //   from_name: formData.name,
-      //   from_email: formData.email,
-      //   message: formData.message,
-      //   reply_to: formData.email 
-      // }, userId);
-      
       setFormData({ name: '', email: '', message: '' });
       toast.success("Message sent successfully!");
     } catch (error) {
@@ -53,26 +41,11 @@ const Contact: React.FC = () => {
   const handleDownloadResume = () => {
     // Replace with your actual resume file path
     const link = document.createElement('a');
-    link.href = '/Charan_Resume.pdf';
+    link.href = '/Resume CHARAN RK.pdf';
     link.download = 'Charan_Resume.pdf';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-  };
-
-  const staggerChildren = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
-  };
-
-  const childVariant = {
-    hidden: { y: 20, opacity: 0 },
-    visible: { y: 0, opacity: 1, transition: { duration: 0.5 } }
   };
 
   return (
@@ -121,10 +94,10 @@ const Contact: React.FC = () => {
           </div>
         </motion.div>
         
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           {/* Contact Form */}
           <motion.div
-            className="lg:col-span-7 glassmorphism rounded-2xl p-8 border border-primary/20 shadow-lg relative overflow-hidden"
+            className="lg:col-span-6 glassmorphism rounded-2xl p-8 border border-primary/20 shadow-lg relative overflow-hidden"
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
@@ -146,9 +119,9 @@ const Contact: React.FC = () => {
             
             <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
               <motion.div
-                variants={childVariant}
-                initial="hidden"
-                whileInView="visible"
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
                 viewport={{ once: true }}
               >
                 <label htmlFor="name" className="block text-foreground/80 mb-2 text-sm font-medium">
@@ -167,9 +140,9 @@ const Contact: React.FC = () => {
               </motion.div>
               
               <motion.div
-                variants={childVariant}
-                initial="hidden"
-                whileInView="visible"
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 }}
                 viewport={{ once: true }}
               >
                 <label htmlFor="email" className="block text-foreground/80 mb-2 text-sm font-medium">
@@ -188,9 +161,9 @@ const Contact: React.FC = () => {
               </motion.div>
               
               <motion.div
-                variants={childVariant}
-                initial="hidden"
-                whileInView="visible"
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 }}
                 viewport={{ once: true }}
               >
                 <label htmlFor="message" className="block text-foreground/80 mb-2 text-sm font-medium">
@@ -214,9 +187,9 @@ const Contact: React.FC = () => {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 disabled={isSubmitting}
-                variants={childVariant}
-                initial="hidden"
-                whileInView="visible"
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6 }}
                 viewport={{ once: true }}
               >
                 <span>{isSubmitting ? 'Sending...' : 'Send Message'}</span>
@@ -225,185 +198,70 @@ const Contact: React.FC = () => {
             </form>
           </motion.div>
 
-          {/* Contact Information */}
-          <motion.div 
-            className="lg:col-span-5 glassmorphism rounded-2xl p-8 border border-primary/20 shadow-lg relative overflow-hidden flex flex-col justify-between"
+          {/* Gaming Setup Image */}
+          <motion.div
+            className="lg:col-span-6 glassmorphism rounded-2xl border border-primary/20 shadow-lg relative overflow-hidden h-[500px]"
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true, margin: "-100px" }}
           >
-            {/* Decorative elements */}
-            <div className="absolute -top-20 -left-20 w-40 h-40 bg-primary/10 rounded-full blur-xl" />
-            <div className="absolute -bottom-20 -right-20 w-40 h-40 bg-primary/10 rounded-full blur-xl" />
+            {/* Gaming setup image */}
+            <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent z-10" />
+            <img 
+              src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=800&q=80" 
+              alt="Gaming Setup" 
+              className="w-full h-full object-cover"
+            />
             
-            <div className="relative z-10 mb-10">
-              <motion.h4 
-                className="text-2xl font-bold mb-6 text-gradient"
-                initial={{ opacity: 0, y: -10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                viewport={{ once: true }}
-              >
-                Contact Information
-              </motion.h4>
+            {/* Floating contact info card */}
+            <motion.div
+              className="absolute bottom-0 left-0 right-0 p-6 backdrop-blur-md bg-background/70 border-t border-primary/10 z-20"
+              initial={{ y: 100, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.5, duration: 0.6 }}
+              viewport={{ once: true }}
+            >
+              <h4 className="text-xl font-bold mb-4 text-gradient">Contact Information</h4>
               
-              <motion.p 
-                className="text-foreground/70 mb-8"
-                variants={childVariant}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-              >
-                Feel free to reach out if you have any questions or would like to work together on interesting projects.
-              </motion.p>
-              
-              <motion.ul 
-                className="space-y-4"
-                variants={staggerChildren}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-              >
-                <motion.li 
-                  className="flex items-start space-x-3"
-                  variants={childVariant}
-                >
-                  <Mail className="w-5 h-5 text-primary mt-1" />
+              <div className="space-y-4">
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                    <Mail className="w-5 h-5 text-primary" />
+                  </div>
                   <div>
-                    <p className="font-medium">Email</p>
-                    <a href="mailto:charanrk5123@gmail.com" className="text-foreground/70 hover:text-primary transition-colors">
+                    <p className="text-foreground/70">Email</p>
+                    <a href="mailto:charanrk5123@gmail.com" className="text-foreground hover:text-primary transition-colors">
                       charanrk5123@gmail.com
                     </a>
                   </div>
-                </motion.li>
+                </div>
                 
-                <motion.li 
-                  className="flex items-start space-x-3"
-                  variants={childVariant}
-                >
-                  <svg 
-                    xmlns="http://www.w3.org/2000/svg" 
-                    className="w-5 h-5 text-primary mt-1" 
-                    viewBox="0 0 24 24" 
-                    fill="none" 
-                    stroke="currentColor" 
-                    strokeWidth="2" 
-                    strokeLinecap="round" 
-                    strokeLinejoin="round"
-                  >
-                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-                  </svg>
-                  <div>
-                    <p className="font-medium">Phone</p>
-                    <a href="tel:+918660570019" className="text-foreground/70 hover:text-primary transition-colors">
-                      +91 86605 70019
-                    </a>
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                    <MapPin className="w-5 h-5 text-primary" />
                   </div>
-                </motion.li>
-                
-                <motion.li 
-                  className="flex items-start space-x-3"
-                  variants={childVariant}
-                >
-                  <svg 
-                    xmlns="http://www.w3.org/2000/svg" 
-                    className="w-5 h-5 text-primary mt-1" 
-                    viewBox="0 0 24 24" 
-                    fill="none" 
-                    stroke="currentColor" 
-                    strokeWidth="2" 
-                    strokeLinecap="round" 
-                    strokeLinejoin="round"
-                  >
-                    <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
-                    <circle cx="12" cy="10" r="3"/>
-                  </svg>
                   <div>
-                    <p className="font-medium">Location</p>
-                    <p className="text-foreground/70">
+                    <p className="text-foreground/70">Location</p>
+                    <p className="text-foreground">
                       Bengaluru, KA, India
                     </p>
                   </div>
-                </motion.li>
-              </motion.ul>
-            </div>
-            
-            <motion.div
-              className="relative z-10 mt-auto"
-              variants={childVariant}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-            >
-              <motion.button
-                onClick={handleDownloadResume}
-                className="w-full flex items-center justify-center space-x-3 px-6 py-4 rounded-lg border border-primary/30 hover:bg-primary/10 transition-colors"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                <FileText className="w-5 h-5 text-primary" />
-                <span className="font-medium">Download Resume</span>
-              </motion.button>
+                </div>
+                
+                <motion.button
+                  onClick={handleDownloadResume}
+                  className="mt-4 w-full flex items-center justify-center space-x-3 px-4 py-3 rounded-lg border border-primary/30 hover:bg-primary/10 transition-colors"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <FileText className="w-5 h-5 text-primary" />
+                  <span className="font-medium">Download Resume</span>
+                </motion.button>
+              </div>
             </motion.div>
           </motion.div>
         </div>
-        
-        {/* Social Media Links */}
-        <motion.div 
-          className="mt-16 flex justify-center space-x-6"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.6 }}
-          viewport={{ once: true, margin: "-100px" }}
-        >
-          <a href="https://www.linkedin.com/in/charan051203/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-            <motion.div 
-              className="w-12 h-12 rounded-full bg-card border border-primary/20 flex items-center justify-center hover:bg-primary/10 transition-colors"
-              whileHover={{ scale: 1.1, rotate: 5 }}
-              whileTap={{ scale: 0.9 }}
-            >
-              <Linkedin className="w-5 h-5 text-primary" />
-            </motion.div>
-          </a>
-          
-          <a href="https://github.com/Charan051203" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
-            <motion.div 
-              className="w-12 h-12 rounded-full bg-card border border-primary/20 flex items-center justify-center hover:bg-primary/10 transition-colors"
-              whileHover={{ scale: 1.1, rotate: 5 }}
-              whileTap={{ scale: 0.9 }}
-            >
-              <Github className="w-5 h-5 text-primary" />
-            </motion.div>
-          </a>
-          
-          <a href="https://www.instagram.com/chrn_._/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-            <motion.div 
-              className="w-12 h-12 rounded-full bg-card border border-primary/20 flex items-center justify-center hover:bg-primary/10 transition-colors"
-              whileHover={{ scale: 1.1, rotate: 5 }}
-              whileTap={{ scale: 0.9 }}
-            >
-              <Instagram className="w-5 h-5 text-primary" />
-            </motion.div>
-          </a>
-          
-          <a href="https://x.com/charan_5123" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
-            <motion.div 
-              className="w-12 h-12 rounded-full bg-card border border-primary/20 flex items-center justify-center hover:bg-primary/10 transition-colors"
-              whileHover={{ scale: 1.1, rotate: 5 }}
-              whileTap={{ scale: 0.9 }}
-            >
-              <svg 
-                className="w-5 h-5 text-primary" 
-                viewBox="0 0 24 24" 
-                fill="currentColor"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-              </svg>
-            </motion.div>
-          </a>
-        </motion.div>
       </div>
     </section>
   );

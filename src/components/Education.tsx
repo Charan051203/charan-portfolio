@@ -1,62 +1,63 @@
+
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Calendar, GraduationCap, Medal, BookOpen } from 'lucide-react';
 
 const timelineItems = [
   {
     year: "2021 - Present",
     degree: "B.E. Artificial Intelligence and Data Science",
     institution: "GLOBAL ACADEMY OF TECHNOLOGY",
-    description: "CGPA: 8.0. Focusing on machine learning, deep learning, and data analytics."
+    description: "CGPA: 8.0. Focusing on machine learning, deep learning, and data analytics.",
+    icon: <GraduationCap className="w-5 h-5" />
   },
   {
     year: "2021",
     degree: "Class 12 (PCMB)",
     institution: "SRI CHAITANYA TECHNO SCHOOL",
-    description: "Achieved 87% aggregate in CBSE board exams."
+    description: "Achieved 87% aggregate in CBSE board exams.",
+    icon: <BookOpen className="w-5 h-5" />
   },
   {
     year: "2019",
     degree: "Class 10",
     institution: "SRI CHAITANYA TECHNO SCHOOL",
-    description: "Achieved 82% aggregate in CBSE board exams."
+    description: "Achieved 82% aggregate in CBSE board exams.",
+    icon: <Medal className="w-5 h-5" />
   }
 ];
 
 const Education: React.FC = () => {
-  const containerVariants = {
-    hidden: {
-      opacity: 0
-    },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.3
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: {
-      x: -50,
-      opacity: 0
-    },
-    visible: {
-      x: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.5,
-        ease: "easeOut"
-      }
-    }
-  };
-
   return (
-    <section id="education" className="py-24 relative">
+    <section id="education" className="py-24 relative overflow-hidden">
       {/* Background elements */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-background to-background/50 opacity-80" />
         <div className="absolute top-1/3 right-1/4 w-64 h-64 bg-primary/5 rounded-full blur-[80px]" />
         <div className="absolute bottom-1/4 left-1/4 w-64 h-64 bg-primary/5 rounded-full blur-[80px]" />
+        
+        {/* Animated floating particles */}
+        {Array.from({ length: 20 }).map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-1 h-1 rounded-full bg-primary/30"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+            }}
+            animate={{
+              y: [0, -30, 0],
+              x: [0, Math.random() * 10 - 5, 0],
+              opacity: [0.2, 0.7, 0.2],
+              scale: [1, 1.5, 1]
+            }}
+            transition={{
+              duration: Math.random() * 4 + 2,
+              repeat: Infinity,
+              delay: Math.random() * 2
+            }}
+          />
+        ))}
       </div>
       
       <div className="container mx-auto px-6">
@@ -74,122 +75,98 @@ const Education: React.FC = () => {
           </div>
         </motion.div>
         
-        {/* Desktop Timeline */}
-        <motion.div 
-          className="max-w-3xl mx-auto relative hidden md:block" 
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-        >
-          {/* Timeline line */}
-          <div className="absolute top-0 bottom-0 left-1/2 w-0.5 bg-primary/20 transform -translate-x-1/2" />
-          
-          {timelineItems.map((item, index) => <motion.div key={index} className="relative mb-12" variants={itemVariants}>
-              {/* Timeline dot with pulse effect */}
-              <motion.div className="absolute left-1/2 transform -translate-x-1/2 w-5 h-5 rounded-full bg-primary z-10" initial={{
-            scale: 0
-          }} whileInView={{
-            scale: 1
-          }} transition={{
-            delay: 0.2,
-            duration: 0.5
-          }} viewport={{
-            once: true
-          }}>
-                <motion.div className="absolute inset-0 bg-primary/50 rounded-full" animate={{
-              scale: [1, 1.5, 1],
-              opacity: [1, 0, 1]
-            }} transition={{
-              duration: 2,
-              repeat: Infinity
-            }} />
-              </motion.div>
-              
-              {/* Content - alternating sides */}
-              <div className={`relative ${index % 2 === 0 ? 'text-right pr-16 ml-auto' : 'text-left pl-16'} w-1/2`}>
-                <motion.div className="bg-card border border-border rounded-xl p-6 shadow-lg glassmorphism" whileHover={{
-              y: -5,
-              boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
-            }} transition={{
-              duration: 0.3
-            }}>
-                  <span className="text-sm text-primary font-semibold">{item.year}</span>
-                  <h4 className="text-xl font-bold mt-2">{item.degree}</h4>
-                  <h5 className="text-foreground/70 text-lg">{item.institution}</h5>
-                  <p className="mt-3 text-foreground/70">{item.description}</p>
-                </motion.div>
-                
-                {/* Connector line with animation */}
-                <motion.div className={`absolute top-1/2 ${index % 2 === 0 ? 'left-0 right-auto w-16' : 'right-0 left-auto w-16'} h-0.5 bg-primary/40`} initial={{
-              width: 0
-            }} whileInView={{
-              width: 64
-            }} transition={{
-              delay: 0.3,
-              duration: 0.5
-            }} viewport={{
-              once: true
-            }} />
-              </div>
-            </motion.div>)}
-        </motion.div>
-        
-        {/* Mobile Timeline - FIXED for mobile view */}
-        <motion.div 
-          className="md:hidden space-y-8 relative" 
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-        >
-          {/* Timeline line - fixed positioning */}
-          <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-primary/20 ml-px" />
-          
+        {/* Modern Timeline Design */}
+        <div className="max-w-4xl mx-auto">
           {timelineItems.map((item, index) => (
             <motion.div 
-              key={index} 
-              variants={itemVariants} 
-              className="relative pl-16 mb-8"
+              key={index}
+              className="mb-12 relative"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.2 }}
+              viewport={{ once: true, margin: "-100px" }}
             >
-              {/* Timeline dot with pulse effect */}
-              <motion.div 
-                className="absolute left-8 top-7 transform -translate-x-1/2 w-4 h-4 rounded-full bg-primary z-10"
-                initial={{ scale: 0 }}
-                whileInView={{ scale: 1 }}
-                transition={{ delay: 0.2, duration: 0.5 }}
-                viewport={{ once: true }}
-              >
+              <div className="flex items-start gap-6">
+                {/* Year Badge */}
                 <motion.div 
-                  className="absolute inset-0 bg-primary/50 rounded-full" 
-                  animate={{ scale: [1, 1.5, 1], opacity: [1, 0, 1] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                />
-              </motion.div>
-              
-              {/* Mobile Content */}
-              <motion.div 
-                className="bg-card border border-border rounded-xl p-6 shadow-lg glassmorphism relative z-10"
-                whileHover={{ x: 5, boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)" }}
-                transition={{ duration: 0.3 }}
-              >
-                <span className="text-sm text-primary font-semibold block mb-1">{item.year}</span>
-                <h4 className="text-lg font-bold">{item.degree}</h4>
-                <h5 className="text-foreground/70 text-base">{item.institution}</h5>
-                <p className="mt-2 text-foreground/70 text-sm">{item.description}</p>
-              </motion.div>
-              
-              {/* Connector line with animation */}
-              <motion.div 
-                className="absolute top-7 left-8 w-8 h-0.5 bg-primary/40 z-5" 
-                initial={{ width: 0 }}
-                whileInView={{ width: 32 }}
-                transition={{ delay: 0.3, duration: 0.5 }}
-                viewport={{ once: true }}
-              />
+                  className="hidden md:flex min-w-32 h-12 items-center justify-center bg-primary/10 rounded-full border border-primary/30 backdrop-blur-sm"
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  whileInView={{ scale: 1, opacity: 1 }}
+                  transition={{ delay: 0.2 + index * 0.1 }}
+                  viewport={{ once: true }}
+                >
+                  <Calendar className="w-4 h-4 text-primary mr-2" />
+                  <span className="text-sm font-semibold">{item.year}</span>
+                </motion.div>
+                
+                {/* Central Icon with glow effect */}
+                <div className="relative z-10">
+                  <motion.div 
+                    className="w-12 h-12 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center backdrop-blur-sm"
+                    initial={{ scale: 0, rotate: -30 }}
+                    whileInView={{ scale: 1, rotate: 0 }}
+                    transition={{ delay: 0.3 + index * 0.1, type: "spring" }}
+                    viewport={{ once: true }}
+                  >
+                    <motion.div 
+                      className="text-primary"
+                      animate={{ 
+                        scale: [1, 1.2, 1],
+                        opacity: [0.7, 1, 0.7]
+                      }}
+                      transition={{ 
+                        duration: 3, 
+                        repeat: Infinity, 
+                        delay: index * 0.5 
+                      }}
+                    >
+                      {item.icon}
+                    </motion.div>
+                  </motion.div>
+                  
+                  {/* Vertical line for connection - only if not the last item */}
+                  {index < timelineItems.length - 1 && (
+                    <motion.div 
+                      className="absolute top-12 left-1/2 w-0.5 bg-gradient-to-b from-primary/50 to-primary/5"
+                      style={{ height: "calc(100% + 1rem)", transform: "translateX(-50%)" }}
+                      initial={{ height: 0 }}
+                      whileInView={{ height: "calc(100% + 1rem)" }}
+                      transition={{ delay: 0.5 + index * 0.2, duration: 0.5 }}
+                      viewport={{ once: true }}
+                    />
+                  )}
+                </div>
+                
+                {/* Content Card */}
+                <motion.div 
+                  className="flex-1 glassmorphism rounded-2xl p-6 border border-primary/10"
+                  initial={{ x: 20, opacity: 0 }}
+                  whileInView={{ x: 0, opacity: 1 }}
+                  transition={{ delay: 0.4 + index * 0.1 }}
+                  viewport={{ once: true }}
+                  whileHover={{ 
+                    y: -5, 
+                    boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+                    backgroundColor: "rgba(255, 255, 255, 0.03)"
+                  }}
+                >
+                  {/* Mobile Year display */}
+                  <div className="flex items-center md:hidden mb-2">
+                    <Calendar className="w-4 h-4 text-primary mr-2" />
+                    <span className="text-sm font-semibold text-primary">{item.year}</span>
+                  </div>
+                  
+                  <h4 className="text-xl font-bold">{item.degree}</h4>
+                  <div className="flex items-center my-2">
+                    <GraduationCap className="w-4 h-4 text-primary/70 mr-2" />
+                    <h5 className="text-foreground/80">{item.institution}</h5>
+                  </div>
+                  <p className="mt-2 text-foreground/70">{item.description}</p>
+                </motion.div>
+              </div>
             </motion.div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
