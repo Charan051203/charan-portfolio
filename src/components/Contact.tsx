@@ -3,6 +3,9 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Send, FileText, Mail, MapPin } from 'lucide-react';
 import { toast } from 'sonner';
+import { Input } from './ui/input';
+import { Textarea } from './ui/textarea';
+import { Label } from './ui/label';
 
 const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -94,172 +97,346 @@ const Contact: React.FC = () => {
           </div>
         </motion.div>
         
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          {/* Contact Form */}
+        <div className="max-w-5xl mx-auto mb-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+            {/* Contact Form */}
+            <motion.div
+              className="glassmorphism rounded-2xl p-8 border border-primary/20 shadow-lg relative overflow-hidden"
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true, margin: "-100px" }}
+            >
+              {/* Decorative elements */}
+              <div className="absolute -top-20 -right-20 w-40 h-40 bg-primary/10 rounded-full blur-xl" />
+              <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-primary/10 rounded-full blur-xl" />
+              
+              <motion.h4 
+                className="text-2xl font-bold mb-6 text-gradient relative z-10"
+                initial={{ opacity: 0, y: -10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+                viewport={{ once: true }}
+              >
+                Send Me A Message
+              </motion.h4>
+              
+              <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                  viewport={{ once: true }}
+                >
+                  <Label htmlFor="name" className="block text-foreground/80 mb-2">
+                    Your Name
+                  </Label>
+                  <Input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-3 bg-card/50 border border-primary/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all placeholder-foreground/40"
+                    placeholder="John Doe"
+                  />
+                </motion.div>
+                
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4 }}
+                  viewport={{ once: true }}
+                >
+                  <Label htmlFor="email" className="block text-foreground/80 mb-2">
+                    Your Email
+                  </Label>
+                  <Input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-3 bg-card/50 border border-primary/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all placeholder-foreground/40"
+                    placeholder="john@example.com"
+                  />
+                </motion.div>
+                
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5 }}
+                  viewport={{ once: true }}
+                >
+                  <Label htmlFor="message" className="block text-foreground/80 mb-2">
+                    Your Message
+                  </Label>
+                  <Textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    required
+                    rows={5}
+                    className="w-full px-4 py-3 bg-card/50 border border-primary/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all resize-none placeholder-foreground/40"
+                    placeholder="Hello, I'd like to discuss a project..."
+                  />
+                </motion.div>
+                
+                <motion.button
+                  type="submit"
+                  className="w-full px-6 py-4 bg-primary text-primary-foreground rounded-lg font-semibold hover:bg-primary/90 transition-colors flex items-center justify-center space-x-2 group"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  disabled={isSubmitting}
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.6 }}
+                  viewport={{ once: true }}
+                >
+                  <span>{isSubmitting ? 'Sending...' : 'Send Message'}</span>
+                  <Send className="w-4 h-4 transform transition-transform group-hover:translate-x-1" />
+                </motion.button>
+              </form>
+            </motion.div>
+
+            {/* Gaming setup animated image */}
+            <div className="relative flex items-center justify-center">
+              {/* Floating orbs around the image for effect */}
+              <motion.div 
+                className="absolute w-24 h-24 rounded-full bg-primary/20 blur-xl"
+                animate={{ 
+                  x: [0, 15, 0],
+                  y: [0, -15, 0],
+                  scale: [1, 1.2, 1]
+                }}
+                transition={{ 
+                  repeat: Infinity,
+                  duration: 5,
+                  ease: "easeInOut"
+                }}
+                style={{ top: "10%", left: "20%" }}
+              />
+              
+              <motion.div 
+                className="absolute w-16 h-16 rounded-full bg-blue-500/30 blur-xl"
+                animate={{ 
+                  x: [0, -20, 0],
+                  y: [0, 15, 0],
+                  scale: [1, 1.3, 1]
+                }}
+                transition={{ 
+                  repeat: Infinity,
+                  duration: 7,
+                  ease: "easeInOut"
+                }}
+                style={{ bottom: "15%", right: "25%" }}
+              />
+              
+              <motion.div 
+                className="absolute w-12 h-12 rounded-full bg-purple-500/30 blur-xl"
+                animate={{ 
+                  x: [0, 25, 0],
+                  y: [0, 20, 0],
+                  scale: [1, 1.2, 1]
+                }}
+                transition={{ 
+                  repeat: Infinity,
+                  duration: 9,
+                  ease: "easeInOut"
+                }}
+                style={{ top: "60%", left: "15%" }}
+              />
+
+              {/* Animated glow behind the image */}
+              <motion.div 
+                className="absolute inset-0 bg-gradient-to-r from-primary/20 to-blue-500/20 rounded-full blur-3xl"
+                animate={{ 
+                  scale: [1, 1.1, 1],
+                  opacity: [0.5, 0.7, 0.5]
+                }}
+                transition={{ 
+                  repeat: Infinity,
+                  duration: 3,
+                  ease: "easeInOut"
+                }}
+              />
+
+              {/* The animated floating image */}
+              <motion.div
+                className="relative z-10 w-full max-w-md rounded-2xl overflow-hidden border-2 border-primary/20"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: this }} 
+                viewport={{ once: true }}
+                animate={{ 
+                  y: [0, -15, 0],
+                  rotate: [0, 1, 0]
+                }}
+                transition={{ 
+                  repeat: Infinity,
+                  duration: 6,
+                  ease: "easeInOut"
+                }}
+              >
+                {/* Game particles effect */}
+                <div className="absolute inset-0 z-20 overflow-hidden">
+                  {Array.from({ length: 20 }).map((_, i) => (
+                    <motion.div
+                      key={i}
+                      className="absolute w-1 h-1 bg-primary rounded-full"
+                      style={{
+                        left: `${Math.random() * 100}%`,
+                        top: `${Math.random() * 100}%`,
+                      }}
+                      animate={{
+                        y: [0, -100],
+                        opacity: [0, 1, 0],
+                      }}
+                      transition={{
+                        duration: Math.random() * 2 + 1,
+                        repeat: Infinity,
+                        delay: Math.random() * 2,
+                      }}
+                    />
+                  ))}
+                </div>
+                
+                {/* Gaming setup image */}
+                <motion.img 
+                  src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800&q=80" 
+                  alt="Gaming Setup" 
+                  className="w-full h-full object-cover"
+                  animate={{ scale: [1, 1.03, 1] }}
+                  transition={{ 
+                    repeat: Infinity,
+                    duration: 10,
+                    ease: "easeInOut"
+                  }}
+                />
+                
+                {/* Overlay effect */}
+                <motion.div 
+                  className="absolute inset-0 bg-gradient-to-t from-background/50 to-transparent"
+                  animate={{ 
+                    opacity: [0.3, 0.5, 0.3]
+                  }}
+                  transition={{ 
+                    repeat: Infinity,
+                    duration: 4,
+                  }}
+                />
+              </motion.div>
+              
+              {/* Controller icon animation */}
+              <motion.div
+                className="absolute bottom-4 right-4 text-primary"
+                animate={{ 
+                  scale: [1, 1.2, 1],
+                  rotate: [0, 5, 0, -5, 0]
+                }}
+                transition={{ 
+                  repeat: Infinity,
+                  duration: 3,
+                }}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="6" y="6" width="14" height="12" rx="2" />
+                  <line x1="6" y1="12" x2="6" y2="12" />
+                  <line x1="8" y1="10" x2="8" y2="10" />
+                  <line x1="10" y1="8" x2="10" y2="8" />
+                  <line x1="6" y1="16" x2="6" y2="16" />
+                  <circle cx="16" cy="10" r="1" />
+                  <circle cx="18" cy="12" r="1" />
+                  <circle cx="16" cy="14" r="1" />
+                  <circle cx="14" cy="12" r="1" />
+                </svg>
+              </motion.div>
+            </div>
+          </div>
+          
+          {/* Contact Information Card - Below the message form */}
           <motion.div
-            className="lg:col-span-6 glassmorphism rounded-2xl p-8 border border-primary/20 shadow-lg relative overflow-hidden"
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
+            className="mt-10 glassmorphism rounded-2xl p-8 border border-primary/20 shadow-lg overflow-hidden"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
             viewport={{ once: true, margin: "-100px" }}
           >
-            {/* Decorative elements */}
             <div className="absolute -top-20 -right-20 w-40 h-40 bg-primary/10 rounded-full blur-xl" />
             <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-primary/10 rounded-full blur-xl" />
             
-            <motion.h4 
-              className="text-2xl font-bold mb-6 text-gradient relative z-10"
-              initial={{ opacity: 0, y: -10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              viewport={{ once: true }}
-            >
-              Send Me A Message
-            </motion.h4>
-            
-            <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
+            <div className="relative z-10">
+              <motion.h4 
+                className="text-2xl font-bold mb-6 text-center text-gradient"
+                initial={{ opacity: 0, y: -10 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
+                transition={{ delay: 0.2 }}
                 viewport={{ once: true }}
               >
-                <label htmlFor="name" className="block text-foreground/80 mb-2 text-sm font-medium">
-                  Your Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 bg-card/50 border border-primary/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all placeholder-foreground/40"
-                  placeholder="John Doe"
-                />
-              </motion.div>
+                Contact Information
+              </motion.h4>
               
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
-                viewport={{ once: true }}
-              >
-                <label htmlFor="email" className="block text-foreground/80 mb-2 text-sm font-medium">
-                  Your Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 bg-card/50 border border-primary/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all placeholder-foreground/40"
-                  placeholder="john@example.com"
-                />
-              </motion.div>
-              
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 }}
-                viewport={{ once: true }}
-              >
-                <label htmlFor="message" className="block text-foreground/80 mb-2 text-sm font-medium">
-                  Your Message
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  required
-                  rows={5}
-                  className="w-full px-4 py-3 bg-card/50 border border-primary/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all resize-none placeholder-foreground/40"
-                  placeholder="Hello, I'd like to discuss a project..."
-                />
-              </motion.div>
-              
-              <motion.button
-                type="submit"
-                className="w-full px-6 py-4 bg-primary text-primary-foreground rounded-lg font-semibold hover:bg-primary/90 transition-colors flex items-center justify-center space-x-2 group"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                disabled={isSubmitting}
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6 }}
-                viewport={{ once: true }}
-              >
-                <span>{isSubmitting ? 'Sending...' : 'Send Message'}</span>
-                <Send className="w-4 h-4 transform transition-transform group-hover:translate-x-1" />
-              </motion.button>
-            </form>
-          </motion.div>
-
-          {/* Gaming Setup Image */}
-          <motion.div
-            className="lg:col-span-6 glassmorphism rounded-2xl border border-primary/20 shadow-lg relative overflow-hidden h-[500px]"
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true, margin: "-100px" }}
-          >
-            {/* Gaming setup image */}
-            <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent z-10" />
-            <img 
-              src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=800&q=80" 
-              alt="Gaming Setup" 
-              className="w-full h-full object-cover"
-            />
-            
-            {/* Floating contact info card */}
-            <motion.div
-              className="absolute bottom-0 left-0 right-0 p-6 backdrop-blur-md bg-background/70 border-t border-primary/10 z-20"
-              initial={{ y: 100, opacity: 0 }}
-              whileInView={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.5, duration: 0.6 }}
-              viewport={{ once: true }}
-            >
-              <h4 className="text-xl font-bold mb-4 text-gradient">Contact Information</h4>
-              
-              <div className="space-y-4">
-                <div className="flex items-center space-x-3">
-                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                    <Mail className="w-5 h-5 text-primary" />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                <motion.div 
+                  className="flex items-center space-x-4"
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.3 }}
+                  viewport={{ once: true }}
+                  whileHover={{ x: 5 }}
+                >
+                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                    <Mail className="w-6 h-6 text-primary" />
                   </div>
                   <div>
-                    <p className="text-foreground/70">Email</p>
-                    <a href="mailto:charanrk5123@gmail.com" className="text-foreground hover:text-primary transition-colors">
+                    <p className="text-foreground/70 text-sm">Email</p>
+                    <a href="mailto:charanrk5123@gmail.com" className="text-foreground hover:text-primary transition-colors font-medium">
                       charanrk5123@gmail.com
                     </a>
                   </div>
-                </div>
+                </motion.div>
                 
-                <div className="flex items-center space-x-3">
-                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                    <MapPin className="w-5 h-5 text-primary" />
+                <motion.div 
+                  className="flex items-center space-x-4"
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.4 }}
+                  viewport={{ once: true }}
+                  whileHover={{ x: 5 }}
+                >
+                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                    <MapPin className="w-6 h-6 text-primary" />
                   </div>
                   <div>
-                    <p className="text-foreground/70">Location</p>
-                    <p className="text-foreground">
-                      Bengaluru, KA, India
+                    <p className="text-foreground/70 text-sm">Location</p>
+                    <p className="text-foreground font-medium">
+                      Bengaluru, Karnataka, India
                     </p>
                   </div>
-                </div>
+                </motion.div>
                 
-                <motion.button
-                  onClick={handleDownloadResume}
-                  className="mt-4 w-full flex items-center justify-center space-x-3 px-4 py-3 rounded-lg border border-primary/30 hover:bg-primary/10 transition-colors"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
+                <motion.div 
+                  className="flex items-center space-x-4 md:col-span-2 mx-auto mt-4"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5 }}
+                  viewport={{ once: true }}
                 >
-                  <FileText className="w-5 h-5 text-primary" />
-                  <span className="font-medium">Download Resume</span>
-                </motion.button>
+                  <motion.button
+                    onClick={handleDownloadResume}
+                    className="flex items-center justify-center space-x-3 px-6 py-3 rounded-lg border border-primary/30 hover:bg-primary/10 transition-colors"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <FileText className="w-5 h-5 text-primary" />
+                    <span className="font-medium">Download Resume</span>
+                  </motion.button>
+                </motion.div>
               </div>
-            </motion.div>
+            </div>
           </motion.div>
         </div>
       </div>
