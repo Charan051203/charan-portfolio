@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import CursorEffect from '../components/CursorEffect';
@@ -10,7 +11,7 @@ import Contact from '../components/Contact';
 import Footer from '../components/Footer';
 import TechnicalSkills from '../components/TechnicalSkills';
 import { toast } from 'sonner';
-import { Home } from 'lucide-react';
+import { Home, Linkedin, Github, Instagram, Twitter } from 'lucide-react';
 
 const jokes = [
   "Why do programmers prefer dark mode? Because light attracts bugs.",
@@ -61,13 +62,11 @@ const Index: React.FC = () => {
       {/* Fixed social media sidebar - Only visible on desktop */}
       <div className="fixed left-6 bottom-1/2 transform translate-y-1/2 flex flex-col gap-4 z-30 hidden lg:flex">
         {[
-          { icon: <Linkedin />, href: "https://www.linkedin.com/in/charan051203/", label: "LinkedIn" },
-          { icon: <Github />, href: "https://github.com/Charan051203", label: "GitHub" },
-          { icon: <Instagram />, href: "https://www.instagram.com/chrn_._/", label: "Instagram" },
+          { icon: <Linkedin className="w-5 h-5" />, href: "https://www.linkedin.com/in/charan051203/", label: "LinkedIn" },
+          { icon: <Github className="w-5 h-5" />, href: "https://github.com/Charan051203", label: "GitHub" },
+          { icon: <Instagram className="w-5 h-5" />, href: "https://www.instagram.com/chrn_._/", label: "Instagram" },
           { 
-            icon: <svg viewBox="0 0 24 24" className="w-5 h-5" fill="currentColor">
-              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-            </svg>, 
+            icon: <Twitter className="w-5 h-5" />, 
             href: "https://x.com/charan_5123", 
             label: "Twitter" 
           }
