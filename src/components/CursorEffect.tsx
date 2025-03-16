@@ -7,8 +7,11 @@ const CursorEffect: React.FC = () => {
 
   useEffect(() => {
     const updateCursorPosition = (e: MouseEvent) => {
-      setCursorPosition({ x: e.clientX, y: e.clientY });
-      if (!isVisible) setIsVisible(true);
+      // Use requestAnimationFrame for smoother animation
+      requestAnimationFrame(() => {
+        setCursorPosition({ x: e.clientX, y: e.clientY });
+        if (!isVisible) setIsVisible(true);
+      });
     };
 
     const handleMouseLeave = () => {
@@ -41,6 +44,7 @@ const CursorEffect: React.FC = () => {
           opacity: isVisible ? 1 : 0,
           left: cursorPosition.x,
           top: cursorPosition.y,
+          transition: 'opacity 0.3s ease-out',
         }}
       />
       <div 
@@ -49,6 +53,7 @@ const CursorEffect: React.FC = () => {
           opacity: isVisible ? 0.6 : 0,
           left: cursorPosition.x,
           top: cursorPosition.y,
+          transition: 'transform 0.15s ease-out, opacity 0.3s ease-out',
           transform: `translate(-50%, -50%) scale(${isVisible ? 1 : 0.8})`,
         }}
       />

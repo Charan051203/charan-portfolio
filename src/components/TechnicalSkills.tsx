@@ -131,8 +131,8 @@ const TechnicalSkills: React.FC = () => {
                     whileHover={{ y: -5 }}
                   >
                     <div className="w-20 h-20 relative flex items-center justify-center mb-3 skill-icon-container">
-                      {/* Glowing background effect */}
-                      <div className="absolute inset-0 bg-primary/10 rounded-full blur-md" />
+                      {/* Enhanced glowing background effect */}
+                      <div className="absolute inset-0 bg-primary/20 rounded-full blur-md" />
                       
                       {/* Skill icon with proper sizing */}
                       <div className="relative z-10 w-16 h-16 md:w-20 md:h-20 rounded-full glassmorphism border border-primary/20 p-3 flex items-center justify-center skill-icon">

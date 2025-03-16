@@ -106,7 +106,7 @@ const Contact: React.FC = () => {
                   transition={{ delay: 0.3 }}
                   viewport={{ once: true }}
                 >
-                  <Label htmlFor="name" className="block text-foreground/80 mb-2 md:text-center text-left">
+                  <Label htmlFor="name" className="block text-foreground/80 mb-2 text-left">
                     Your Name
                   </Label>
                   <Input
@@ -127,7 +127,7 @@ const Contact: React.FC = () => {
                   transition={{ delay: 0.4 }}
                   viewport={{ once: true }}
                 >
-                  <Label htmlFor="email" className="block text-foreground/80 mb-2 md:text-center text-left">
+                  <Label htmlFor="email" className="block text-foreground/80 mb-2 text-left">
                     Your Email
                   </Label>
                   <Input
@@ -148,7 +148,7 @@ const Contact: React.FC = () => {
                   transition={{ delay: 0.5 }}
                   viewport={{ once: true }}
                 >
-                  <Label htmlFor="message" className="block text-foreground/80 mb-2 md:text-center text-left">
+                  <Label htmlFor="message" className="block text-foreground/80 mb-2 text-left">
                     Your Message
                   </Label>
                   <Textarea
@@ -180,7 +180,7 @@ const Contact: React.FC = () => {
               </form>
             </motion.div>
 
-            {/* Gaming setup animated image - Ensure it's always visible */}
+            {/* Gaming setup animated image */}
             <div className="relative flex items-center justify-center h-full min-h-[300px]">
               {/* Animated glow behind the image */}
               <motion.div 
@@ -290,7 +290,7 @@ const Contact: React.FC = () => {
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
                 <motion.div 
-                  className="flex items-center space-x-4 md:justify-center justify-start"
+                  className="flex items-center space-x-4 justify-start"
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.3 }}
@@ -300,7 +300,7 @@ const Contact: React.FC = () => {
                   <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
                     <Mail className="w-6 h-6 text-primary" />
                   </div>
-                  <div className="md:text-center text-left">
+                  <div className="text-left">
                     <p className="text-foreground/70 text-sm">Email</p>
                     <a href="mailto:charanrk5123@gmail.com" className="text-foreground hover:text-primary transition-colors font-medium">
                       charanrk5123@gmail.com
@@ -309,7 +309,7 @@ const Contact: React.FC = () => {
                 </motion.div>
                 
                 <motion.div 
-                  className="flex items-center space-x-4 md:justify-center justify-start"
+                  className="flex items-center space-x-4 justify-start"
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.4 }}
@@ -319,7 +319,7 @@ const Contact: React.FC = () => {
                   <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
                     <MapPin className="w-6 h-6 text-primary" />
                   </div>
-                  <div className="md:text-center text-left">
+                  <div className="text-left">
                     <p className="text-foreground/70 text-sm">Location</p>
                     <p className="text-foreground font-medium">
                       Bengaluru, Karnataka, India
