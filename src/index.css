@@ -45,10 +45,15 @@
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
+    min-height: 100vh;
+    height: auto !important;
+    overflow-x: hidden;
   }
 
   html {
     @apply scroll-smooth;
+    overflow-x: hidden;
+    height: 100%;
   }
 
   /* Custom scrollbar */
@@ -104,23 +109,6 @@
   
   .animation-delay-800 {
     animation-delay: 800ms;
-  }
-
-  /* Shape clip paths for cursor particles */
-  .clip-path-triangle {
-    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-  }
-  
-  .clip-path-diamond {
-    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-  }
-  
-  .clip-path-shard {
-    clip-path: polygon(50% 0%, 80% 50%, 50% 100%, 20% 50%);
-  }
-  
-  .perspective-800 {
-    perspective: 800px;
   }
 }
 

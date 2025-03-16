@@ -56,42 +56,10 @@ const Index: React.FC = () => {
     return () => window.removeEventListener('resize', checkSidebar);
   }, []);
 
-  // Fix scrollbar issue - ensure body height isn't exceeded
-  useEffect(() => {
-    // Remove any overflow issues
-    document.body.style.overflowX = 'hidden';
-    document.documentElement.style.overflowX = 'hidden';
-    
-    // Fix the body height issue
-    const handleResize = () => {
-      const body = document.body;
-      const html = document.documentElement;
-      const documentHeight = Math.max(
-        body.scrollHeight,
-        html.scrollHeight,
-        body.offsetHeight,
-        html.offsetHeight,
-        body.clientHeight,
-        html.clientHeight
-      );
-      body.style.height = `${documentHeight}px`;
-    };
-    
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      document.body.style.height = '';
-      document.body.style.overflowX = '';
-      document.documentElement.style.overflowX = '';
-    };
-  }, []);
-
   return (
     <div className="relative">
       <CursorEffect />
-      <Navbar />
+      <Navbar showIcons={!showSidebar} />
       
       <main>
         <Hero />

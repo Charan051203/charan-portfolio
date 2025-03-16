@@ -118,11 +118,11 @@ const TechnicalSkills: React.FC = () => {
                 {category.items.map((skill, skillIndex) => (
                   <motion.div
                     key={skillIndex}
-                    className="glassmorphism rounded-lg p-2 flex flex-col items-center justify-center"
+                    className="glassmorphism rounded-lg p-3 flex flex-col items-center justify-center"
                     whileHover={{ y: -5, scale: 1.05 }}
                     transition={{ duration: 0.2 }}
                   >
-                    <div className="w-8 h-8 mb-2 flex items-center justify-center">
+                    <div className="w-10 h-10 mb-2 flex items-center justify-center">
                       <img 
                         src={skill.icon} 
                         alt={skill.name} 
@@ -130,7 +130,7 @@ const TechnicalSkills: React.FC = () => {
                         onError={(e) => {
                           // Fallback if image doesn't load
                           const target = e.target as HTMLImageElement;
-                          target.src = `https://via.placeholder.com/32x32.png?text=${skill.name.charAt(0)}`;
+                          target.src = `https://via.placeholder.com/40x40.png?text=${skill.name.charAt(0)}`;
                         }}
                       />
                     </div>

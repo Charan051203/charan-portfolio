@@ -58,28 +58,6 @@ const Contact: React.FC = () => {
         <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-background to-background/50 opacity-80" />
         <div className="absolute top-1/3 left-1/4 w-64 h-64 bg-primary/5 rounded-full blur-[80px]" />
         <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-primary/5 rounded-full blur-[80px]" />
-        
-        {/* Animated particles */}
-        {Array.from({ length: 15 }).map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 rounded-full bg-primary/50"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [0, -30, 0],
-              opacity: [0.2, 0.8, 0.2],
-              scale: [1, 1.5, 1]
-            }}
-            transition={{
-              duration: Math.random() * 3 + 2,
-              repeat: Infinity,
-              delay: Math.random() * 2
-            }}
-          />
-        ))}
       </div>
       
       <div className="container mx-auto px-6">
@@ -112,7 +90,7 @@ const Contact: React.FC = () => {
               <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-primary/10 rounded-full blur-xl" />
               
               <motion.h4 
-                className="text-2xl font-bold mb-6 text-gradient relative z-10"
+                className="text-2xl font-bold mb-6 text-gradient relative z-10 text-center"
                 initial={{ opacity: 0, y: -10 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
@@ -128,7 +106,7 @@ const Contact: React.FC = () => {
                   transition={{ delay: 0.3 }}
                   viewport={{ once: true }}
                 >
-                  <Label htmlFor="name" className="block text-foreground/80 mb-2">
+                  <Label htmlFor="name" className="block text-foreground/80 mb-2 text-center">
                     Your Name
                   </Label>
                   <Input
@@ -149,7 +127,7 @@ const Contact: React.FC = () => {
                   transition={{ delay: 0.4 }}
                   viewport={{ once: true }}
                 >
-                  <Label htmlFor="email" className="block text-foreground/80 mb-2">
+                  <Label htmlFor="email" className="block text-foreground/80 mb-2 text-center">
                     Your Email
                   </Label>
                   <Input
@@ -170,7 +148,7 @@ const Contact: React.FC = () => {
                   transition={{ delay: 0.5 }}
                   viewport={{ once: true }}
                 >
-                  <Label htmlFor="message" className="block text-foreground/80 mb-2">
+                  <Label htmlFor="message" className="block text-foreground/80 mb-2 text-center">
                     Your Message
                   </Label>
                   <Textarea
@@ -202,54 +180,8 @@ const Contact: React.FC = () => {
               </form>
             </motion.div>
 
-            {/* Gaming setup animated image - Fixed to always be visible */}
+            {/* Gaming setup animated image - Ensure it's always visible */}
             <div className="relative flex items-center justify-center h-full min-h-[300px]">
-              {/* Floating orbs around the image for effect */}
-              <motion.div 
-                className="absolute w-24 h-24 rounded-full bg-primary/20 blur-xl"
-                animate={{ 
-                  x: [0, 15, 0],
-                  y: [0, -15, 0],
-                  scale: [1, 1.2, 1]
-                }}
-                transition={{ 
-                  repeat: Infinity,
-                  duration: 5,
-                  ease: "easeInOut"
-                }}
-                style={{ top: "10%", left: "20%" }}
-              />
-              
-              <motion.div 
-                className="absolute w-16 h-16 rounded-full bg-blue-500/30 blur-xl"
-                animate={{ 
-                  x: [0, -20, 0],
-                  y: [0, 15, 0],
-                  scale: [1, 1.3, 1]
-                }}
-                transition={{ 
-                  repeat: Infinity,
-                  duration: 7,
-                  ease: "easeInOut"
-                }}
-                style={{ bottom: "15%", right: "25%" }}
-              />
-              
-              <motion.div 
-                className="absolute w-12 h-12 rounded-full bg-purple-500/30 blur-xl"
-                animate={{ 
-                  x: [0, 25, 0],
-                  y: [0, 20, 0],
-                  scale: [1, 1.2, 1]
-                }}
-                transition={{ 
-                  repeat: Infinity,
-                  duration: 9,
-                  ease: "easeInOut"
-                }}
-                style={{ top: "60%", left: "15%" }}
-              />
-
               {/* Animated glow behind the image */}
               <motion.div 
                 className="absolute inset-0 bg-gradient-to-r from-primary/20 to-blue-500/20 rounded-full blur-3xl"
@@ -264,10 +196,9 @@ const Contact: React.FC = () => {
                 }}
               />
 
-              {/* The animated floating image - Modified to always stay visible */}
+              {/* The animated floating image */}
               <motion.div
                 className="relative z-10 w-full max-w-md rounded-2xl overflow-hidden border-2 border-primary/20"
-                initial={{ opacity: 1 }} 
                 animate={{ 
                   y: [0, -15, 0],
                   rotate: [0, 1, 0]
@@ -277,30 +208,8 @@ const Contact: React.FC = () => {
                   duration: 6,
                   ease: "easeInOut"
                 }}
+                style={{ opacity: 1, visibility: "visible" }}
               >
-                {/* Game particles effect */}
-                <div className="absolute inset-0 z-20 overflow-hidden">
-                  {Array.from({ length: 20 }).map((_, i) => (
-                    <motion.div
-                      key={i}
-                      className="absolute w-1 h-1 bg-primary rounded-full"
-                      style={{
-                        left: `${Math.random() * 100}%`,
-                        top: `${Math.random() * 100}%`,
-                      }}
-                      animate={{
-                        y: [0, -100],
-                        opacity: [0, 1, 0],
-                      }}
-                      transition={{
-                        duration: Math.random() * 2 + 1,
-                        repeat: Infinity,
-                        delay: Math.random() * 2,
-                      }}
-                    />
-                  ))}
-                </div>
-                
                 {/* Gaming setup image */}
                 <motion.img 
                   src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800&q=80" 
@@ -378,7 +287,7 @@ const Contact: React.FC = () => {
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
                 <motion.div 
-                  className="flex items-center space-x-4"
+                  className="flex items-center space-x-4 justify-center"
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.3 }}
@@ -388,7 +297,7 @@ const Contact: React.FC = () => {
                   <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
                     <Mail className="w-6 h-6 text-primary" />
                   </div>
-                  <div>
+                  <div className="text-center">
                     <p className="text-foreground/70 text-sm">Email</p>
                     <a href="mailto:charanrk5123@gmail.com" className="text-foreground hover:text-primary transition-colors font-medium">
                       charanrk5123@gmail.com
@@ -397,7 +306,7 @@ const Contact: React.FC = () => {
                 </motion.div>
                 
                 <motion.div 
-                  className="flex items-center space-x-4"
+                  className="flex items-center space-x-4 justify-center"
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.4 }}
@@ -407,7 +316,7 @@ const Contact: React.FC = () => {
                   <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
                     <MapPin className="w-6 h-6 text-primary" />
                   </div>
-                  <div>
+                  <div className="text-center">
                     <p className="text-foreground/70 text-sm">Location</p>
                     <p className="text-foreground font-medium">
                       Bengaluru, Karnataka, India
