@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Separator } from './ui/separator';
 
 // List of skills with categories
 const skills = [
@@ -99,18 +100,18 @@ const TechnicalSkills: React.FC = () => {
           </div>
         </motion.div>
         
-        <div className="space-y-16">
+        <div className="space-y-12">
           {skills.map((skillCategory, categoryIndex) => (
             <motion.div 
               key={categoryIndex}
-              className="bg-card/30 glassmorphism p-8 rounded-2xl"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: categoryIndex * 0.1 }}
               viewport={{ once: true, margin: "-100px" }}
+              className="mb-8"
             >
               <motion.h4 
-                className="text-2xl font-semibold mb-8 text-gradient text-center"
+                className="text-2xl font-semibold mb-6 text-gradient"
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 transition={{ delay: 0.2 }}
@@ -119,7 +120,9 @@ const TechnicalSkills: React.FC = () => {
                 {skillCategory.category}
               </motion.h4>
               
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 justify-items-center">
+              <Separator className="mb-8 bg-primary/20" />
+              
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8 justify-items-center">
                 {skillCategory.items.map((skill, index) => (
                   <motion.div
                     key={index}
@@ -130,16 +133,19 @@ const TechnicalSkills: React.FC = () => {
                     viewport={{ once: true }}
                     whileHover={{ y: -5 }}
                   >
-                    <div className="w-20 h-20 relative flex items-center justify-center mb-3 skill-icon-container">
+                    <div className="w-24 h-24 relative flex items-center justify-center mb-3 skill-icon-container">
                       {/* Enhanced glowing background effect */}
-                      <div className="absolute inset-0 bg-primary/20 rounded-full blur-md" />
+                      <div className="absolute inset-0 bg-primary/40 rounded-full blur-md animate-pulse-light" />
                       
                       {/* Skill icon with proper sizing */}
-                      <div className="relative z-10 w-16 h-16 md:w-20 md:h-20 rounded-full glassmorphism border border-primary/20 p-3 flex items-center justify-center skill-icon">
+                      <div className="relative z-10 w-16 h-16 md:w-20 md:h-20 rounded-full glassmorphism border border-primary/20 p-3 flex items-center justify-center skill-icon overflow-hidden">
+                        {/* Inner glow effect */}
+                        <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-primary/5 to-transparent opacity-80 animate-rotate-slow" />
+                        
                         <img 
                           src={skill.icon} 
                           alt={skill.name} 
-                          className="max-w-full max-h-full object-contain"
+                          className="max-w-full max-h-full object-contain relative z-10"
                           onError={(e) => {
                             (e.target as HTMLImageElement).src = "/placeholder.svg";
                           }}

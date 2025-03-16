@@ -34,9 +34,7 @@
 
     --radius: 0.5rem;
   }
-}
 
-@layer base {
   * {
     @apply border-border;
   }
@@ -58,7 +56,6 @@
     overscroll-behavior: none;
   }
 
-  /* Improved Custom scrollbar */
   ::-webkit-scrollbar {
     width: 8px;
   }
@@ -115,7 +112,10 @@
   will-change: transform, left, top;
 }
 
-/* Add floating animation */
+.cursor-trail-dot {
+  will-change: left, top, opacity, width, height;
+}
+
 @keyframes float {
   0%, 100% {
     transform: translateY(0);
@@ -142,7 +142,6 @@
   animation: float-small 4s ease-in-out infinite;
 }
 
-/* Shimmer effect for skills */
 @keyframes shimmer {
   0% {
     background-position: -200% 0;
@@ -162,7 +161,6 @@
   animation: shimmer 3s infinite;
 }
 
-/* Responsive fixes */
 @media (max-width: 768px) {
   .container {
     @apply px-4;
@@ -184,7 +182,6 @@
     @apply gap-4;
   }
   
-  /* Left align contact section text on mobile */
   #contact .md\:text-center {
     @apply text-left;
   }
@@ -192,14 +189,26 @@
   #contact .md\:justify-center {
     @apply justify-start;
   }
+  
+  #contact .contact-info-item {
+    @apply flex-col items-start;
+  }
 }
 
-/* Technical skills icon sizing */
 #skills .skill-icon {
   @apply w-16 h-16 md:w-20 md:h-20;
 }
 
-/* Ensure skill icon containers have proper glow effect */
 #skills .skill-icon-container .absolute {
-  @apply bg-primary/20;
+  @apply bg-primary/40 animate-pulse-light;
+}
+
+#skills .skill-icon-container {
+  @apply relative;
+}
+
+#skills .skill-icon-container::before {
+  content: '';
+  @apply absolute inset-0 rounded-full blur-md bg-primary/30 animate-pulse-light;
+  z-index: -1;
 }
