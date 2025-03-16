@@ -1,10 +1,13 @@
-
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Menu, X, Linkedin, Github, Instagram, Twitter } from 'lucide-react';
 import { useIsMobile } from '../hooks/use-mobile';
 
-const Navbar: React.FC = () => {
+interface NavbarProps {
+  showIcons?: boolean;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ showIcons = true }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const isMobile = useIsMobile();
@@ -15,14 +18,14 @@ const Navbar: React.FC = () => {
     const checkSidebar = () => {
       // If we're on desktop (not mobile), check if we should show social icons in navbar
       // We don't show them if the sidebar is visible (which is on desktop, lg: breakpoint)
-      const shouldShowIcons = isMobile || window.innerWidth < 1024;
+      const shouldShowIcons = showIcons && (isMobile || window.innerWidth < 1024);
       setShowSocialIcons(shouldShowIcons);
     };
 
     checkSidebar();
     window.addEventListener('resize', checkSidebar);
     return () => window.removeEventListener('resize', checkSidebar);
-  }, [isMobile]);
+  }, [isMobile, showIcons]);
 
   useEffect(() => {
     const handleScroll = () => {
