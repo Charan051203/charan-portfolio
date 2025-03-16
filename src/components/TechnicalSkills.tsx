@@ -2,92 +2,91 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
+// List of skills with categories
+const skills = [
+  {
+    category: "Programming Languages",
+    items: [
+      { name: "Python", icon: "/python-svgrepo-com.svg" },
+      { name: "C", icon: "/C.png" },
+      { name: "C#", icon: "/C_sharp.png" },
+      { name: "SQL", icon: "/SQL.svg" }
+    ]
+  },
+  {
+    category: "Machine Learning & AI",
+    items: [
+      { name: "TensorFlow", icon: "/Tensorflow_logo.png" },
+      { name: "Keras", icon: "/Keras.png" },
+      { name: "PyTorch", icon: "/Pytorch.png" },
+      { name: "Scikit-learn", icon: "/scikit-learn.png" },
+      { name: "LIME", icon: "/LIME.png" },
+      { name: "SHAP", icon: "/SHaP.svg" }
+    ]
+  },
+  {
+    category: "Data Science",
+    items: [
+      { name: "Numpy", icon: "/Numpy.png" },
+      { name: "Pandas", icon: "/Pandas.png" },
+      { name: "Matplotlib", icon: "/Matplotlib.png" },
+      { name: "Jupyter", icon: "/Jupyter.svg" },
+      { name: "NLTK", icon: "/NLTK.png" }
+    ]
+  },
+  {
+    category: "Game Development",
+    items: [
+      { name: "Unity", icon: "/Unity.png" },
+      { name: "Unreal Engine", icon: "/Unreal.jpg" },
+      { name: "PyGame", icon: "/PyGame" },
+      { name: "Blender", icon: "/Blender.png" }
+    ]
+  },
+  {
+    category: "Others",
+    items: [
+      { name: "GitHub", icon: "/GitHub-logo.png" },
+      { name: "Git", icon: "/GIt.png" },
+      { name: "Microsoft Azure", icon: "/Microsoft_Azure_Logo.svg.webp" },
+      { name: "Google Cloud", icon: "/Google Cloud.svg" },
+      { name: "MySQL", icon: "/mysql.png" },
+      { name: "Power BI", icon: "/PowerBI.png" },
+      { name: "Tableau", icon: "/Tableau-Logo.png" },
+      { name: "Excel", icon: "/Excel.png" },
+      { name: "ChatGPT", icon: "/Chatgpt.png" },
+      { name: "Microsoft Copilot", icon: "/Copilot.jpg" }
+    ]
+  }
+];
+
 const TechnicalSkills: React.FC = () => {
-  const skills = [
-    {
-      category: "Programming Languages",
-      items: [
-        { name: "Python", icon: "/python-svgrepo-com.svg" },
-        { name: "C", icon: "/C.png" },
-        { name: "C#", icon: "/C_sharp.png" },
-        { name: "SQL", icon: "/SQL.svg" }
-        
-      ]
-    },
-    {
-      category: "AI & Machine Learning",
-      items: [
-        { name: "TensorFlow", icon: "/Tensorflow_logo.png" },
-        { name: "PyTorch", icon: "/Pytorch.png" },
-        { name: "Scikit-learn", icon: "/scikit-learn.png" },
-        { name: "NLTK", icon: "/NLTK.png" },
-        { name: "Pandas", icon: "/Pandas.png" },
-        { name: "NumPy", icon: "/Numpy.png" },
-        { name: "Keras", icon: "/Keras.png" },
-        { name: "Matplotlib", icon: "/Matplotlib.png" },
-        { name: "LIME", icon: "/LIME.png" },
-        { name: "SHAP", icon: "/SHaP.svg" }
-      ]
-    },
-
-    {
-      category: "Game Development",
-      items: [
-        { name: "PyGame", icon: "/PyGame" },
-        { name: "Unity", icon: "/Unity.png" },
-        { name: "Unreal Engine", icon: "/Unreal.jpg" },
-        { name: "Blender", icon: "/Blender.png" },
-      ]
-    },
-    {
-      category: "Tools & Platforms",
-      items: [
-        { name: "Git", icon: "/GIt.png" },
-        { name: "GitHub", icon: "/GitHub-logo.png" },
-        { name: "Copilot", icon: "/Copilot.jpg" },
-        { name: "ChatGPT", icon: "/Chatgpt.png" },
-        { name: "Excel", icon: "/Excel.png" },
-        { name: "MySQL", icon: "/mysql.png" },
-        { name: "PowerBI", icon: "/PowerBI.png" },
-        { name: "Tableau", icon: "/Tableau-Logo.png" },
-        { name: "Microsoft Azure", icon: "/azure.png" },
-        { name: "Google Cloud", icon: "/Google Cloud.svg" },
-        { name: "Jupyter", icon: "/Jupyter.svg" }
-      ]
-    }
-  ];
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: { 
-      y: 0, 
-      opacity: 1,
-      transition: { duration: 0.5, ease: "easeOut" }
-    }
-  };
-
   return (
-    <section id="skills" className="py-16 relative">
+    <section id="skills" className="py-24 relative">
       {/* Background elements */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-background to-background/50 opacity-80" />
-        <div className="absolute top-1/3 right-1/4 w-64 h-64 bg-primary/5 rounded-full blur-[80px]" />
-        <div className="absolute bottom-1/4 left-1/4 w-64 h-64 bg-primary/5 rounded-full blur-[80px]" />
-      </div>
+      <motion.div 
+        className="absolute inset-0 -z-10"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.6 }}
+      >
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-background/10 via-background to-background/90 opacity-80" />
+        
+        {/* Background pattern */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute inset-0" style={{
+            backgroundImage: 'radial-gradient(circle at 25px 25px, rgba(255, 255, 255, 0.2) 2%, transparent 0%)',
+            backgroundSize: '50px 50px'
+          }} />
+        </div>
+        
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-[100px]" />
+        <div className="absolute bottom-1/3 right-1/4 w-64 h-64 bg-primary/5 rounded-full blur-[80px]" />
+      </motion.div>
       
       <div className="container mx-auto px-6">
         <motion.div 
-          className="text-center mb-10"
+          className="text-center mb-16"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
@@ -100,47 +99,60 @@ const TechnicalSkills: React.FC = () => {
           </div>
         </motion.div>
         
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          className="space-y-8"
-        >
-          {skills.map((category, catIndex) => (
-            <motion.div key={catIndex} variants={itemVariants} className="mb-6">
-              <h4 className="text-xl font-semibold mb-3 text-primary/90 flex items-center">
-                <span className="mr-2">{category.category}</span>
-                <span className="h-px bg-primary/30 flex-grow ml-4"></span>
-              </h4>
+        <div className="space-y-16">
+          {skills.map((skillCategory, categoryIndex) => (
+            <motion.div 
+              key={categoryIndex}
+              className="bg-card/30 glassmorphism p-8 rounded-2xl"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: categoryIndex * 0.1 }}
+              viewport={{ once: true, margin: "-100px" }}
+            >
+              <motion.h4 
+                className="text-2xl font-semibold mb-8 text-gradient text-center"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ delay: 0.2 }}
+                viewport={{ once: true }}
+              >
+                {skillCategory.category}
+              </motion.h4>
               
-              <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-3">
-                {category.items.map((skill, skillIndex) => (
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 justify-items-center">
+                {skillCategory.items.map((skill, index) => (
                   <motion.div
-                    key={skillIndex}
-                    className="glassmorphism rounded-lg p-3 flex flex-col items-center justify-center"
-                    whileHover={{ y: -5, scale: 1.05 }}
-                    transition={{ duration: 0.2 }}
+                    key={index}
+                    className="flex flex-col items-center"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.2 + (index * 0.05) }}
+                    viewport={{ once: true }}
+                    whileHover={{ y: -5 }}
                   >
-                    <div className="w-10 h-10 mb-2 flex items-center justify-center">
-                      <img 
-                        src={skill.icon} 
-                        alt={skill.name} 
-                        className="w-full h-full object-contain"
-                        onError={(e) => {
-                          // Fallback if image doesn't load
-                          const target = e.target as HTMLImageElement;
-                          target.src = `https://via.placeholder.com/40x40.png?text=${skill.name.charAt(0)}`;
-                        }}
-                      />
+                    <div className="w-20 h-20 relative flex items-center justify-center mb-3 skill-icon-container">
+                      {/* Glowing background effect */}
+                      <div className="absolute inset-0 bg-primary/10 rounded-full blur-md" />
+                      
+                      {/* Skill icon with proper sizing */}
+                      <div className="relative z-10 w-16 h-16 md:w-20 md:h-20 rounded-full glassmorphism border border-primary/20 p-3 flex items-center justify-center skill-icon">
+                        <img 
+                          src={skill.icon} 
+                          alt={skill.name} 
+                          className="max-w-full max-h-full object-contain"
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).src = "/placeholder.svg";
+                          }}
+                        />
+                      </div>
                     </div>
-                    <p className="text-xs text-center">{skill.name}</p>
+                    <p className="text-sm text-center font-medium text-foreground/80">{skill.name}</p>
                   </motion.div>
                 ))}
               </div>
             </motion.div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

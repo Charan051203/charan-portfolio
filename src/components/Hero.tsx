@@ -1,6 +1,6 @@
 
 import React, { useEffect, useRef, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Hero: React.FC = () => {
   const logoRef = useRef<HTMLDivElement>(null);
@@ -30,7 +30,7 @@ const Hero: React.FC = () => {
     setGreetingIndex(randomIndex);
   }, []);
 
-  // Cycle through roles
+  // Cycle through roles with improved animation
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentRoleIndex(prev => (prev + 1) % roles.length);
@@ -68,25 +68,45 @@ const Hero: React.FC = () => {
   return <section id="home" className="min-h-screen flex items-center justify-center pt-24 pb-16 relative overflow-hidden">
       {/* Background geometric shapes */}
       <div className="absolute inset-0 -z-10">
-        {Array.from({
-        length: 30
-      }).map((_, index) => {
-        const size = Math.random() * 100 + 20;
-        const posX = Math.random() * 100;
-        const posY = Math.random() * 100;
-        const delay = Math.random() * 5;
-        const duration = Math.random() * 30 + 15;
-        const opacity = Math.random() * 0.12 + 0.03;
-        return <div key={index} className={`absolute bg-white/10 ${Math.random() > 0.5 ? 'rounded-xl' : 'rounded-full'}`} style={{
-          width: `${size}px`,
-          height: `${size}px`,
-          left: `${posX}%`,
-          top: `${posY}%`,
-          opacity,
-          animationDelay: `${delay}s`,
-          animationDuration: `${duration}s`
-        }} />;
-      })}
+        <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-background to-background/80" />
+        
+        {/* Improved background design with subtle grid pattern */}
+        <div className="absolute inset-0 opacity-10" 
+          style={{
+            backgroundImage: `linear-gradient(to right, rgba(255,255,255,0.1) 1px, transparent 1px), 
+                              linear-gradient(to bottom, rgba(255,255,255,0.1) 1px, transparent 1px)`,
+            backgroundSize: '40px 40px'
+          }}
+        />
+        
+        {/* Subtle animated gradient orbs */}
+        {Array.from({length: 6}).map((_, index) => {
+          const size = Math.random() * 300 + 100;
+          const posX = Math.random() * 100;
+          const posY = Math.random() * 100;
+          return (
+            <motion.div 
+              key={index}
+              className="absolute rounded-full blur-[100px]"
+              style={{
+                background: `radial-gradient(circle at center, rgba(72, 149, 239, 0.15), rgba(20, 184, 166, 0.08))`,
+                width: `${size}px`,
+                height: `${size}px`,
+                left: `${posX}%`,
+                top: `${posY}%`,
+              }}
+              animate={{
+                x: [0, 30, 0, -30, 0],
+                y: [0, -30, 0, 30, 0],
+              }}
+              transition={{
+                duration: 25 + index * 5,
+                ease: "easeInOut",
+                repeat: Infinity,
+              }}
+            />
+          );
+        })}
       </div>
       
       <div className="container px-6 mx-auto">
@@ -121,22 +141,21 @@ const Hero: React.FC = () => {
             duration: 0.8
           }}>CHARAN RK</motion.h1>
             
-            <motion.div className="h-8 mb-6">
-              {roles.map((role, index) => <motion.p key={role} initial={{
-              opacity: 0,
-              y: 20
-            }} animate={{
-              opacity: currentRoleIndex === index ? 1 : 0,
-              y: currentRoleIndex === index ? 0 : 20
-            }} transition={{
-              duration: 0.5
-            }} style={{
-              position: currentRoleIndex === index ? 'relative' : 'absolute',
-              display: currentRoleIndex === index ? 'block' : 'none'
-            }} className="text-xl text-sky-600">
-                  {role}
-                </motion.p>)}
-            </motion.div>
+            {/* Improved role text animation with AnimatePresence for smoother transitions */}
+            <div className="h-8 mb-6 relative">
+              <AnimatePresence mode="wait">
+                <motion.p 
+                  key={roles[currentRoleIndex]}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.5 }}
+                  className="text-xl text-sky-600 absolute"
+                >
+                  {roles[currentRoleIndex]}
+                </motion.p>
+              </AnimatePresence>
+            </div>
             
             <motion.p initial={{
             opacity: 0
@@ -161,7 +180,7 @@ const Hero: React.FC = () => {
                 View Work
               </a>
               
-              <a href="public/Resume CHARAN RK.pdf" download className="px-6 py-3 border border-primary/30 text-foreground rounded-full font-medium hover:bg-primary/10 transition-colors">
+              <a href="/Resume CHARAN RK.pdf" download className="px-6 py-3 border border-primary/30 text-foreground rounded-full font-medium hover:bg-primary/10 transition-colors">
                 Download Resume
               </a>
             </motion.div>
