@@ -43,7 +43,7 @@
   }
 
   body {
-    @apply bg-background text-foreground overflow-x-hidden;
+    @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 
@@ -162,8 +162,6 @@
   animation: float-small 4s ease-in-out infinite;
 }
 
-/* Removed magnetic mouse hover effect, keeping the section for reference */
-
 /* Shimmer effect for skills */
 @keyframes shimmer {
   0% {
@@ -182,6 +180,19 @@
   );
   background-size: 200% 100%;
   animation: shimmer 3s infinite;
+}
+
+/* Fix for overflow issues */
+html, body {
+  overflow-x: hidden;
+  position: relative;
+  width: 100%;
+  max-width: 100vw;
+}
+
+/* Center align contact information */
+.contact-info {
+  @apply text-center;
 }
 
 /* Responsive fixes */

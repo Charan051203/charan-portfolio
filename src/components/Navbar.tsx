@@ -8,6 +8,21 @@ const Navbar: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const isMobile = useIsMobile();
+  const [showSocialIcons, setShowSocialIcons] = useState(false);
+
+  // Check for sidebar visibility
+  useEffect(() => {
+    const checkSidebar = () => {
+      // If we're on desktop (not mobile), check if we should show social icons in navbar
+      // We don't show them if the sidebar is visible (which is on desktop, lg: breakpoint)
+      const shouldShowIcons = isMobile || window.innerWidth < 1024;
+      setShowSocialIcons(shouldShowIcons);
+    };
+
+    checkSidebar();
+    window.addEventListener('resize', checkSidebar);
+    return () => window.removeEventListener('resize', checkSidebar);
+  }, [isMobile]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -45,9 +60,6 @@ const Navbar: React.FC = () => {
     }
   ];
 
-  // Check if we should show social icons in navbar based on screen size and scroll position
-  const shouldShowSocialIcons = !isMobile;
-
   return (
     <>
       <motion.nav
@@ -82,8 +94,8 @@ const Navbar: React.FC = () => {
             </div>
           </div>
 
-          {/* Desktop Social Icons - Only visible on larger screens when sidebar icons are not visible */}
-          {shouldShowSocialIcons && (
+          {/* Desktop Social Icons - Only visible when sidebar icons are not visible */}
+          {showSocialIcons && (
             <div className="hidden md:flex items-center space-x-4">
               {socialLinks.map((item, i) => (
                 <motion.a
@@ -138,7 +150,7 @@ const Navbar: React.FC = () => {
             </motion.a>
           ))}
           
-          {/* Social Icons in mobile menu */}
+          {/* Social Icons in mobile menu - always visible in mobile menu */}
           <motion.div 
             className="flex space-x-6 mt-8 pt-8 border-t border-border/30 w-64 justify-center"
             initial={{ opacity: 0 }}

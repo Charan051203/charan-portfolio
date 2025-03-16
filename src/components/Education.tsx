@@ -124,13 +124,13 @@ const Education: React.FC = () => {
                     </motion.div>
                   </motion.div>
                   
-                  {/* Vertical line for connection - only if not the last item */}
-                  {index < timelineItems.length - 1 && (
+                  {/* Vertical line for connection - now for all items */}
+                  {index < timelineItems.length && (
                     <motion.div 
                       className="absolute top-12 left-1/2 w-0.5 bg-gradient-to-b from-primary/50 to-primary/5"
-                      style={{ height: "calc(100% + 1rem)", transform: "translateX(-50%)" }}
+                      style={{ height: index < timelineItems.length - 1 ? "calc(100% + 1rem)" : "50px", transform: "translateX(-50%)" }}
                       initial={{ height: 0 }}
-                      whileInView={{ height: "calc(100% + 1rem)" }}
+                      whileInView={{ height: index < timelineItems.length - 1 ? "calc(100% + 1rem)" : "50px" }}
                       transition={{ delay: 0.5 + index * 0.2, duration: 0.5 }}
                       viewport={{ once: true }}
                     />

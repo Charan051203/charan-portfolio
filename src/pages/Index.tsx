@@ -30,8 +30,17 @@ const jokes = [
 const Index: React.FC = () => {
   const [randomJoke, setRandomJoke] = useState('');
   const isMobile = useIsMobile();
+  const [showSidebar, setShowSidebar] = useState(false);
 
   useEffect(() => {
+    // Check window size for sidebar visibility
+    const checkSidebar = () => {
+      setShowSidebar(window.innerWidth >= 1024); // lg breakpoint in Tailwind
+    };
+    
+    checkSidebar();
+    window.addEventListener('resize', checkSidebar);
+    
     // Get random joke
     const joke = jokes[Math.floor(Math.random() * jokes.length)];
     setRandomJoke(joke);
@@ -43,6 +52,40 @@ const Index: React.FC = () => {
         duration: 5000
       });
     }, 2000);
+    
+    return () => window.removeEventListener('resize', checkSidebar);
+  }, []);
+
+  // Fix scrollbar issue - ensure body height isn't exceeded
+  useEffect(() => {
+    // Remove any overflow issues
+    document.body.style.overflowX = 'hidden';
+    document.documentElement.style.overflowX = 'hidden';
+    
+    // Fix the body height issue
+    const handleResize = () => {
+      const body = document.body;
+      const html = document.documentElement;
+      const documentHeight = Math.max(
+        body.scrollHeight,
+        html.scrollHeight,
+        body.offsetHeight,
+        html.offsetHeight,
+        body.clientHeight,
+        html.clientHeight
+      );
+      body.style.height = `${documentHeight}px`;
+    };
+    
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      document.body.style.height = '';
+      document.body.style.overflowX = '';
+      document.documentElement.style.overflowX = '';
+    };
   }, []);
 
   return (
@@ -62,7 +105,7 @@ const Index: React.FC = () => {
       <Footer />
       
       {/* Fixed social media sidebar - Only visible on desktop */}
-      {!isMobile && (
+      {showSidebar && (
         <div className="fixed left-6 bottom-1/2 transform translate-y-1/2 flex flex-col gap-4 z-30 hidden lg:flex">
           {[
             { icon: <Linkedin className="w-5 h-5" />, href: "https://www.linkedin.com/in/charan051203/", label: "LinkedIn" },

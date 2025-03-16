@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, useSpring, useMotionValue, useTransform } from 'framer-motion';
+import { motion, useSpring, useMotionValue } from 'framer-motion';
 
 interface Position {
   x: number;
@@ -53,38 +53,30 @@ const CursorEffect: React.FC = () => {
   const lastMousePositionRef = useRef({ x: 0, y: 0 });
   const mouseSpeedRef = useRef(0);
   
-  // Scale based on mouse speed - Fix: convert number to MotionValue
-  const mouseSpeedMotionValue = useMotionValue(0);
-  const cursorScale = useTransform(
-    mouseSpeedMotionValue,
-    [0, 0.5],
-    [1, 1.5]
-  );
-
-  // Update the MotionValue whenever mouseSpeed changes
-  useEffect(() => {
-    mouseSpeedMotionValue.set(mouseSpeedRef.current > 0.5 ? 0.5 : mouseSpeedRef.current);
-  }, [mouseSpeed, mouseSpeedMotionValue]);
-
+  // Create a motion value for mouse speed
+  const mouseSpeedMotion = useMotionValue(0);
+  
   // Generate enhanced background particles
   useEffect(() => {
     const generateParticles = () => {
       const windowWidth = window.innerWidth;
       const windowHeight = window.innerHeight;
-      const shapes = ['circle', 'triangle', 'square', 'diamond', 'star', 'hexagon'];
+      const shapes = ['circle', 'triangle', 'square', 'diamond', 'shard', 'hexagon'];
+      
+      // More sophisticated color palette with transparency
       const colorPalette = [
-        'hsla(210, 100%, 70%, opacity)',
-        'hsla(240, 100%, 70%, opacity)',
-        'hsla(270, 100%, 70%, opacity)',
-        'hsla(300, 100%, 70%, opacity)',
-        'hsla(330, 100%, 70%, opacity)'
+        'hsla(210, 70%, 60%, opacity)',
+        'hsla(240, 70%, 60%, opacity)',
+        'hsla(270, 70%, 60%, opacity)',
+        'hsla(191, 82%, 59%, opacity)', // Primary color
+        'hsla(215, 25%, 27%, opacity)',  // Secondary color
       ];
       
-      const newParticles: Particle[] = Array.from({ length: 50 }, (_, i) => {
+      const newParticles: Particle[] = Array.from({ length: 40 }, (_, i) => {
         const x = Math.random() * windowWidth;
         const y = Math.random() * windowHeight;
-        const size = Math.random() * 70 + 30;
-        const opacity = Math.random() * 0.2 + 0.05;
+        const size = Math.random() * 50 + 20; // Smaller particles
+        const opacity = Math.random() * 0.15 + 0.05; // More subtle
         const shapeIndex = Math.floor(Math.random() * shapes.length);
         const colorIndex = Math.floor(Math.random() * colorPalette.length);
         const color = colorPalette[colorIndex].replace('opacity', opacity.toString());
@@ -137,6 +129,7 @@ const CursorEffect: React.FC = () => {
       // Smooth mouse speed
       mouseSpeedRef.current = mouseSpeedRef.current * 0.8 + (distance * 0.2);
       setMouseSpeed(mouseSpeedRef.current);
+      mouseSpeedMotion.set(mouseSpeedRef.current);
       
       // Update trail
       setTrails(prev => {
@@ -158,7 +151,7 @@ const CursorEffect: React.FC = () => {
       lastMousePositionRef.current = { x: clientX, y: clientY };
     };
 
-    // Enhanced particle animation with fluid physics
+    // Refined particle animation with subtle physics
     const animateParticles = () => {
       setParticles(prevParticles => 
         prevParticles.map(particle => {
@@ -167,14 +160,14 @@ const CursorEffect: React.FC = () => {
           const dy = position.y - particle.y;
           const distance = Math.sqrt(dx * dx + dy * dy);
           
-          // Enhanced attraction radius - increases with mouse speed
-          const baseRadius = 400;
-          const attractionRadius = baseRadius + (mouseSpeedRef.current * 100);
+          // Refined attraction radius - increases slightly with mouse speed
+          const baseRadius = 350;
+          const attractionRadius = baseRadius + (mouseSpeedRef.current * 50);
           const isInRange = distance < attractionRadius;
           
-          // Calculate dynamic attraction force based on mouse speed
-          const baseForce = 0.4;
-          const speedMultiplier = 1 + (mouseSpeedRef.current * 2);
+          // Calculate subtle attraction force
+          const baseForce = 0.3;
+          const speedMultiplier = 1 + (mouseSpeedRef.current * 1.5);
           const force = isInRange 
             ? (1 - distance / attractionRadius) * baseForce * speedMultiplier 
             : 0;
@@ -185,12 +178,12 @@ const CursorEffect: React.FC = () => {
           const springY = (particle.originY - particle.y) * springFactor;
           
           // Apply forces with improved damping
-          const damping = 0.92;
+          const damping = 0.95;
           let vx = particle.vx * damping;
           let vy = particle.vy * damping;
           
           if (isInRange) {
-            // Add attraction force with more dynamic effect
+            // Add attraction force with more subtle effect
             vx += dx * force;
             vy += dy * force;
           }
@@ -199,22 +192,22 @@ const CursorEffect: React.FC = () => {
           vx += springX;
           vy += springY;
           
-          // Add slight random movement for more organic feel
-          vx += (Math.random() - 0.5) * 0.3;
-          vy += (Math.random() - 0.5) * 0.3;
+          // Add very slight random movement for more organic feel
+          vx += (Math.random() - 0.5) * 0.2;
+          vy += (Math.random() - 0.5) * 0.2;
           
           // Update position with velocity
           const x = particle.x + vx;
           const y = particle.y + vy;
           
-          // Dynamic rotation based on velocity and attraction
+          // Subtle rotation based on velocity and attraction
           const rotationSpeed = isInRange 
-            ? Math.sqrt(vx * vx + vy * vy) * 5 + force * 15
-            : 0.2;
+            ? Math.sqrt(vx * vx + vy * vy) * 3 + force * 10
+            : 0.1;
           
           // Dynamic opacity based on attraction
           const targetOpacity = isInRange 
-            ? particle.opacity * 2.5 * force
+            ? particle.opacity * 2 * force
             : particle.opacity;
           
           return {
@@ -267,7 +260,7 @@ const CursorEffect: React.FC = () => {
     };
   }, [position, cursorX, cursorY]);
 
-  // Get shape CSS class based on shape type with enhanced shapes
+  // Get shape CSS class based on shape type with refined shapes
   const getShapeClass = (shape: string): string => {
     switch(shape) {
       case 'triangle':
@@ -276,8 +269,8 @@ const CursorEffect: React.FC = () => {
         return 'rounded-md';
       case 'diamond':
         return 'clip-path-diamond';
-      case 'star':
-        return 'clip-path-star';
+      case 'shard':
+        return 'clip-path-shard';
       case 'hexagon':
         return 'clip-path-hexagon';
       default:
@@ -368,7 +361,7 @@ const CursorEffect: React.FC = () => {
             opacity: particle.opacity,
             transform: `translate(${particle.x}px, ${particle.y}px) rotate(${particle.rotation}deg)`,
             boxShadow: particle.isAttracted 
-              ? `0 0 ${20 + particle.size/5}px ${particle.color.replace('opacity', '0.4')}`
+              ? `0 0 ${10 + particle.size/8}px ${particle.color.replace('opacity', '0.3')}`
               : 'none',
             zIndex: -1,
             transition: particle.isAttracted ? 'box-shadow 0.3s ease-out' : 'none',
