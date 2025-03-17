@@ -100,7 +100,7 @@ const TechnicalSkills: React.FC = () => {
           </div>
         </motion.div>
         
-        <div className="space-y-12">
+        <div className="space-y-10">
           {skills.map((skillCategory, categoryIndex) => (
             <motion.div 
               key={categoryIndex}
@@ -108,10 +108,10 @@ const TechnicalSkills: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: categoryIndex * 0.1 }}
               viewport={{ once: true, margin: "-100px" }}
-              className="mb-8"
+              className="mb-6"
             >
               <motion.h4 
-                className="text-2xl font-semibold mb-6 text-gradient"
+                className="text-2xl font-semibold mb-4 text-gradient"
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 transition={{ delay: 0.2 }}
@@ -120,9 +120,9 @@ const TechnicalSkills: React.FC = () => {
                 {skillCategory.category}
               </motion.h4>
               
-              <Separator className="mb-8 bg-primary/20" />
+              <Separator className="mb-6 bg-primary/20" />
               
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-4 justify-items-center">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-2 sm:gap-3 justify-items-center">
                 {skillCategory.items.map((skill, index) => (
                   <motion.div
                     key={index}
@@ -131,16 +131,16 @@ const TechnicalSkills: React.FC = () => {
                     whileInView={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.2 + (index * 0.05) }}
                     viewport={{ once: true }}
-                    whileHover={{ y: -3 }}
+                    whileHover={{ y: -2 }}
                   >
-                    <div className="w-16 h-16 relative flex items-center justify-center mb-2 skill-icon-container">
-                      {/* Very subtle glow effect */}
-                      <div className="glow-bg inset-0 rounded-sm blur-[5px]" />
+                    <div className="w-14 h-14 relative flex items-center justify-center mb-2 skill-icon-container">
+                      {/* Subtle glow effect */}
+                      <div className="glow-bg inset-0 rounded-sm blur-[3px]" />
                       
-                      {/* Skill icon with proper sizing - now square instead of round */}
-                      <div className="relative z-10 w-12 h-12 md:w-14 md:h-14 rounded-sm glassmorphism border border-primary/10 p-2 flex items-center justify-center skill-icon overflow-hidden">
+                      {/* Skill icon with smaller size */}
+                      <div className="relative z-10 w-10 h-10 md:w-12 md:h-12 rounded-sm glassmorphism border border-primary/10 p-2 flex items-center justify-center skill-icon overflow-hidden">
                         {/* Inner glow effect - more subtle */}
-                        <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-primary/3 to-transparent opacity-30" />
+                        <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-primary/3 to-transparent opacity-20" />
                         
                         <img 
                           src={skill.icon} 
