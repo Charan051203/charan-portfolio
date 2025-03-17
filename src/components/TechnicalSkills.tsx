@@ -22,17 +22,20 @@ const skills = [
       { name: "PyTorch", icon: "/Pytorch.png" },
       { name: "Scikit-learn", icon: "/scikit-learn.png" },
       { name: "LIME", icon: "/LIME.png" },
-      { name: "SHAP", icon: "/Shap.png" }
+      { name: "SHAP", icon: "/Shap.png" },
+      { name: "NLTK", icon: "/NLTK.png" }
     ]
   },
   {
     category: "Data Science",
     items: [
+      { name: "MySQL", icon: "/mysql.png" },
       { name: "Numpy", icon: "/Numpy.png" },
       { name: "Pandas", icon: "/Pandas.png" },
       { name: "Matplotlib", icon: "/Matplotlib.png" },
-      { name: "Jupyter", icon: "/Jupyter.png" },
-      { name: "NLTK", icon: "/NLTK.png" }
+      { name: "Excel", icon: "/Excel.png" },
+      { name: "Power BI", icon: "/PowerBI.png" },
+      { name: "Tableau", icon: "/Tableau-Logo.png" },
     ]
   },
   {
@@ -48,13 +51,10 @@ const skills = [
     category: "Others",
     items: [
       { name: "GitHub", icon: "/GitHub.png" },
+      { name: "Jupyter", icon: "/Jupyter.png" },
       { name: "Git", icon: "/Git.png" },
       { name: "Microsoft Azure", icon: "/Azure.png" },
       { name: "Google Cloud", icon: "/GCP.png" },
-      { name: "MySQL", icon: "/mysql.png" },
-      { name: "Power BI", icon: "/PowerBI.png" },
-      { name: "Tableau", icon: "/Tableau-Logo.png" },
-      { name: "Excel", icon: "/Excel.png" },
       { name: "ChatGPT", icon: "/Chatgpt.png" },
       { name: "Microsoft Copilot", icon: "/copilot-color.png" }
     ]
