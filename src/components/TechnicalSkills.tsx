@@ -122,7 +122,8 @@ const TechnicalSkills: React.FC = () => {
               
               <Separator className="mb-6 bg-primary/20" />
               
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-1 sm:gap-2 justify-items-center">
+              {/* Increased vertical gap (y-axis) and reduced horizontal gap (x-axis) */}
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-y-4 gap-x-0 justify-items-center">
                 {skillCategory.items.map((skill, index) => (
                   <motion.div
                     key={index}
@@ -134,13 +135,13 @@ const TechnicalSkills: React.FC = () => {
                     whileHover={{ y: -2, scale: 1.05 }}
                   >
                     <div className="w-16 h-16 relative flex items-center justify-center mb-2 skill-icon-container">
-                      {/* Enhanced glow effect */}
-                      <div className="glow-bg absolute inset-0 rounded-sm blur-[6px]" />
+                      {/* Enhanced glow effect with more prominent glow */}
+                      <div className="glow-bg absolute inset-0 rounded-sm blur-[8px]" />
                       
                       {/* Skill icon with original size */}
-                      <div className="relative z-10 w-12 h-12 md:w-14 md:h-14 rounded-sm glassmorphism border border-primary/20 p-2 flex items-center justify-center skill-icon overflow-hidden">
-                        {/* Inner glow effect */}
-                        <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-primary/5 to-transparent opacity-40" />
+                      <div className="relative z-10 w-12 h-12 md:w-14 md:h-14 rounded-sm glassmorphism border border-primary/20 p-2 flex items-center justify-center skill-icon overflow-hidden glow-effect">
+                        {/* Inner glow effect - more vibrant */}
+                        <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-primary/15 to-transparent opacity-70" />
                         
                         <img 
                           src={skill.icon} 

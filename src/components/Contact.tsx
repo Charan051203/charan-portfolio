@@ -24,18 +24,34 @@ const Contact: React.FC = () => {
     e.preventDefault();
     setIsSubmitting(true);
     
+    // Form validation
+    if (!formData.name || !formData.email || !formData.message) {
+      toast.error("Please fill in all fields");
+      setIsSubmitting(false);
+      return;
+    }
+    
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      toast.error("Please enter a valid email address");
+      setIsSubmitting(false);
+      return;
+    }
+    
     try {
-      // Simulate form submission (replace with actual email sending code)
+      // Simulate form submission (this would be replaced with actual API call)
+      // In a real implementation, you would call an API endpoint to send the email
       await new Promise(resolve => setTimeout(resolve, 1000));
       
-      // Email service would send to charanrk5123@gmail.com
       console.log('Sending email to charanrk5123@gmail.com', formData);
       
+      // Clear form after successful submission
       setFormData({ name: '', email: '', message: '' });
-      toast.success("Message sent successfully!");
+      toast.success("Message sent successfully! I will get back to you soon.");
     } catch (error) {
-      console.error(error);
-      toast.error("Failed to send message. Please try again.");
+      console.error("Error sending message:", error);
+      toast.error("Failed to send message. Please try again or contact directly via email.");
     } finally {
       setIsSubmitting(false);
     }
@@ -116,7 +132,7 @@ const Contact: React.FC = () => {
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 bg-card/50 border border-primary/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all placeholder-foreground/40 text-center"
+                    className="w-full px-4 py-3 bg-card/50 border border-primary/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all placeholder-foreground/40"
                     placeholder="John Doe"
                   />
                 </motion.div>
@@ -137,7 +153,7 @@ const Contact: React.FC = () => {
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 bg-card/50 border border-primary/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all placeholder-foreground/40 text-center"
+                    className="w-full px-4 py-3 bg-card/50 border border-primary/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all placeholder-foreground/40"
                     placeholder="john@example.com"
                   />
                 </motion.div>
@@ -158,7 +174,7 @@ const Contact: React.FC = () => {
                     onChange={handleChange}
                     required
                     rows={5}
-                    className="w-full px-4 py-3 bg-card/50 border border-primary/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all resize-none placeholder-foreground/40 text-center"
+                    className="w-full px-4 py-3 bg-card/50 border border-primary/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all resize-none placeholder-foreground/40"
                     placeholder="Hello, I'd like to discuss a project..."
                   />
                 </motion.div>
@@ -302,7 +318,7 @@ const Contact: React.FC = () => {
                   </div>
                   <div>
                     <p className="text-foreground/70 text-sm text-left">Email</p>
-                    <a href="mailto:charanrk5123@gmail.com" className="text-foreground hover:text-primary transition-colors font-medium block text-center">
+                    <a href="mailto:charanrk5123@gmail.com" className="text-foreground hover:text-primary transition-colors font-medium block text-center md:text-center">
                       charanrk5123@gmail.com
                     </a>
                   </div>
@@ -321,7 +337,7 @@ const Contact: React.FC = () => {
                   </div>
                   <div>
                     <p className="text-foreground/70 text-sm text-left">Location</p>
-                    <p className="text-foreground font-medium text-center">
+                    <p className="text-foreground font-medium text-center md:text-center">
                       Bengaluru, Karnataka, India
                     </p>
                   </div>
