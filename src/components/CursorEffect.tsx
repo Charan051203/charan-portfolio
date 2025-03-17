@@ -14,24 +14,30 @@ const CursorEffect: React.FC = () => {
   const trailLength = 8; // Number of trailing dots
   const requestRef = useRef<number>();
   const positionRef = useRef({ x: -100, y: -100 });
+  const prevTimeRef = useRef<number>(0);
   
   useEffect(() => {
-    // More efficient approach using requestAnimationFrame
-    const updateCursor = () => {
-      setCursorPosition(positionRef.current);
-      
-      // Update trail with better performance
-      setTrail(prevTrail => {
-        const newTrail = [
-          { x: positionRef.current.x, y: positionRef.current.y, opacity: 1 },
-          ...prevTrail.slice(0, trailLength - 1)
-        ];
+    // More efficient approach using requestAnimationFrame with timestamp
+    const updateCursor = (time: number) => {
+      // Only update on frame intervals (throttling for smoother performance)
+      if (time - prevTimeRef.current > 16) { // ~60fps
+        setCursorPosition(positionRef.current);
         
-        return newTrail.map((dot, index) => ({
-          ...dot,
-          opacity: 1 - (index / trailLength)
-        }));
-      });
+        // Update trail with better performance
+        setTrail(prevTrail => {
+          const newTrail = [
+            { x: positionRef.current.x, y: positionRef.current.y, opacity: 1 },
+            ...prevTrail.slice(0, trailLength - 1)
+          ];
+          
+          return newTrail.map((dot, index) => ({
+            ...dot,
+            opacity: 1 - (index / trailLength)
+          }));
+        });
+        
+        prevTimeRef.current = time;
+      }
       
       requestRef.current = requestAnimationFrame(updateCursor);
     };
@@ -49,10 +55,10 @@ const CursorEffect: React.FC = () => {
       setIsVisible(true);
     };
 
-    // Start the animation loop
+    // Start the animation loop with timestamp
     requestRef.current = requestAnimationFrame(updateCursor);
     
-    // Add event listeners
+    // Add event listeners with passive flag for better performance
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
     document.body.addEventListener('mouseleave', handleMouseLeave);
     document.body.addEventListener('mouseenter', handleMouseEnter);

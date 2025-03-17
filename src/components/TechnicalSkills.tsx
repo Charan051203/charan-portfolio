@@ -135,7 +135,7 @@ const TechnicalSkills: React.FC = () => {
                   >
                     <div className="w-20 h-20 relative flex items-center justify-center mb-3 skill-icon-container">
                       {/* Subtle glow effect */}
-                      <div className="absolute inset-0 bg-primary/20 rounded-full blur-md animate-pulse-light" />
+                      <div className="glow-bg inset-0 rounded-full blur-md" />
                       
                       {/* Skill icon with proper sizing */}
                       <div className="relative z-10 w-14 h-14 md:w-16 md:h-16 rounded-full glassmorphism border border-primary/20 p-3 flex items-center justify-center skill-icon overflow-hidden">
