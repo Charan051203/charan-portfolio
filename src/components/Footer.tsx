@@ -52,7 +52,7 @@ const Footer: React.FC = () => {
           viewport={{ once: true }}
         >
           <p className="text-foreground/50 text-sm text-center">
-            © {currentYear} CHARAN RK. All rights reserved.
+            © {currentYear} | With ❤️ by Charan RK | Open-Sourced on GitHub.
           </p>
         </motion.div>
       </div>
