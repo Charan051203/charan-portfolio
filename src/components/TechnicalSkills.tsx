@@ -133,14 +133,14 @@ const TechnicalSkills: React.FC = () => {
                     viewport={{ once: true }}
                     whileHover={{ y: -5 }}
                   >
-                    <div className="w-24 h-24 relative flex items-center justify-center mb-3 skill-icon-container">
-                      {/* Enhanced glowing background effect */}
-                      <div className="absolute inset-0 bg-primary/40 rounded-full blur-md animate-pulse-light" />
+                    <div className="w-20 h-20 relative flex items-center justify-center mb-3 skill-icon-container">
+                      {/* Subtle glow effect */}
+                      <div className="absolute inset-0 bg-primary/20 rounded-full blur-md animate-pulse-light" />
                       
                       {/* Skill icon with proper sizing */}
-                      <div className="relative z-10 w-16 h-16 md:w-20 md:h-20 rounded-full glassmorphism border border-primary/20 p-3 flex items-center justify-center skill-icon overflow-hidden">
-                        {/* Inner glow effect */}
-                        <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-primary/5 to-transparent opacity-80 animate-rotate-slow" />
+                      <div className="relative z-10 w-14 h-14 md:w-16 md:h-16 rounded-full glassmorphism border border-primary/20 p-3 flex items-center justify-center skill-icon overflow-hidden">
+                        {/* Inner glow effect - more subtle */}
+                        <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-primary/3 to-transparent opacity-50" />
                         
                         <img 
                           src={skill.icon} 

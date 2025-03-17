@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -95,25 +96,35 @@
   }
 }
 
-/* Improved cursor effect - smooth and performant */
+/* Improved cursor effect - smoother and more optimized */
 .cursor-dot {
-  @apply fixed w-4 h-4 rounded-full z-50 pointer-events-none;
+  @apply fixed w-3 h-3 rounded-full z-50 pointer-events-none;
   background-color: hsla(var(--primary));
   mix-blend-mode: exclusion;
   transform: translate(-50%, -50%);
-  will-change: transform, left, top;
+  will-change: transform;
+  transition: width 0.2s, height 0.2s;
 }
 
 .cursor-outline {
-  @apply fixed w-8 h-8 rounded-full border z-50 pointer-events-none;
+  @apply fixed w-7 h-7 rounded-full border z-50 pointer-events-none;
   border-color: hsla(var(--primary));
   mix-blend-mode: exclusion;
   transform: translate(-50%, -50%);
-  will-change: transform, left, top;
+  will-change: transform;
+  transition: width 0.2s, height 0.2s, opacity 0.3s;
 }
 
 .cursor-trail-dot {
+  position: fixed;
+  border-radius: 50%;
+  background-color: hsla(var(--primary));
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 50;
+  mix-blend-mode: exclusion;
   will-change: left, top, opacity, width, height;
+  transition: opacity 0.2s ease;
 }
 
 @keyframes float {
@@ -181,26 +192,15 @@
   .grid {
     @apply gap-4;
   }
-  
-  #contact .md\:text-center {
-    @apply text-left;
-  }
-  
-  #contact .md\:justify-center {
-    @apply justify-start;
-  }
-  
-  #contact .contact-info-item {
-    @apply flex-col items-start;
-  }
 }
 
+/* Technical Skills section styles - fixed size and glow */
 #skills .skill-icon {
-  @apply w-16 h-16 md:w-20 md:h-20;
+  @apply w-14 h-14 md:w-16 md:h-16;
 }
 
 #skills .skill-icon-container .absolute {
-  @apply bg-primary/40 animate-pulse-light;
+  @apply bg-primary/30 animate-pulse-light;
 }
 
 #skills .skill-icon-container {
@@ -209,6 +209,6 @@
 
 #skills .skill-icon-container::before {
   content: '';
-  @apply absolute inset-0 rounded-full blur-md bg-primary/30 animate-pulse-light;
+  @apply absolute inset-0 rounded-full blur-md bg-primary/20 animate-pulse-light;
   z-index: -1;
 }
