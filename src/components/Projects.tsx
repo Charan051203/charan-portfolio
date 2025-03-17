@@ -5,56 +5,72 @@ import { motion } from 'framer-motion';
 
 // Placeholder images
 const projectImages = [
-  'https://via.placeholder.com/800x450/1A1F2C/FFFFFF?text=Project+1',
-  'https://via.placeholder.com/800x450/1A1F2C/FFFFFF?text=Project+2',
-  'https://via.placeholder.com/800x450/1A1F2C/FFFFFF?text=Project+3',
-  'https://via.placeholder.com/800x450/1A1F2C/FFFFFF?text=Project+4',
-  'https://via.placeholder.com/800x450/1A1F2C/FFFFFF?text=Project+5',
-  'https://via.placeholder.com/800x450/1A1F2C/FFFFFF?text=Project+6',
+  '/Car Parking.png',
+  '/Sentiment.png',
+  '/AutoComplete.png',
+  '/Fruit.png',
+  '/Pothole.png',
+  '/Weather.png',
+  '/Malware.png',
+  '/Dementia.png'
 ];
 
 const projectsData = [
   {
-    title: 'EasyGrad',
-    description: 'Online educational platform for graduate students, featuring course management and interactive learning tools.',
+    title: 'Car Parking Space Detector',
+    description: 'A real-time object detection system that identifies available and occupied parking spaces using YOLOv8n. Ideal for smart cities, shopping malls, and automated parking systems.',
     image: projectImages[0],
-    technologies: ['React', 'Node.js', 'MongoDB', 'Express'],
-    link: '#'
+    technologies: ['Computer Vision', 'YOLOV8', 'Deep Learning', 'Python'],
+    link: 'https://github.com/Charan051203/Car_Parking_Space_Detector_YOLOv8'
   },
   {
-    title: 'Hairguys',
-    description: 'A modern booking platform for barber shops with appointment scheduling and management system.',
+    title: 'Multilingual Sentiment Analysis ',
+    description: 'This project implements Multilingual Sentiment Analysis using XML-RoBERTa. It classifies tweets into positive, negative, or neutral sentiment while handling language translation for unsupported languages.',
     image: projectImages[1],
-    technologies: ['Vue.js', 'Firebase', 'Tailwind CSS'],
-    link: '#'
+    technologies: ['Transformers', 'NLP', 'XML-roBERTa','Python'],
+    link: 'https://github.com/Charan051203/Multilingual-Sentiment-Analysis'
   },
   {
-    title: 'Web Dev English',
-    description: 'Language learning application specifically designed for web developers to improve their English skills.',
+    title: 'Sentence Auto-Completion using LSTM',
+    description: 'This project implements a Sentence Auto-Completion model using a LSTM neural network. The model is trained on the Holmes.txt dataset from Kaggle to predict and complete sentences based on input text.',
     image: projectImages[2],
-    technologies: ['React', 'Redux', 'Node.js', 'MongoDB'],
-    link: '#'
+    technologies: ['LSTM', 'NLP', 'TensorFlow', 'Python'],
+    link: 'https://github.com/Charan051203/Sentence-Auto-Completion-LSTM'
   },
   {
-    title: 'Money Arjan Solutions',
-    description: 'Financial management dashboard with budget tracking, expense analysis, and financial goal setting.',
+    title: 'Fruit detection using Imagesegmentation',
+    description: 'An Image Segmentation and Fruit Counting project using Deep Learning. This model detects fruits (apples, oranges, and more) in an image, places bounding boxes around them, and counts the total number of detected fruits.',
     image: projectImages[3],
-    technologies: ['TypeScript', 'React', 'GraphQL', 'PostgreSQL'],
-    link: '#'
+    technologies: ['OpenCV', 'TensorFlow', 'Matplotlib', 'Python'],
+    link: 'https://github.com/Charan051203/Counting-fruits-Image-segmentation'
   },
   {
-    title: 'Pioneer Digital',
-    description: 'Digital marketing agency website with portfolio showcase, service listings, and client testimonials.',
+    title: 'Pothole Detection Using various CNN architecture',
+    description: 'This Project focused on detecting potholes using different CNN architectures. The project aims to identify and classify road conditions by leveraging the power of deep learning techniques, specifically CNNs.',
     image: projectImages[4],
-    technologies: ['Gatsby', 'Contentful CMS', 'Tailwind CSS'],
-    link: '#'
+    technologies: ['CNN', 'TensorFlow', 'ShaP', 'Python'],
+    link: 'https://github.com/Charan051203/Pothole-Detection-Using-various-CNN-architecture'
   },
   {
-    title: 'Track My Expense',
-    description: 'Mobile-friendly expense tracker with receipt scanning, categorization, and detailed reports.',
+    title: 'Weather app using HTML CSS JavaScript',
+    description: 'This project focused on simple yet functional weather application built using HTML, CSS, and JavaScript. The app allows users to retrieve and display real-time weather information for any city.',
     image: projectImages[5],
-    technologies: ['React Native', 'Firebase', 'Chart.js'],
-    link: '#'
+    technologies: ['HTML', 'CSS', 'JavaScript', 'OpenWeather API'],
+    link: 'https://github.com/Charan051203/Weather-app-using-HTML-CSS-JavaScript'
+  },
+  {
+    title: 'Malware classification using ANN',
+    description: 'This project focused on classifying malware using Artificial Neural Networks (ANN). The project aims to accurately identify and categorize various types of malware by leveraging the capabilities of ANN models.',
+    image: projectImages[6],
+    technologies: ['ANN', 'ScikitLearn', 'Keras', 'Python'],
+    link: 'https://github.com/Charan051203/Malware-classification-using-ANN'
+  },
+  {
+    title: 'Classification of Dementia using ML Models',
+    description: 'This project focuses on classifying dementia using various Machine Learning (ML) models. It includes prediction models and interprets their results using LIME (Local Interpretable Model-Agnostic Explanations) and SHAP (SHapley Additive exPlanations)',
+    image: projectImages[7],
+    technologies: ['Boosting Techniques', 'HyperParameter Tuning', 'SHaP','Python'],
+    link: 'https://github.com/Charan051203/Classification-of-Dementia-using-ML-Models'
   }
 ];
 
