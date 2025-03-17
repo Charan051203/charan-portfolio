@@ -228,7 +228,7 @@ const Contact: React.FC = () => {
               visibility: "visible"
             }}>
                 {/* Gaming setup image */}
-                <motion.img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800&q=80" alt="Gaming Setup" className="w-full h-full object-cover" animate={{
+                <motion.img src="/Profile.svg" alt="Gaming Setup" className="w-full h-full object-cover" animate={{
                 scale: [1, 1.03, 1]
               }} transition={{
                 repeat: Infinity,
