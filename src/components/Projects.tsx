@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 
 // Placeholder images
 const projectImages = [
-  '/Car Parking.png',
+  '/CarParking.png',
   '/Sentiment.png',
   '/AutoComplete.png',
   '/Fruit.png',
