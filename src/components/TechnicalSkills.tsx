@@ -8,10 +8,10 @@ const skills = [
   {
     category: "Programming Languages",
     items: [
-      { name: "Python", icon: "/python-svgrepo-com.svg" },
+      { name: "Python", icon: "/Python.png" },
       { name: "C", icon: "/C.png" },
       { name: "C#", icon: "/C_sharp.png" },
-      { name: "SQL", icon: "/SQL.svg" }
+      { name: "SQL", icon: "/SQL.png" }
     ]
   },
   {
@@ -22,7 +22,7 @@ const skills = [
       { name: "PyTorch", icon: "/Pytorch.png" },
       { name: "Scikit-learn", icon: "/scikit-learn.png" },
       { name: "LIME", icon: "/LIME.png" },
-      { name: "SHAP", icon: "/SHaP.svg" }
+      { name: "SHAP", icon: "/Shap.png" }
     ]
   },
   {
@@ -31,7 +31,7 @@ const skills = [
       { name: "Numpy", icon: "/Numpy.png" },
       { name: "Pandas", icon: "/Pandas.png" },
       { name: "Matplotlib", icon: "/Matplotlib.png" },
-      { name: "Jupyter", icon: "/Jupyter.svg" },
+      { name: "Jupyter", icon: "/Jupyter.png" },
       { name: "NLTK", icon: "/NLTK.png" }
     ]
   },
@@ -39,24 +39,24 @@ const skills = [
     category: "Game Development",
     items: [
       { name: "Unity", icon: "/Unity.png" },
-      { name: "Unreal Engine", icon: "/Unreal.jpg" },
-      { name: "PyGame", icon: "/PyGame" },
+      { name: "Unreal Engine", icon: "/Unreal.png" },
+      { name: "PyGame", icon: "/pygame_logo.png" },
       { name: "Blender", icon: "/Blender.png" }
     ]
   },
   {
     category: "Others",
     items: [
-      { name: "GitHub", icon: "/GitHub-logo.png" },
-      { name: "Git", icon: "/GIt.png" },
-      { name: "Microsoft Azure", icon: "/Microsoft_Azure_Logo.svg.webp" },
-      { name: "Google Cloud", icon: "/Google Cloud.svg" },
+      { name: "GitHub", icon: "/GitHub.png" },
+      { name: "Git", icon: "/Git.png" },
+      { name: "Microsoft Azure", icon: "/Azure.png" },
+      { name: "Google Cloud", icon: "/GCP.png" },
       { name: "MySQL", icon: "/mysql.png" },
       { name: "Power BI", icon: "/PowerBI.png" },
       { name: "Tableau", icon: "/Tableau-Logo.png" },
       { name: "Excel", icon: "/Excel.png" },
       { name: "ChatGPT", icon: "/Chatgpt.png" },
-      { name: "Microsoft Copilot", icon: "/Copilot.jpg" }
+      { name: "Microsoft Copilot", icon: "/copilot-color.png" }
     ]
   }
 ];
