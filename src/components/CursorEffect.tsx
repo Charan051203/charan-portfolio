@@ -5,35 +5,47 @@ interface CursorDot {
   x: number;
   y: number;
   opacity: number;
+  scale?: number;
 }
 
 const CursorEffect: React.FC = () => {
   const [cursorPosition, setCursorPosition] = useState({ x: -100, y: -100 });
   const [isVisible, setIsVisible] = useState(false);
   const [trail, setTrail] = useState<CursorDot[]>([]);
-  const trailLength = 8; // Number of trailing dots
+  const trailLength = 10; // Increased number of trailing dots
   const requestRef = useRef<number>();
   const positionRef = useRef({ x: -100, y: -100 });
   const prevTimeRef = useRef<number>(0);
+  const lastPositionsRef = useRef<{x: number, y: number}[]>([]);
   
   useEffect(() => {
-    // More efficient approach using requestAnimationFrame with timestamp
+    // Enhanced animation using requestAnimationFrame with timestamp
     const updateCursor = (time: number) => {
       // Only update on frame intervals (throttling for smoother performance)
-      if (time - prevTimeRef.current > 16) { // ~60fps
+      if (time - prevTimeRef.current > 12) { // ~83fps for smoother animation
         setCursorPosition(positionRef.current);
         
-        // Update trail with better performance
+        // Store last positions for smoother trail effect
+        lastPositionsRef.current.unshift({ ...positionRef.current });
+        lastPositionsRef.current = lastPositionsRef.current.slice(0, trailLength * 2);
+        
+        // Update trail with smoother interpolation
         setTrail(prevTrail => {
-          const newTrail = [
-            { x: positionRef.current.x, y: positionRef.current.y, opacity: 1 },
-            ...prevTrail.slice(0, trailLength - 1)
-          ];
+          const newTrail: CursorDot[] = [];
           
-          return newTrail.map((dot, index) => ({
-            ...dot,
-            opacity: 1 - (index / trailLength)
-          }));
+          // Generate trail dots with proper spacing
+          for (let i = 0; i < trailLength; i++) {
+            const position = lastPositionsRef.current[Math.min(i * 2, lastPositionsRef.current.length - 1)] || positionRef.current;
+            
+            newTrail.push({
+              x: position.x,
+              y: position.y,
+              opacity: 1 - (i / trailLength),
+              scale: 1 - (i * 0.05)
+            });
+          }
+          
+          return newTrail;
         });
         
         prevTimeRef.current = time;
@@ -53,6 +65,8 @@ const CursorEffect: React.FC = () => {
 
     const handleMouseEnter = () => {
       setIsVisible(true);
+      // Reset trail positions when re-entering to avoid jumps
+      lastPositionsRef.current = [];
     };
 
     // Start the animation loop with timestamp
@@ -88,7 +102,7 @@ const CursorEffect: React.FC = () => {
         }}
       />
       
-      {/* Trailing dots - optimized */}
+      {/* Trailing dots - enhanced with scale and glow */}
       {trail.map((dot, index) => (
         <div 
           key={index}
@@ -96,20 +110,23 @@ const CursorEffect: React.FC = () => {
           style={{
             left: dot.x,
             top: dot.y,
-            opacity: dot.opacity * (isVisible ? 0.7 : 0),
-            width: `${Math.max(2, 6 - index * 0.6)}px`,
-            height: `${Math.max(2, 6 - index * 0.6)}px`,
+            opacity: dot.opacity * (isVisible ? 0.8 : 0),
+            width: `${Math.max(2, 6 - index * 0.5)}px`,
+            height: `${Math.max(2, 6 - index * 0.5)}px`,
+            transform: `translate(-50%, -50%) scale(${dot.scale || 1})`,
+            filter: index < 3 ? `blur(${index * 0.5}px)` : 'none',
           }}
         />
       ))}
       
-      {/* Cursor outline */}
+      {/* Cursor outline with pulse effect */}
       <div 
         className="cursor-outline" 
         style={{ 
           opacity: isVisible ? 0.6 : 0,
           left: cursorPosition.x,
           top: cursorPosition.y,
+          animation: isVisible ? 'pulse-light 2s ease-in-out infinite' : 'none'
         }}
       />
     </>

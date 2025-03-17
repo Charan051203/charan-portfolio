@@ -96,25 +96,26 @@
   }
 }
 
-/* Improved cursor effect - smoother and more optimized */
+/* Enhanced cursor effect - smoother animation and better performance */
 .cursor-dot {
   position: fixed;
-  width: 0.75rem;
-  height: 0.75rem;
+  width: 0.6rem;
+  height: 0.6rem;
   border-radius: 9999px;
   z-index: 50;
   pointer-events: none;
   background-color: hsla(var(--primary));
   mix-blend-mode: exclusion;
   transform: translate(-50%, -50%);
-  will-change: transform;
+  will-change: left, top;
   transition: width 0.2s, height 0.2s;
+  filter: drop-shadow(0 0 5px hsla(var(--primary), 0.5));
 }
 
 .cursor-outline {
   position: fixed;
-  width: 1.75rem;
-  height: 1.75rem;
+  width: 1.5rem;
+  height: 1.5rem;
   border-radius: 9999px;
   border-width: 1px;
   z-index: 50;
@@ -122,20 +123,19 @@
   border-color: hsla(var(--primary));
   mix-blend-mode: exclusion;
   transform: translate(-50%, -50%);
-  will-change: transform;
-  transition: width 0.2s, height 0.2s, opacity 0.3s;
+  will-change: left, top;
+  transition: width 0.3s, height 0.3s, opacity 0.3s;
 }
 
 .cursor-trail-dot {
   position: fixed;
   border-radius: 50%;
   background-color: hsla(var(--primary));
-  transform: translate(-50%, -50%);
   pointer-events: none;
   z-index: 50;
   mix-blend-mode: exclusion;
   will-change: left, top, opacity, width, height;
-  transition: opacity 0.2s ease;
+  transition: opacity 0.15s ease;
 }
 
 @keyframes float {
@@ -205,13 +205,13 @@
   }
 }
 
-/* Technical Skills section styles - fixed size and glow */
+/* Technical Skills section styles - small fixed size icons with subtle glow */
 #skills .skill-icon {
-  @apply w-14 h-14 md:w-16 md:h-16;
+  @apply w-12 h-12 md:w-14 md:h-14;
 }
 
 #skills .skill-icon-container .glow-bg {
-  background-color: hsla(var(--primary), 0.3);
+  background-color: hsla(var(--primary), 0.15);
   animation: pulse-light 4s ease-in-out infinite;
 }
 
@@ -223,9 +223,29 @@
   content: '';
   position: absolute;
   inset: 0;
-  border-radius: 9999px;
-  filter: blur(0.375rem);
-  background-color: hsla(var(--primary), 0.2);
+  border-radius: 0.125rem;
+  filter: blur(0.25rem);
+  background-color: hsla(var(--primary), 0.1);
   animation: pulse-light 4s ease-in-out infinite;
   z-index: -1;
+}
+
+/* Pulse light animation */
+@keyframes pulse-light {
+  0%, 100% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+/* Cursor glow animation */
+@keyframes cursor-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 hsla(var(--primary), 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 5px hsla(var(--primary), 0);
+  }
 }

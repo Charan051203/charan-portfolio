@@ -279,7 +279,7 @@ const Contact: React.FC = () => {
             
             <div className="relative z-10">
               <motion.h4 
-                className="text-2xl font-bold mb-6 text-left text-gradient"
+                className="text-2xl font-bold mb-6 text-center text-gradient"
                 initial={{ opacity: 0, y: -10 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
@@ -290,7 +290,7 @@ const Contact: React.FC = () => {
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
                 <motion.div 
-                  className="flex items-center space-x-4 justify-center"
+                  className="flex items-center space-x-4"
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.3 }}
@@ -300,16 +300,16 @@ const Contact: React.FC = () => {
                   <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
                     <Mail className="w-6 h-6 text-primary" />
                   </div>
-                  <div className="text-center">
-                    <p className="text-foreground/70 text-sm">Email</p>
-                    <a href="mailto:charanrk5123@gmail.com" className="text-foreground hover:text-primary transition-colors font-medium">
+                  <div>
+                    <p className="text-foreground/70 text-sm text-left">Email</p>
+                    <a href="mailto:charanrk5123@gmail.com" className="text-foreground hover:text-primary transition-colors font-medium block text-center">
                       charanrk5123@gmail.com
                     </a>
                   </div>
                 </motion.div>
                 
                 <motion.div 
-                  className="flex items-center space-x-4 justify-center"
+                  className="flex items-center space-x-4"
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.4 }}
@@ -319,9 +319,9 @@ const Contact: React.FC = () => {
                   <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
                     <MapPin className="w-6 h-6 text-primary" />
                   </div>
-                  <div className="text-center">
-                    <p className="text-foreground/70 text-sm">Location</p>
-                    <p className="text-foreground font-medium">
+                  <div>
+                    <p className="text-foreground/70 text-sm text-left">Location</p>
+                    <p className="text-foreground font-medium text-center">
                       Bengaluru, Karnataka, India
                     </p>
                   </div>
