@@ -204,14 +204,14 @@
   }
 }
 
-/* Technical Skills section styles - smaller fixed size and subtle glow */
+/* Technical Skills section styles - restored size with enhanced glow */
 #skills .skill-icon {
-  @apply w-10 h-10 md:w-12 md:h-12;
+  @apply w-12 h-12 md:w-14 md:h-14;
 }
 
 #skills .skill-icon-container .glow-bg {
-  background-color: hsla(var(--primary), 0.1);
-  animation: pulse-light 4s ease-in-out infinite;
+  background-color: hsla(var(--primary), 0.2);
+  animation: pulse-glow 3s ease-in-out infinite;
 }
 
 #skills .skill-icon-container {
@@ -223,19 +223,19 @@
   position: absolute;
   inset: 0;
   border-radius: 0.125rem;
-  filter: blur(0.15rem);
-  background-color: hsla(var(--primary), 0.05);
-  animation: pulse-light 4s ease-in-out infinite;
+  filter: blur(0.35rem);
+  background-color: hsla(var(--primary), 0.15);
+  animation: pulse-glow 3s ease-in-out infinite;
   z-index: -1;
 }
 
-/* Pulse light animation - more subtle */
-@keyframes pulse-light {
+/* Enhanced glow pulse animation */
+@keyframes pulse-glow {
   0%, 100% {
-    opacity: 0.3;
+    opacity: 0.5;
   }
   50% {
-    opacity: 0.1;
+    opacity: 0.2;
   }
 }
 
