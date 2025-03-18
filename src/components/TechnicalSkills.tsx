@@ -63,7 +63,7 @@ const skills = [
 
 const TechnicalSkills: React.FC = () => {
   return (
-    <section id="skills" className="py-24 relative">
+    <section id="skills" className="py-16 md:py-20 lg:py-24 relative">
       {/* Background elements */}
       <motion.div 
         className="absolute inset-0 -z-10"
@@ -85,9 +85,9 @@ const TechnicalSkills: React.FC = () => {
         <div className="absolute bottom-1/3 right-1/4 w-64 h-64 bg-primary/5 rounded-full blur-[80px]" />
       </motion.div>
       
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto px-4 sm:px-6">
         <motion.div 
-          className="text-center mb-16"
+          className="text-center mb-12 md:mb-16"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
@@ -100,7 +100,7 @@ const TechnicalSkills: React.FC = () => {
           </div>
         </motion.div>
         
-        <div className="space-y-10">
+        <div className="space-y-12">
           {skills.map((skillCategory, categoryIndex) => (
             <motion.div 
               key={categoryIndex}
@@ -108,7 +108,7 @@ const TechnicalSkills: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: categoryIndex * 0.1 }}
               viewport={{ once: true, margin: "-100px" }}
-              className="mb-6"
+              className="mb-8"
             >
               <motion.h4 
                 className="text-2xl font-semibold mb-4 text-gradient"
@@ -122,8 +122,8 @@ const TechnicalSkills: React.FC = () => {
               
               <Separator className="mb-6 bg-primary/20" />
               
-              {/* Increased vertical gap (y-axis) and reduced horizontal gap (x-axis) */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-y-4 gap-x-0 justify-items-center">
+              {/* Increased vertical gap and reduced horizontal gap */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 gap-y-8 gap-x-2 justify-items-center">
                 {skillCategory.items.map((skill, index) => (
                   <motion.div
                     key={index}
@@ -132,28 +132,33 @@ const TechnicalSkills: React.FC = () => {
                     whileInView={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.2 + (index * 0.05) }}
                     viewport={{ once: true }}
-                    whileHover={{ y: -2, scale: 1.05 }}
+                    whileHover={{ y: -5, scale: 1.05 }}
                   >
-                    <div className="w-16 h-16 relative flex items-center justify-center mb-2 skill-icon-container">
-                      {/* Enhanced glow effect with more prominent glow */}
-                      <div className="glow-bg absolute inset-0 rounded-sm blur-[8px]" />
+                    <div className="w-16 h-16 relative flex items-center justify-center mb-3 skill-icon-container">
+                      {/* Enhanced glow effect background */}
+                      <div className="glow-bg absolute inset-0 rounded-sm blur-[10px]" />
                       
-                      {/* Skill icon with original size */}
-                      <div className="relative z-10 w-12 h-12 md:w-14 md:h-14 rounded-sm glassmorphism border border-primary/20 p-2 flex items-center justify-center skill-icon overflow-hidden glow-effect">
-                        {/* Inner glow effect - more vibrant */}
-                        <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-primary/15 to-transparent opacity-70" />
+                      {/* Skill icon with hover animation */}
+                      <motion.div 
+                        className="relative z-10 w-12 h-12 md:w-14 md:h-14 rounded-sm glassmorphism border border-primary/20 p-2 flex items-center justify-center skill-icon overflow-hidden glow-effect"
+                        whileHover={{ scale: 1.1 }}
+                        transition={{ type: "spring", stiffness: 300, damping: 15 }}
+                      >
+                        {/* Inner glow effect - more vibrant with animation */}
+                        <div className="absolute inset-0 bg-gradient-to-r from-primary/25 via-primary/20 to-transparent opacity-80" />
                         
                         <img 
                           src={skill.icon} 
                           alt={skill.name} 
                           className="max-w-full max-h-full object-contain relative z-10"
+                          loading="lazy"
                           onError={(e) => {
                             (e.target as HTMLImageElement).src = "/placeholder.svg";
                           }}
                         />
-                      </div>
+                      </motion.div>
                     </div>
-                    <p className="text-xs text-center font-medium text-foreground/80">{skill.name}</p>
+                    <p className="text-xs md:text-sm text-center font-medium text-foreground/80">{skill.name}</p>
                   </motion.div>
                 ))}
               </div>

@@ -12,7 +12,7 @@ const CursorEffect: React.FC = () => {
   const [cursorPosition, setCursorPosition] = useState({ x: -100, y: -100 });
   const [isVisible, setIsVisible] = useState(false);
   const [trail, setTrail] = useState<CursorDot[]>([]);
-  const trailLength = 10; // Increased number of trailing dots
+  const trailLength = 12; // Increased number of trailing dots for smoother effect
   const requestRef = useRef<number>();
   const positionRef = useRef({ x: -100, y: -100 });
   const prevTimeRef = useRef<number>(0);
@@ -22,7 +22,7 @@ const CursorEffect: React.FC = () => {
     // Enhanced animation using requestAnimationFrame with timestamp
     const updateCursor = (time: number) => {
       // Only update on frame intervals (throttling for smoother performance)
-      if (time - prevTimeRef.current > 12) { // ~83fps for smoother animation
+      if (time - prevTimeRef.current > 10) { // ~100fps for even smoother animation
         setCursorPosition(positionRef.current);
         
         // Store last positions for smoother trail effect
@@ -110,23 +110,34 @@ const CursorEffect: React.FC = () => {
           style={{
             left: dot.x,
             top: dot.y,
-            opacity: dot.opacity * (isVisible ? 0.8 : 0),
-            width: `${Math.max(2, 6 - index * 0.5)}px`,
-            height: `${Math.max(2, 6 - index * 0.5)}px`,
+            opacity: dot.opacity * (isVisible ? 0.9 : 0),
+            width: `${Math.max(2, 6 - index * 0.4)}px`,
+            height: `${Math.max(2, 6 - index * 0.4)}px`,
             transform: `translate(-50%, -50%) scale(${dot.scale || 1})`,
-            filter: index < 3 ? `blur(${index * 0.5}px)` : 'none',
+            filter: index < 4 ? `blur(${index * 0.4}px)` : 'none',
+            transition: 'opacity 0.15s ease, transform 0.15s ease',
           }}
         />
       ))}
       
-      {/* Cursor outline with pulse effect */}
+      {/* Enhanced cursor outline with stronger pulse effect */}
       <div 
         className="cursor-outline" 
         style={{ 
-          opacity: isVisible ? 0.6 : 0,
+          opacity: isVisible ? 0.7 : 0,
           left: cursorPosition.x,
           top: cursorPosition.y,
-          animation: isVisible ? 'pulse-light 2s ease-in-out infinite' : 'none'
+          animation: isVisible ? 'pulse-light 1.5s ease-in-out infinite' : 'none'
+        }}
+      />
+      
+      {/* New: Add a larger faint outer ring for more dramatic effect */}
+      <div
+        className="cursor-outer-ring"
+        style={{
+          opacity: isVisible ? 0.3 : 0,
+          left: cursorPosition.x,
+          top: cursorPosition.y,
         }}
       />
     </>

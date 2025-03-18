@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -107,23 +108,38 @@
   mix-blend-mode: exclusion;
   transform: translate(-50%, -50%);
   will-change: left, top;
-  transition: width 0.2s, height 0.2s;
-  filter: drop-shadow(0 0 5px hsla(var(--primary), 0.5));
+  transition: width 0.2s, height 0.2s, opacity 0.15s;
+  filter: drop-shadow(0 0 8px hsla(var(--primary), 0.7));
 }
 
 .cursor-outline {
   position: fixed;
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 2rem;
+  height: 2rem;
   border-radius: 9999px;
-  border-width: 1px;
+  border-width: 1.5px;
   z-index: 50;
   pointer-events: none;
   border-color: hsla(var(--primary));
   mix-blend-mode: exclusion;
   transform: translate(-50%, -50%);
   will-change: left, top;
-  transition: width 0.3s, height 0.3s, opacity 0.3s;
+  transition: width 0.3s, height 0.3s, opacity 0.2s;
+}
+
+.cursor-outer-ring {
+  position: fixed;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 9999px;
+  border: 1px solid hsla(var(--primary), 0.3);
+  z-index: 49;
+  pointer-events: none;
+  mix-blend-mode: exclusion;
+  transform: translate(-50%, -50%);
+  will-change: left, top;
+  transition: opacity 0.3s;
+  animation: cursor-pulse 2s infinite;
 }
 
 .cursor-trail-dot {
@@ -134,9 +150,20 @@
   z-index: 50;
   mix-blend-mode: exclusion;
   will-change: left, top, opacity, width, height;
-  transition: opacity 0.15s ease;
 }
 
+@keyframes cursor-pulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.1);
+    opacity: 0.15;
+  }
+}
+
+/* Animation keyframes */
 @keyframes float {
   0%, 100% {
     transform: translateY(0);
@@ -182,6 +209,7 @@
   animation: shimmer 3s infinite;
 }
 
+/* Responsive styles for different screen sizes */
 @media (max-width: 768px) {
   .container {
     @apply px-4;
@@ -204,19 +232,24 @@
   }
 }
 
-/* Technical Skills section styles - enhanced glow effects */
+/* Technical Skills section enhanced styles */
 #skills .skill-icon {
   @apply w-12 h-12 md:w-14 md:h-14;
 }
 
-/* Enhanced glow effect for skill icons */
+/* Enhanced glow effect for skill icons with animation */
 #skills .skill-icon-container .glow-bg {
-  background-color: hsla(var(--primary), 0.35);
-  animation: pulse-glow 2.5s ease-in-out infinite;
+  background-color: hsla(var(--primary), 0.4);
+  animation: pulse-icon-glow 3s ease-in-out infinite;
 }
 
 #skills .skill-icon-container {
   position: relative;
+  transition: transform 0.3s ease;
+}
+
+#skills .skill-icon-container:hover {
+  transform: translateY(-5px);
 }
 
 #skills .skill-icon-container::before {
@@ -224,38 +257,95 @@
   position: absolute;
   inset: 0;
   border-radius: 0.125rem;
-  filter: blur(0.75rem);
-  background-color: hsla(var(--primary), 0.25);
-  animation: pulse-glow 2.5s ease-in-out infinite;
+  filter: blur(0.85rem);
+  background-color: hsla(var(--primary), 0.3);
+  animation: pulse-icon-glow 3s ease-in-out infinite;
   z-index: -1;
 }
 
 /* Add a new class for the glow effect on the icons */
 #skills .glow-effect {
-  box-shadow: 0 0 10px hsla(var(--primary), 0.4);
-  transition: box-shadow 0.3s ease;
+  box-shadow: 0 0 15px hsla(var(--primary), 0.5);
+  transition: all 0.3s ease;
+  overflow: visible !important;
 }
 
 #skills .glow-effect:hover {
-  box-shadow: 0 0 15px hsla(var(--primary), 0.6);
+  box-shadow: 0 0 20px hsla(var(--primary), 0.8);
+  transform: scale(1.05);
 }
 
-/* Enhanced glow pulse animation */
-@keyframes pulse-glow {
+/* Enhanced glow pulse animation for icons */
+@keyframes pulse-icon-glow {
+  0%, 100% {
+    opacity: 0.8;
+    filter: blur(0.75rem);
+  }
+  50% {
+    opacity: 0.4;
+    filter: blur(0.9rem);
+  }
+}
+
+/* Pulse animation for cursor */
+@keyframes pulse-light {
   0%, 100% {
     opacity: 0.7;
+    transform: translate(-50%, -50%) scale(1);
   }
   50% {
     opacity: 0.3;
+    transform: translate(-50%, -50%) scale(1.2);
   }
 }
 
-/* Cursor glow animation */
-@keyframes cursor-pulse {
-  0%, 100% {
-    box-shadow: 0 0 0 0 hsla(var(--primary), 0.4);
+/* Social icons animations */
+.social-icon {
+  transition: all 0.3s ease;
+}
+
+.social-icon:hover {
+  transform: translateY(-5px);
+  filter: drop-shadow(0 0 8px hsla(var(--primary), 0.5));
+}
+
+/* Contact form alignment */
+@media (min-width: 768px) {
+  .contact-label {
+    @apply text-left;
   }
-  50% {
-    box-shadow: 0 0 0 5px hsla(var(--primary), 0);
+  
+  .contact-value {
+    @apply text-center;
+  }
+}
+
+/* Image optimization */
+.profile-image {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Loading optimization for images */
+img {
+  content-visibility: auto;
+}
+
+/* Add responsive padding */
+@media (max-width: 640px) {
+  section {
+    @apply py-16 px-4;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  section {
+    @apply py-20 px-6;
+  }
+}
+
+@media (min-width: 1025px) {
+  section {
+    @apply py-24 px-8;
   }
 }

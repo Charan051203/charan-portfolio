@@ -38,7 +38,7 @@ const Hero: React.FC = () => {
   }, []);
   
   return (
-    <section id="home" className="min-h-screen flex items-center justify-center pt-24 pb-16 relative overflow-hidden">
+    <section id="home" className="min-h-screen flex items-center justify-center pt-16 md:pt-20 lg:pt-24 pb-12 md:pb-16 relative overflow-hidden">
       {/* Background geometric shapes */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-background to-background/80" />
@@ -82,8 +82,8 @@ const Hero: React.FC = () => {
         })}
       </div>
       
-      <div className="container px-6 mx-auto">
-        <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-12">
+      <div className="container px-4 sm:px-6 mx-auto">
+        <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-8 md:gap-12">
           {/* Left content */}
           <motion.div className="w-full lg:w-1/2" 
             initial={{ opacity: 0, x: -50 }}
@@ -98,7 +98,7 @@ const Hero: React.FC = () => {
               {greetings[greetingIndex].text}, I'm
             </motion.p>
             
-            <motion.h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 text-gradient" 
+            <motion.h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 text-gradient" 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6, duration: 0.8 }}
@@ -146,14 +146,14 @@ const Hero: React.FC = () => {
             </motion.div>
           </motion.div>
           
-          {/* Right content - Profile Photo with hover effect (no cursor tracking) */}
+          {/* Right content - Profile Photo with hover effect (larger size) */}
           <motion.div className="w-full lg:w-1/2 flex justify-center" 
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8 }}
           >
             <motion.div 
-              className="relative w-[320px] h-[320px] transition-all duration-300 ease-out"
+              className="relative w-[280px] h-[280px] sm:w-[350px] sm:h-[350px] md:w-[400px] md:h-[400px] transition-all duration-300 ease-out"
               whileHover={{ scale: 1.05 }}
             >
               {/* Enhanced glowing effects */}
@@ -175,6 +175,7 @@ const Hero: React.FC = () => {
               {Array.from({length: 8}).map((_, i) => {
                 const angle = (i / 8) * Math.PI * 2;
                 const delay = i * 0.2;
+                const radius = Math.min(window.innerWidth / 6, 180); // Responsive radius
                 return (
                   <motion.div
                     key={`orbit-${i}`}
@@ -185,8 +186,8 @@ const Hero: React.FC = () => {
                       margin: '-1px'
                     }}
                     animate={{
-                      x: [Math.cos(angle) * 160, Math.cos(angle + Math.PI) * 160, Math.cos(angle + Math.PI * 2) * 160],
-                      y: [Math.sin(angle) * 160, Math.sin(angle + Math.PI) * 160, Math.sin(angle + Math.PI * 2) * 160],
+                      x: [Math.cos(angle) * radius, Math.cos(angle + Math.PI) * radius, Math.cos(angle + Math.PI * 2) * radius],
+                      y: [Math.sin(angle) * radius, Math.sin(angle + Math.PI) * radius, Math.sin(angle + Math.PI * 2) * radius],
                       opacity: [0.4, 1, 0.4],
                       scale: [1, 1.5, 1]
                     }}
@@ -201,7 +202,7 @@ const Hero: React.FC = () => {
               })}
 
               <motion.div 
-                className="absolute inset-0 w-full h-full rounded-full overflow-hidden border-4 border-primary/30" 
+                className="absolute inset-0 w-full h-full rounded-full overflow-hidden border-4 border-primary/30 profile-image" 
                 animate={{
                   y: [0, -10, 0]
                 }} 
@@ -215,10 +216,12 @@ const Hero: React.FC = () => {
                   src="/profile2.png" 
                   alt="Charan RK" 
                   className="w-full h-full object-cover" 
+                  loading="eager" 
+                  fetchpriority="high"
                   onError={e => {
                     // Fallback if image doesn't load
                     const target = e.target as HTMLImageElement;
-                    target.src = "https://via.placeholder.com/280x280.png?text=Charan+RK";
+                    target.src = "/placeholder.svg";
                   }} 
                 />
                 
@@ -240,7 +243,7 @@ const Hero: React.FC = () => {
                 <motion.div
                   className="absolute w-full h-8 bg-primary/10 blur-sm"
                   animate={{
-                    y: [-320, 320],
+                    y: [-400, 400],
                     opacity: [0, 0.8, 0]
                   }}
                   transition={{
