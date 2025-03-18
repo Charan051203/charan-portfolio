@@ -1,5 +1,6 @@
+
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Linkedin, Github, Instagram, Twitter } from 'lucide-react';
 import { useIsMobile } from '../hooks/use-mobile';
 
@@ -63,6 +64,32 @@ const Navbar: React.FC<NavbarProps> = ({ showIcons = true }) => {
     }
   ];
 
+  // Animation variants for mobile menu
+  const mobileMenuVariants = {
+    hidden: { 
+      opacity: 0,
+      x: '-100%',
+      transition: {
+        duration: 0.3,
+        staggerChildren: 0.05,
+        staggerDirection: -1
+      }
+    },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        duration: 0.3,
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const menuItemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 }
+  };
+
   return (
     <>
       <motion.nav
@@ -70,18 +97,18 @@ const Navbar: React.FC<NavbarProps> = ({ showIcons = true }) => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-          scrolled ? 'glassmorphism py-3' : 'bg-transparent py-6'
+          scrolled ? 'glassmorphism py-2 px-3 sm:py-3 sm:px-4' : 'bg-transparent py-3 px-3 sm:py-6 sm:px-4'
         }`}
       >
-        <div className="container mx-auto px-6 flex justify-between items-center">
-          <a href="#home" className="text-2xl font-bold">
+        <div className="container mx-auto flex justify-between items-center">
+          <a href="#home" className="text-lg sm:text-xl md:text-2xl font-bold">
             <span className="text-gradient">CHARAN</span>
             <span className="text-white shadow-glow">RK</span>
           </a>
           
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center">
-            <div className="flex space-x-8">
+            <div className="flex space-x-6 lg:space-x-8">
               {navLinks.map((link, index) => (
                 <motion.a
                   key={index}
@@ -118,67 +145,95 @@ const Navbar: React.FC<NavbarProps> = ({ showIcons = true }) => {
             </div>
           )}
           
-          {/* Mobile menu button */}
+          {/* Mobile menu button - More prominent for better visibility */}
           <div className="md:hidden">
-            <button 
+            <motion.button 
               className="w-10 h-10 glassmorphism rounded-full flex items-center justify-center"
               aria-label="Menu"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              whileTap={{ scale: 0.95 }}
+              whileHover={{ scale: 1.05 }}
             >
-              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-            </button>
+              <AnimatePresence mode="wait">
+                {mobileMenuOpen ? 
+                  <motion.div
+                    key="close"
+                    initial={{ rotate: -90, opacity: 0 }}
+                    animate={{ rotate: 0, opacity: 1 }}
+                    exit={{ rotate: 90, opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <X className="w-5 h-5" />
+                  </motion.div> : 
+                  <motion.div
+                    key="menu"
+                    initial={{ rotate: 90, opacity: 0 }}
+                    animate={{ rotate: 0, opacity: 1 }}
+                    exit={{ rotate: -90, opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <Menu className="w-5 h-5" />
+                  </motion.div>
+                }
+              </AnimatePresence>
+            </motion.button>
           </div>
         </div>
       </motion.nav>
       
-      {/* Mobile menu */}
-      <motion.div
-        className={`fixed inset-0 bg-background/90 backdrop-blur-lg z-40 md:hidden ${mobileMenuOpen ? 'flex' : 'hidden'} flex-col items-center justify-center`}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: mobileMenuOpen ? 1 : 0 }}
-        transition={{ duration: 0.3 }}
-      >
-        <div className="flex flex-col items-center space-y-8">
-          {navLinks.map((link, index) => (
-            <motion.a
-              key={index}
-              href={link.href}
-              className="text-xl font-medium text-foreground hover:text-primary transition-colors"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: 0.1 * index }}
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              {link.name}
-            </motion.a>
-          ))}
-          
-          {/* Social Icons in mobile menu - always visible in mobile menu */}
-          <motion.div 
-            className="flex space-x-6 mt-8 pt-8 border-t border-border/30 w-64 justify-center"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6 }}
+      {/* Mobile menu with improved animation */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            className="fixed inset-0 bg-background/95 backdrop-blur-lg z-40 md:hidden flex flex-col items-center justify-center"
+            initial="hidden"
+            animate="visible"
+            exit="hidden"
+            variants={mobileMenuVariants}
           >
-            {socialLinks.map((item, i) => (
-              <motion.a
-                key={i}
-                href={item.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full glassmorphism flex items-center justify-center text-foreground hover:text-primary"
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{ delay: 0.7 + (i * 0.1) }}
-                onClick={(e) => e.stopPropagation()}
-                aria-label={item.label}
+            <div className="flex flex-col items-center space-y-6">
+              {navLinks.map((link, index) => (
+                <motion.a
+                  key={index}
+                  href={link.href}
+                  className="text-xl font-medium text-foreground hover:text-primary transition-colors px-4 py-2"
+                  variants={menuItemVariants}
+                  onClick={() => setMobileMenuOpen(false)}
+                  whileHover={{ scale: 1.05, x: 5 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  {link.name}
+                </motion.a>
+              ))}
+              
+              {/* Social Icons in mobile menu - always visible in mobile menu with improved animation */}
+              <motion.div 
+                className="flex space-x-5 mt-6 pt-6 border-t border-border/30 w-64 justify-center"
+                variants={menuItemVariants}
               >
-                {item.icon}
-              </motion.a>
-            ))}
+                {socialLinks.map((item, i) => (
+                  <motion.a
+                    key={i}
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-10 h-10 rounded-full glassmorphism flex items-center justify-center text-foreground hover:text-primary"
+                    whileHover={{ scale: 1.1, y: -5 }}
+                    whileTap={{ scale: 0.95 }}
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ delay: 0.2 + (i * 0.1) }}
+                    onClick={(e) => e.stopPropagation()}
+                    aria-label={item.label}
+                  >
+                    {item.icon}
+                  </motion.a>
+                ))}
+              </motion.div>
+            </div>
           </motion.div>
-        </div>
-      </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 };

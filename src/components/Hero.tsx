@@ -38,7 +38,7 @@ const Hero: React.FC = () => {
   }, []);
   
   return (
-    <section id="home" className="min-h-screen flex items-center justify-center pt-16 md:pt-20 lg:pt-24 pb-12 md:pb-16 relative overflow-hidden">
+    <section id="home" className="min-h-screen flex flex-col items-center justify-center pt-16 md:pt-20 lg:pt-24 pb-12 md:pb-16 relative overflow-hidden">
       {/* Background geometric shapes */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-background to-background/80" />
@@ -81,6 +81,35 @@ const Hero: React.FC = () => {
           );
         })}
       </div>
+      
+      {/* On mobile, show scroll indicator first */}
+      <motion.div 
+        className="flex md:hidden mb-8 mt-16 flex-col items-center"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.5, duration: 0.5 }}
+      >
+        <motion.div 
+          className="w-8 h-12 border-2 border-primary/50 rounded-full flex justify-center p-2" 
+        >
+          <motion.div 
+            className="w-1 h-2 bg-primary rounded-full" 
+            animate={{
+              y: [0, 12, 0],
+              opacity: [0.6, 1, 0.6]
+            }} 
+            transition={{
+              repeat: Infinity,
+              duration: 1.5
+            }} 
+          />
+        </motion.div>
+        <motion.p 
+          className="mt-2 text-sm text-foreground/60"
+        >
+          Scroll Down
+        </motion.p>
+      </motion.div>
       
       <div className="container px-4 sm:px-6 mx-auto">
         <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-8 md:gap-12">
@@ -126,7 +155,7 @@ const Hero: React.FC = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1, duration: 0.8 }} 
-              className="mb-8 max-w-xl text-slate-50"
+              className="mb-8 max-w-xl text-slate-50 text-sm sm:text-base"
             >
               AI Engineer and Data Scientist skilled in Machine Learning, Deep Learning, Prompt Engineering and Data Analytics. Proficient in predictive modeling, AI-driven solutions, and optimization techniques. As a game enthusiast, I love spending my free time exploring virtual worlds and playing video games.
             </motion.p>
@@ -136,24 +165,24 @@ const Hero: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.2, duration: 0.8 }}
             >
-              <a href="#projects" className="px-6 py-3 bg-primary text-primary-foreground rounded-full font-medium hover:bg-primary/90 transition-colors">
+              <a href="#projects" className="px-4 sm:px-6 py-2 sm:py-3 bg-primary text-primary-foreground rounded-full font-medium hover:bg-primary/90 transition-colors text-sm sm:text-base">
                 View Work
               </a>
               
-              <a href="/Resume CHARAN RK.pdf" download className="px-6 py-3 border border-primary/30 text-foreground rounded-full font-medium hover:bg-primary/10 transition-colors">
+              <a href="/Resume CHARAN RK.pdf" download className="px-4 sm:px-6 py-2 sm:py-3 border border-primary/30 text-foreground rounded-full font-medium hover:bg-primary/10 transition-colors text-sm sm:text-base">
                 Download Resume
               </a>
             </motion.div>
           </motion.div>
           
-          {/* Right content - Profile Photo with hover effect (larger size) */}
+          {/* Right content - Profile Photo with hover effect (responsive size) */}
           <motion.div className="w-full lg:w-1/2 flex justify-center" 
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8 }}
           >
             <motion.div 
-              className="relative w-[280px] h-[280px] sm:w-[350px] sm:h-[350px] md:w-[400px] md:h-[400px] transition-all duration-300 ease-out"
+              className="relative w-[240px] h-[240px] sm:w-[280px] sm:h-[280px] md:w-[320px] md:h-[320px] lg:w-[380px] lg:h-[380px] transition-all duration-300 ease-out"
               whileHover={{ scale: 1.05 }}
             >
               {/* Enhanced glowing effects */}
@@ -175,7 +204,7 @@ const Hero: React.FC = () => {
               {Array.from({length: 8}).map((_, i) => {
                 const angle = (i / 8) * Math.PI * 2;
                 const delay = i * 0.2;
-                const radius = Math.min(window.innerWidth / 6, 180); // Responsive radius
+                const radius = Math.min(window.innerWidth / 7, 150); // More responsive radius
                 return (
                   <motion.div
                     key={`orbit-${i}`}
@@ -217,7 +246,6 @@ const Hero: React.FC = () => {
                   alt="Charan RK" 
                   className="w-full h-full object-cover" 
                   loading="eager" 
-                  fetchPriority="high"
                   onError={e => {
                     // Fallback if image doesn't load
                     const target = e.target as HTMLImageElement;
@@ -230,7 +258,6 @@ const Hero: React.FC = () => {
                   className="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent" 
                   animate={{
                     opacity: [0.6, 0.8, 0.6],
-                    backgroundPosition: ['0% 0%', '100% 100%', '0% 0%']
                   }}
                   transition={{
                     repeat: Infinity,
@@ -254,9 +281,9 @@ const Hero: React.FC = () => {
                 />
               </motion.div>
               
-              {/* Decorative elements around the photo */}
+              {/* Decorative elements around the photo - Smaller for better mobile view */}
               <motion.div 
-                className="absolute -top-4 -right-4 w-12 h-12 bg-primary/40 rounded-full blur-md" 
+                className="absolute -top-4 -right-4 w-8 h-8 sm:w-12 sm:h-12 bg-primary/40 rounded-full blur-md" 
                 animate={{
                   scale: [1, 1.5, 1],
                   opacity: [0.5, 1, 0.5]
@@ -268,7 +295,7 @@ const Hero: React.FC = () => {
                 }} 
               />
               <motion.div 
-                className="absolute -bottom-4 -left-4 w-16 h-16 bg-primary/30 rounded-full blur-md" 
+                className="absolute -bottom-4 -left-4 w-10 h-10 sm:w-16 sm:h-16 bg-primary/30 rounded-full blur-md" 
                 animate={{
                   scale: [1, 1.3, 1],
                   opacity: [0.5, 1, 0.5]
@@ -279,7 +306,7 @@ const Hero: React.FC = () => {
                 }} 
               />
               <motion.div 
-                className="absolute top-1/2 -right-6 w-8 h-8 bg-blue-500/40 rounded-full blur-sm" 
+                className="absolute top-1/2 -right-4 w-6 h-6 sm:w-8 sm:h-8 bg-blue-500/40 rounded-full blur-sm" 
                 animate={{
                   scale: [1, 1.4, 1],
                   opacity: [0.3, 0.7, 0.3]
@@ -291,7 +318,7 @@ const Hero: React.FC = () => {
                 }} 
               />
               <motion.div 
-                className="absolute bottom-1/4 -left-8 w-10 h-10 bg-purple-500/30 rounded-full blur-sm" 
+                className="absolute bottom-1/4 -left-4 w-8 h-8 sm:w-10 sm:h-10 bg-purple-500/30 rounded-full blur-sm" 
                 animate={{
                   scale: [1, 1.2, 1],
                   opacity: [0.3, 0.6, 0.3]
@@ -307,8 +334,8 @@ const Hero: React.FC = () => {
         </div>
       </div>
       
-      {/* Scroll indicator */}
-      <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center">
+      {/* Desktop scroll indicator */}
+      <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 hidden md:flex flex-col items-center">
         <motion.div 
           className="w-8 h-12 border-2 border-primary/50 rounded-full flex justify-center p-2" 
           initial={{ opacity: 0, y: -20 }}

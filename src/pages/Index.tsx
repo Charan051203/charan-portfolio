@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import CursorEffect from '../components/CursorEffect';
 import Navbar from '../components/Navbar';
@@ -32,16 +32,17 @@ const Index: React.FC = () => {
   const isMobile = useIsMobile();
   const [showSidebar, setShowSidebar] = useState(false);
   const [hasScrolled, setHasScrolled] = useState(false);
-  // Fix the TypeScript error by correctly typing cursorVariant
+  // Properly typing cursorVariant to fix TypeScript error
   const [cursorVariant, setCursorVariant] = useState<'default' | 'hover' | 'click'>('default');
+  
+  // Use useCallback to improve performance
+  const handleMouseOver = useCallback(() => setCursorVariant('hover'), []);
+  const handleMouseOut = useCallback(() => setCursorVariant('default'), []);
+  const handleMouseDown = useCallback(() => setCursorVariant('click'), []);
+  const handleMouseUp = useCallback(() => setCursorVariant('hover'), []);
   
   useEffect(() => {
     // Add event listener for cursor hover effects
-    const handleMouseOver = () => setCursorVariant('hover');
-    const handleMouseOut = () => setCursorVariant('default');
-    const handleMouseDown = () => setCursorVariant('click');
-    const handleMouseUp = () => setCursorVariant('hover');
-    
     // Add these event listeners to interactive elements
     const interactiveElements = document.querySelectorAll('a, button, .interactive-project');
     
@@ -64,8 +65,8 @@ const Index: React.FC = () => {
     const joke = jokes[Math.floor(Math.random() * jokes.length)];
     setRandomJoke(joke);
 
-    // Welcome toast
-    setTimeout(() => {
+    // Welcome toast with slight delay for better UX
+    const toastTimer = setTimeout(() => {
       toast("Welcome to my portfolio", {
         description: joke,
         duration: 5000
@@ -82,6 +83,7 @@ const Index: React.FC = () => {
     return () => {
       window.removeEventListener('resize', checkSidebar);
       window.removeEventListener('scroll', handleScroll);
+      clearTimeout(toastTimer);
       
       // Clean up cursor event listeners
       interactiveElements.forEach(element => {
@@ -91,7 +93,7 @@ const Index: React.FC = () => {
         element.removeEventListener('mouseup', handleMouseUp);
       });
     };
-  }, []);
+  }, [handleMouseOver, handleMouseOut, handleMouseDown, handleMouseUp]);
 
   return (
     <div className="relative">
@@ -149,10 +151,10 @@ const Index: React.FC = () => {
         </div>
       )}
       
-      {/* Back to top button - Enhanced for better visibility */}
+      {/* Back to top button - Enhanced for better visibility on mobile */}
       <motion.a
         href="#home"
-        className="fixed bottom-6 right-4 sm:right-6 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-primary flex items-center justify-center hover:bg-primary/90 transition-all z-30"
+        className="fixed bottom-6 right-4 sm:right-6 w-12 h-12 sm:w-12 sm:h-12 rounded-full bg-primary flex items-center justify-center hover:bg-primary/90 transition-all z-30"
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ 
           opacity: hasScrolled ? 1 : 0,
@@ -166,7 +168,7 @@ const Index: React.FC = () => {
           boxShadow: '0 0 15px hsla(var(--primary), 0.5)'
         }}
       >
-        <Home className="text-primary-foreground w-4 h-4 sm:w-5 sm:h-5" />
+        <Home className="text-primary-foreground w-5 h-5 sm:w-5 sm:h-5" />
       </motion.a>
     </div>
   );
