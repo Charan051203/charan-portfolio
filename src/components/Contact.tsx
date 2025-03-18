@@ -260,7 +260,7 @@ const Contact: React.FC = () => {
             <div className="absolute -top-20 -right-20 w-40 h-40 bg-primary/10 rounded-full blur-xl" />
             <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-primary/10 rounded-full blur-xl" />
             
-            <div className="relative z-10">
+            <div className="relative z-10 py-0 my-0 px-[35px] mx-[125px]">
               <motion.h4 className="text-xl md:text-2xl font-bold mb-6 text-center text-gradient" initial={{
               opacity: 0,
               y: -10
