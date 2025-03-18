@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -110,40 +111,25 @@
   filter: drop-shadow(0 0 10px hsla(var(--primary), 0.8));
 }
 
-.cursor-outline {
+.cursor-outer {
   position: fixed;
-  width: 2rem;
-  height: 2rem;
   border-radius: 9999px;
-  border-width: 1.5px;
   z-index: 50;
   pointer-events: none;
-  border-color: hsla(var(--primary));
   mix-blend-mode: exclusion;
-  will-change: left, top, transform;
+  will-change: transform;
   transition: width 0.3s, height 0.3s, opacity 0.2s, transform 0.2s, box-shadow 0.3s;
 }
 
-.cursor-outer-ring {
+.cursor-glow {
   position: fixed;
-  width: 3.5rem;
-  height: 3.5rem;
   border-radius: 9999px;
   z-index: 49;
   pointer-events: none;
   mix-blend-mode: exclusion;
-  will-change: left, top, transform;
-  transition: opacity 0.3s, transform 0.2s;
-  animation: cursor-pulse 2s infinite;
-}
-
-.cursor-trail-dot {
-  position: fixed;
-  border-radius: 50%;
-  z-index: 50;
-  pointer-events: none;
-  mix-blend-mode: exclusion;
-  will-change: left, top, opacity, width, height;
+  will-change: transform;
+  transition: opacity 0.3s, transform 0.3s;
+  animation: cursor-pulse 3s infinite;
 }
 
 @keyframes cursor-pulse {
@@ -213,31 +199,56 @@
 }
 
 /* Responsive styles for different screen sizes */
-@media (max-width: 768px) {
+@media (max-width: 640px) {
   .container {
     @apply px-4;
   }
   
   h1 {
-    @apply text-4xl;
-  }
-  
-  h2 {
     @apply text-3xl;
   }
   
-  h3 {
+  h2 {
     @apply text-2xl;
+  }
+  
+  h3 {
+    @apply text-xl;
   }
   
   .grid {
     @apply gap-4;
   }
+  
+  section {
+    @apply py-12 px-4;
+  }
+  
+  /* Make images smaller on mobile */
+  .profile-image {
+    max-width: 250px;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 768px) {
+  section {
+    @apply py-16 px-5;
+  }
+  
+  .container {
+    @apply px-5;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  section {
+    @apply py-18 px-6;
+  }
 }
 
 /* Technical Skills section enhanced styles */
 #skills .skill-icon {
-  @apply w-12 h-12 md:w-14 md:h-14;
+  @apply w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14;
 }
 
 /* Enhanced glow effect for skill icons with animation */
@@ -290,18 +301,6 @@
   }
 }
 
-/* Pulse animation for cursor */
-@keyframes pulse-light {
-  0%, 100% {
-    opacity: 0.7;
-    transform: translate(-50%, -50%) scale(1);
-  }
-  50% {
-    opacity: 0.3;
-    transform: translate(-50%, -50%) scale(1.2);
-  }
-}
-
 /* Social icons animations */
 .social-icon {
   transition: all 0.3s ease;
@@ -334,21 +333,37 @@ img {
   content-visibility: auto;
 }
 
-/* Add responsive padding */
+/* Additional mobile optimizations */
 @media (max-width: 640px) {
-  section {
-    @apply py-16 px-4;
+  /* Reduce padding further on mobile for more compact layout */
+  .p-8 {
+    @apply p-4;
   }
-}
-
-@media (min-width: 641px) and (max-width: 1024px) {
-  section {
-    @apply py-20 px-6;
+  
+  .px-6 {
+    @apply px-3;
   }
-}
-
-@media (min-width: 1025px) {
-  section {
-    @apply py-24 px-8;
+  
+  .py-4 {
+    @apply py-3;
+  }
+  
+  /* Ensure text is readable on small screens */
+  .text-sm {
+    @apply text-xs;
+  }
+  
+  /* Make buttons more tappable on mobile */
+  button, 
+  a[role="button"],
+  .button-like {
+    @apply min-h-10 min-w-10 flex items-center justify-center;
+  }
+  
+  /* Improve form elements for touch */
+  input, 
+  textarea, 
+  select {
+    @apply text-base py-2;
   }
 }

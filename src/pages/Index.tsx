@@ -32,6 +32,7 @@ const Index: React.FC = () => {
   const isMobile = useIsMobile();
   const [showSidebar, setShowSidebar] = useState(false);
   const [hasScrolled, setHasScrolled] = useState(false);
+  // Fix the TypeScript error by correctly typing cursorVariant
   const [cursorVariant, setCursorVariant] = useState<'default' | 'hover' | 'click'>('default');
   
   useEffect(() => {
@@ -110,7 +111,7 @@ const Index: React.FC = () => {
       
       {/* Fixed social media sidebar - Only visible on desktop */}
       {showSidebar && (
-        <div className="fixed left-6 bottom-1/2 transform translate-y-1/2 flex flex-col gap-5 z-30 hidden lg:flex">
+        <div className="fixed left-4 sm:left-6 bottom-1/2 transform translate-y-1/2 flex flex-col gap-4 sm:gap-5 z-30 hidden lg:flex">
           {[
             { icon: <Linkedin className="w-5 h-5" />, href: "https://www.linkedin.com/in/charan051203/", label: "LinkedIn" },
             { icon: <Github className="w-5 h-5" />, href: "https://github.com/Charan051203", label: "GitHub" },
@@ -126,7 +127,7 @@ const Index: React.FC = () => {
               href={item.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-10 h-10 rounded-full glassmorphism flex items-center justify-center text-foreground hover:text-primary hover:border-primary border border-border/50 transition-all"
+              className="w-9 h-9 sm:w-10 sm:h-10 rounded-full glassmorphism flex items-center justify-center text-foreground hover:text-primary hover:border-primary border border-border/50 transition-all"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: i * 0.1 + 1.5 }}
@@ -140,18 +141,18 @@ const Index: React.FC = () => {
             </motion.a>
           ))}
           <motion.div 
-            className="w-px h-24 bg-border/50 mx-auto mt-2"
+            className="w-px h-16 sm:h-24 bg-border/50 mx-auto mt-2"
             initial={{ height: 0 }}
-            animate={{ height: 96 }}
+            animate={{ height: isMobile ? 64 : 96 }}
             transition={{ delay: 2 }}
           />
         </div>
       )}
       
-      {/* Back to top button - now with improved visibility based on scroll */}
+      {/* Back to top button - Enhanced for better visibility */}
       <motion.a
         href="#home"
-        className="fixed bottom-6 right-6 w-12 h-12 rounded-full bg-primary flex items-center justify-center hover:bg-primary/90 transition-all z-30"
+        className="fixed bottom-6 right-4 sm:right-6 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-primary flex items-center justify-center hover:bg-primary/90 transition-all z-30"
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ 
           opacity: hasScrolled ? 1 : 0,
@@ -165,7 +166,7 @@ const Index: React.FC = () => {
           boxShadow: '0 0 15px hsla(var(--primary), 0.5)'
         }}
       >
-        <Home className="text-primary-foreground w-5 h-5" />
+        <Home className="text-primary-foreground w-4 h-4 sm:w-5 sm:h-5" />
       </motion.a>
     </div>
   );
