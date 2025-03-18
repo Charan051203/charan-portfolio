@@ -27,7 +27,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   
   return (
     <motion.div
-      className="relative overflow-hidden rounded-xl bg-card border border-border interactive-project cursor-pointer"
+      className="relative overflow-hidden rounded-xl bg-card border border-border cursor-pointer"
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: 0.1 * index }}
@@ -48,7 +48,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
         />
         
         {/* Overlay */}
-        <div className="project-overlay">
+        <div className="absolute inset-0 bg-black/60 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
           <a 
             href={link} 
             target="_blank" 

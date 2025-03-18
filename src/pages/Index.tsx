@@ -32,8 +32,25 @@ const Index: React.FC = () => {
   const isMobile = useIsMobile();
   const [showSidebar, setShowSidebar] = useState(false);
   const [hasScrolled, setHasScrolled] = useState(false);
-
+  const [cursorVariant, setCursorVariant] = useState('default');
+  
   useEffect(() => {
+    // Add event listener for cursor hover effects
+    const handleMouseOver = () => setCursorVariant('hover');
+    const handleMouseOut = () => setCursorVariant('default');
+    const handleMouseDown = () => setCursorVariant('click');
+    const handleMouseUp = () => setCursorVariant('hover');
+    
+    // Add these event listeners to interactive elements
+    const interactiveElements = document.querySelectorAll('a, button, .interactive-project');
+    
+    interactiveElements.forEach(element => {
+      element.addEventListener('mouseover', handleMouseOver);
+      element.addEventListener('mouseout', handleMouseOut);
+      element.addEventListener('mousedown', handleMouseDown);
+      element.addEventListener('mouseup', handleMouseUp);
+    });
+    
     // Check window size for sidebar visibility
     const checkSidebar = () => {
       setShowSidebar(window.innerWidth >= 1024); // lg breakpoint in Tailwind
@@ -64,12 +81,20 @@ const Index: React.FC = () => {
     return () => {
       window.removeEventListener('resize', checkSidebar);
       window.removeEventListener('scroll', handleScroll);
+      
+      // Clean up cursor event listeners
+      interactiveElements.forEach(element => {
+        element.removeEventListener('mouseover', handleMouseOver);
+        element.removeEventListener('mouseout', handleMouseOut);
+        element.removeEventListener('mousedown', handleMouseDown);
+        element.removeEventListener('mouseup', handleMouseUp);
+      });
     };
   }, []);
 
   return (
     <div className="relative">
-      <CursorEffect />
+      <CursorEffect cursorVariant={cursorVariant} />
       <Navbar showIcons={!showSidebar} />
       
       <main>
