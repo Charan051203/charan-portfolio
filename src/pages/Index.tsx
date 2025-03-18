@@ -32,7 +32,7 @@ const Index: React.FC = () => {
   const isMobile = useIsMobile();
   const [showSidebar, setShowSidebar] = useState(false);
   const [hasScrolled, setHasScrolled] = useState(false);
-  const [cursorVariant, setCursorVariant] = useState('default');
+  const [cursorVariant, setCursorVariant] = useState<'default' | 'hover' | 'click'>('default');
   
   useEffect(() => {
     // Add event listener for cursor hover effects
