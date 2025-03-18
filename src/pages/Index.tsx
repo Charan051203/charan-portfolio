@@ -31,6 +31,7 @@ const Index: React.FC = () => {
   const [randomJoke, setRandomJoke] = useState('');
   const isMobile = useIsMobile();
   const [showSidebar, setShowSidebar] = useState(false);
+  const [hasScrolled, setHasScrolled] = useState(false);
 
   useEffect(() => {
     // Check window size for sidebar visibility
@@ -53,7 +54,17 @@ const Index: React.FC = () => {
       });
     }, 2000);
     
-    return () => window.removeEventListener('resize', checkSidebar);
+    // Check if page has scrolled
+    const handleScroll = () => {
+      setHasScrolled(window.scrollY > 100);
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    
+    return () => {
+      window.removeEventListener('resize', checkSidebar);
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   return (
@@ -74,7 +85,7 @@ const Index: React.FC = () => {
       
       {/* Fixed social media sidebar - Only visible on desktop */}
       {showSidebar && (
-        <div className="fixed left-6 bottom-1/2 transform translate-y-1/2 flex flex-col gap-4 z-30 hidden lg:flex">
+        <div className="fixed left-6 bottom-1/2 transform translate-y-1/2 flex flex-col gap-5 z-30 hidden lg:flex">
           {[
             { icon: <Linkedin className="w-5 h-5" />, href: "https://www.linkedin.com/in/charan051203/", label: "LinkedIn" },
             { icon: <Github className="w-5 h-5" />, href: "https://github.com/Charan051203", label: "GitHub" },
@@ -96,6 +107,9 @@ const Index: React.FC = () => {
               transition={{ delay: i * 0.1 + 1.5 }}
               whileHover={{ scale: 1.2, y: -5 }}
               aria-label={item.label}
+              style={{
+                boxShadow: '0 0 10px hsla(var(--primary), 0.3)'
+              }}
             >
               {item.icon}
             </motion.a>
@@ -109,15 +123,22 @@ const Index: React.FC = () => {
         </div>
       )}
       
-      {/* Back to top button */}
+      {/* Back to top button - now with improved visibility based on scroll */}
       <motion.a
         href="#home"
         className="fixed bottom-6 right-6 w-12 h-12 rounded-full bg-primary flex items-center justify-center hover:bg-primary/90 transition-all z-30"
         initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
+        animate={{ 
+          opacity: hasScrolled ? 1 : 0,
+          scale: hasScrolled ? 1 : 0.8,
+          y: hasScrolled ? 0 : 20
+        }}
         transition={{ duration: 0.3 }}
         whileHover={{ y: -5 }}
         aria-label="Back to top"
+        style={{
+          boxShadow: '0 0 15px hsla(var(--primary), 0.5)'
+        }}
       >
         <Home className="text-primary-foreground w-5 h-5" />
       </motion.a>

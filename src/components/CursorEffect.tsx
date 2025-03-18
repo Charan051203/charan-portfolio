@@ -11,8 +11,9 @@ interface CursorDot {
 const CursorEffect: React.FC = () => {
   const [cursorPosition, setCursorPosition] = useState({ x: -100, y: -100 });
   const [isVisible, setIsVisible] = useState(false);
+  const [isClicking, setIsClicking] = useState(false);
   const [trail, setTrail] = useState<CursorDot[]>([]);
-  const trailLength = 12; // Increased number of trailing dots for smoother effect
+  const trailLength = 12; // Trailing dots for smoother effect
   const requestRef = useRef<number>();
   const positionRef = useRef({ x: -100, y: -100 });
   const prevTimeRef = useRef<number>(0);
@@ -69,6 +70,14 @@ const CursorEffect: React.FC = () => {
       lastPositionsRef.current = [];
     };
 
+    const handleMouseDown = () => {
+      setIsClicking(true);
+    };
+
+    const handleMouseUp = () => {
+      setIsClicking(false);
+    };
+
     // Start the animation loop with timestamp
     requestRef.current = requestAnimationFrame(updateCursor);
     
@@ -76,6 +85,8 @@ const CursorEffect: React.FC = () => {
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
     document.body.addEventListener('mouseleave', handleMouseLeave);
     document.body.addEventListener('mouseenter', handleMouseEnter);
+    document.addEventListener('mousedown', handleMouseDown);
+    document.addEventListener('mouseup', handleMouseUp);
 
     return () => {
       if (requestRef.current) {
@@ -84,6 +95,8 @@ const CursorEffect: React.FC = () => {
       window.removeEventListener('mousemove', handleMouseMove);
       document.body.removeEventListener('mouseleave', handleMouseLeave);
       document.body.removeEventListener('mouseenter', handleMouseEnter);
+      document.removeEventListener('mousedown', handleMouseDown);
+      document.removeEventListener('mouseup', handleMouseUp);
     };
   }, [isVisible, trailLength]);
 
@@ -99,6 +112,8 @@ const CursorEffect: React.FC = () => {
           opacity: isVisible ? 1 : 0,
           left: cursorPosition.x,
           top: cursorPosition.y,
+          transform: `translate(-50%, -50%) scale(${isClicking ? 0.8 : 1})`,
+          boxShadow: isClicking ? '0 0 15px 5px hsla(var(--primary), 0.8)' : '0 0 10px 2px hsla(var(--primary), 0.6)'
         }}
       />
       
@@ -116,6 +131,8 @@ const CursorEffect: React.FC = () => {
             transform: `translate(-50%, -50%) scale(${dot.scale || 1})`,
             filter: index < 4 ? `blur(${index * 0.4}px)` : 'none',
             transition: 'opacity 0.15s ease, transform 0.15s ease',
+            background: index < 3 ? 'hsla(var(--primary), 0.8)' : 'hsla(var(--primary), 0.6)',
+            boxShadow: index < 3 ? '0 0 8px 2px hsla(var(--primary), 0.4)' : 'none'
           }}
         />
       ))}
@@ -127,17 +144,22 @@ const CursorEffect: React.FC = () => {
           opacity: isVisible ? 0.7 : 0,
           left: cursorPosition.x,
           top: cursorPosition.y,
-          animation: isVisible ? 'pulse-light 1.5s ease-in-out infinite' : 'none'
+          animation: isVisible ? 'pulse-light 1.5s ease-in-out infinite' : 'none',
+          transform: `translate(-50%, -50%) scale(${isClicking ? 1.2 : 1})`,
+          boxShadow: isClicking ? '0 0 20px 5px hsla(var(--primary), 0.5)' : '0 0 15px 3px hsla(var(--primary), 0.3)'
         }}
       />
       
-      {/* New: Add a larger faint outer ring for more dramatic effect */}
+      {/* Add a larger faint outer ring for more dramatic effect */}
       <div
         className="cursor-outer-ring"
         style={{
           opacity: isVisible ? 0.3 : 0,
           left: cursorPosition.x,
           top: cursorPosition.y,
+          transform: `translate(-50%, -50%) scale(${isClicking ? 1.3 : 1})`,
+          boxShadow: '0 0 30px 8px hsla(var(--primary), 0.2)',
+          border: '1px solid hsla(var(--primary), 0.3)'
         }}
       />
     </>

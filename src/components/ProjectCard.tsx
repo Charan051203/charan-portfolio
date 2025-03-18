@@ -21,15 +21,20 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
 }) => {
   const [hovered, setHovered] = useState(false);
   
+  const handleCardClick = () => {
+    window.open(link, '_blank', 'noopener,noreferrer');
+  };
+  
   return (
     <motion.div
-      className="relative overflow-hidden rounded-xl bg-card border border-border interactive-project"
+      className="relative overflow-hidden rounded-xl bg-card border border-border interactive-project cursor-pointer"
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: 0.1 * index }}
       viewport={{ once: true, margin: "-100px" }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+      onClick={handleCardClick}
     >
       {/* Image container */}
       <div className="relative aspect-video overflow-hidden">
@@ -49,6 +54,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
             target="_blank" 
             rel="noopener noreferrer"
             className="px-6 py-2.5 bg-primary/90 text-primary-foreground rounded-full font-medium hover:bg-primary transition-colors border border-primary/20"
+            onClick={(e) => e.stopPropagation()}
           >
             View Project
           </a>

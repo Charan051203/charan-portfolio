@@ -75,82 +75,11 @@ const Contact: React.FC = () => {
         </motion.div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-8 lg:gap-12">
-          {/* Contact Information */}
-          <motion.div 
-            className="space-y-8"
+          {/* Contact Form - Now on the left */}
+          <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            viewport={{ once: true, margin: "-100px" }}
-          >
-            <div>
-              <h4 className="text-2xl font-bold mb-6 text-gradient">Contact Information</h4>
-              <div className="space-y-6 mt-8">
-                <div className="flex items-start space-x-4">
-                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <Mail className="w-5 h-5 text-primary" />
-                  </div>
-                  <div className="space-y-1">
-                    <p className="text-muted-foreground contact-label">Email</p>
-                    <p className="font-medium text-lg contact-value">charanrk5123@gmail.com</p>
-                  </div>
-                </div>
-                <div className="flex items-start space-x-4">
-                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <MapPin className="w-5 h-5 text-primary" />
-                  </div>
-                  <div className="space-y-1">
-                    <p className="text-muted-foreground contact-label">Location</p>
-                    <p className="font-medium text-lg contact-value">Bengaluru, Karnataka<br/>India</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            {/* Social Media Icons */}
-            <div>
-              <h4 className="text-xl font-bold mb-4">Connect With Me</h4>
-              <div className="flex space-x-4 mt-4">
-                {[
-                  { icon: <Linkedin className="w-5 h-5" />, href: "https://www.linkedin.com/in/charan051203/", label: "LinkedIn" },
-                  { icon: <Github className="w-5 h-5" />, href: "https://github.com/Charan051203", label: "GitHub" },
-                  { icon: <Instagram className="w-5 h-5" />, href: "https://www.instagram.com/chrn_._/", label: "Instagram" },
-                  { icon: <Twitter className="w-5 h-5" />, href: "https://x.com/charan_5123", label: "Twitter" }
-                ].map((item, i) => (
-                  <motion.a
-                    key={i}
-                    href={item.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-10 h-10 rounded-full glassmorphism flex items-center justify-center text-foreground hover:text-primary hover:border-primary border border-border/50 transition-all social-icon"
-                    whileHover={{ scale: 1.2, y: -5 }}
-                    aria-label={item.label}
-                  >
-                    {item.icon}
-                  </motion.a>
-                ))}
-              </div>
-            </div>
-            
-            {/* Quick Links section moved below social media */}
-            <div>
-              <h4 className="text-xl font-bold mb-4">Quick Links</h4>
-              <div className="grid grid-cols-2 gap-2">
-                <a href="#home" className="text-muted-foreground hover:text-primary transition-colors">Home</a>
-                <a href="#projects" className="text-muted-foreground hover:text-primary transition-colors">Projects</a>
-                <a href="#experience" className="text-muted-foreground hover:text-primary transition-colors">Experience</a>
-                <a href="#skills" className="text-muted-foreground hover:text-primary transition-colors">Skills</a>
-                <a href="#education" className="text-muted-foreground hover:text-primary transition-colors">Education</a>
-                <a href="/Resume CHARAN RK.pdf" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">Resume</a>
-              </div>
-            </div>
-          </motion.div>
-          
-          {/* Contact Form */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
             viewport={{ once: true, margin: "-100px" }}
           >
             <h4 className="text-2xl font-bold mb-6 text-gradient">Send Message</h4>
@@ -209,6 +138,77 @@ const Contact: React.FC = () => {
                 <Send className="w-4 h-4" />
               </button>
             </form>
+          </motion.div>
+          
+          {/* Contact Information - Now on the right */}
+          <motion.div 
+            className="space-y-8"
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            viewport={{ once: true, margin: "-100px" }}
+          >
+            <div>
+              <h4 className="text-2xl font-bold mb-6 text-gradient">Contact Information</h4>
+              <div className="space-y-6 mt-8">
+                <div className="flex items-start space-x-4">
+                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <Mail className="w-5 h-5 text-primary" />
+                  </div>
+                  <div className="space-y-1">
+                    <p className="text-muted-foreground contact-label text-left">Email</p>
+                    <p className="font-medium text-lg contact-value text-center">charanrk5123@gmail.com</p>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-4">
+                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <MapPin className="w-5 h-5 text-primary" />
+                  </div>
+                  <div className="space-y-1">
+                    <p className="text-muted-foreground contact-label text-left">Location</p>
+                    <p className="font-medium text-lg contact-value text-center">Bengaluru, Karnataka<br/>India</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            {/* Social Media Icons */}
+            <div>
+              <h4 className="text-xl font-bold mb-4">Connect With Me</h4>
+              <div className="flex space-x-4 mt-4">
+                {[
+                  { icon: <Linkedin className="w-5 h-5" />, href: "https://www.linkedin.com/in/charan051203/", label: "LinkedIn" },
+                  { icon: <Github className="w-5 h-5" />, href: "https://github.com/Charan051203", label: "GitHub" },
+                  { icon: <Instagram className="w-5 h-5" />, href: "https://www.instagram.com/chrn_._/", label: "Instagram" },
+                  { icon: <Twitter className="w-5 h-5" />, href: "https://x.com/charan_5123", label: "Twitter" }
+                ].map((item, i) => (
+                  <motion.a
+                    key={i}
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-10 h-10 rounded-full glassmorphism flex items-center justify-center text-foreground hover:text-primary hover:border-primary border border-border/50 transition-all social-icon"
+                    whileHover={{ scale: 1.2, y: -5 }}
+                    aria-label={item.label}
+                  >
+                    {item.icon}
+                  </motion.a>
+                ))}
+              </div>
+            </div>
+            
+            {/* Quick Links section */}
+            <div>
+              <h4 className="text-xl font-bold mb-4">Quick Links</h4>
+              <div className="grid grid-cols-2 gap-2">
+                <a href="#home" className="text-muted-foreground hover:text-primary transition-colors">Home</a>
+                <a href="#projects" className="text-muted-foreground hover:text-primary transition-colors">Projects</a>
+                <a href="#experience" className="text-muted-foreground hover:text-primary transition-colors">Experience</a>
+                <a href="#skills" className="text-muted-foreground hover:text-primary transition-colors">Skills</a>
+                <a href="#education" className="text-muted-foreground hover:text-primary transition-colors">Education</a>
+                <a href="/Resume CHARAN RK.pdf" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">Resume</a>
+              </div>
+            </div>
           </motion.div>
         </div>
       </div>
