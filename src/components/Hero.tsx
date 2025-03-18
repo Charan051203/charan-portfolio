@@ -217,7 +217,7 @@ const Hero: React.FC = () => {
                   alt="Charan RK" 
                   className="w-full h-full object-cover" 
                   loading="eager" 
-                  fetchpriority="high"
+                  fetchPriority="high"
                   onError={e => {
                     // Fallback if image doesn't load
                     const target = e.target as HTMLImageElement;
