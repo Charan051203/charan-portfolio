@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Send, Mail, MapPin, Linkedin, Github, Instagram, Twitter, FileText, Gamepad, Trophy, Joystick, Dice, Target } from 'lucide-react';
+import { Send, Mail, MapPin, Linkedin, Github, Instagram, Twitter, FileText, Gamepad, Trophy, Joystick, Dice1, Target } from 'lucide-react';
 import { toast } from 'sonner';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
@@ -77,7 +77,7 @@ const Contact: React.FC = () => {
     <Gamepad className="w-8 h-8 text-primary/70" />,
     <Trophy className="w-7 h-7 text-yellow-500/70" />,
     <Target className="w-8 h-8 text-green-500/70" />,
-    <Dice className="w-7 h-7 text-purple-500/70" />
+    <Dice1 className="w-7 h-7 text-purple-500/70" />
   ];
 
   return (
