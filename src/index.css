@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -94,6 +95,7 @@
     @apply backdrop-blur-2xl bg-black/40 border border-white/10;
   }
   
+  /* Define the custom py-18 class */
   .py-18 {
     padding-top: 4.5rem;
     padding-bottom: 4.5rem;
@@ -228,6 +230,7 @@
     @apply py-12 px-4;
   }
   
+  /* Make images smaller on mobile */
   .profile-image {
     max-width: 250px;
   }
@@ -249,10 +252,12 @@
   }
 }
 
+/* Technical Skills section enhanced styles */
 #skills .skill-icon {
   @apply w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14;
 }
 
+/* Enhanced glow effect for skill icons with animation */
 #skills .skill-icon-container .glow-bg {
   background-color: hsla(var(--primary), 0.4);
   animation: pulse-icon-glow 3s ease-in-out infinite;
@@ -278,6 +283,7 @@
   z-index: -1;
 }
 
+/* Add a new class for the glow effect on the icons */
 #skills .glow-effect {
   box-shadow: 0 0 15px hsla(var(--primary), 0.5);
   transition: all 0.3s ease;
@@ -289,6 +295,7 @@
   transform: scale(1.05);
 }
 
+/* Enhanced glow pulse animation for icons */
 @keyframes pulse-icon-glow {
   0%, 100% {
     opacity: 0.8;
@@ -300,6 +307,7 @@
   }
 }
 
+/* Social icons animations */
 .social-icon {
   transition: all 0.3s ease;
 }
@@ -309,6 +317,7 @@
   filter: drop-shadow(0 0 8px hsla(var(--primary), 0.5));
 }
 
+/* Contact form alignment */
 @media (min-width: 768px) {
   .contact-label {
     @apply text-left;
@@ -319,16 +328,20 @@
   }
 }
 
+/* Image optimization */
 .profile-image {
   max-width: 100%;
   height: auto;
 }
 
+/* Loading optimization for images */
 img {
   content-visibility: auto;
 }
 
+/* Additional mobile optimizations */
 @media (max-width: 640px) {
+  /* Reduce padding further on mobile for more compact layout */
   .p-8 {
     @apply p-4;
   }
@@ -341,16 +354,19 @@ img {
     @apply py-3;
   }
   
+  /* Ensure text is readable on small screens */
   .text-sm {
     @apply text-xs;
   }
   
+  /* Make buttons more tappable on mobile */
   button, 
   a[role="button"],
   .button-like {
     @apply min-h-10 min-w-10 flex items-center justify-center;
   }
   
+  /* Improve form elements for touch */
   input, 
   textarea, 
   select {

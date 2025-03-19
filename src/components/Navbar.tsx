@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Linkedin, Github, Instagram, Twitter } from 'lucide-react';
+import { Menu, X, Linkedin, Github, Instagram, Twitter, Gamepad } from 'lucide-react';
 import { useIsMobile } from '../hooks/use-mobile';
 
 interface NavbarProps {
@@ -17,7 +17,7 @@ const Navbar: React.FC<NavbarProps> = ({ showIcons = true }) => {
   // Check for sidebar visibility
   useEffect(() => {
     const checkSidebar = () => {
-      // If we're on desktop (not mobile), check if we should show social icons in navbar
+      // If we're on mobile (not mobile), check if we should show social icons in navbar
       // We don't show them if the sidebar is visible (which is on desktop, lg: breakpoint)
       const shouldShowIcons = showIcons && (isMobile || window.innerWidth < 1024);
       setShowSocialIcons(shouldShowIcons);
@@ -145,14 +145,16 @@ const Navbar: React.FC<NavbarProps> = ({ showIcons = true }) => {
             </div>
           )}
           
-          {/* Mobile menu button - More prominent for better visibility */}
+          {/* Mobile menu button - MORE VISIBLE with gamepad icon and larger size */}
           <div className="md:hidden">
             <motion.button 
-              className="w-10 h-10 glassmorphism rounded-full flex items-center justify-center"
+              className="w-12 h-12 glassmorphism rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(72,149,239,0.4)]"
               aria-label="Menu"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               whileTap={{ scale: 0.95 }}
               whileHover={{ scale: 1.05 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
             >
               <AnimatePresence mode="wait">
                 {mobileMenuOpen ? 
@@ -163,7 +165,7 @@ const Navbar: React.FC<NavbarProps> = ({ showIcons = true }) => {
                     exit={{ rotate: 90, opacity: 0 }}
                     transition={{ duration: 0.2 }}
                   >
-                    <X className="w-5 h-5" />
+                    <X className="w-6 h-6 text-primary" />
                   </motion.div> : 
                   <motion.div
                     key="menu"
@@ -171,8 +173,9 @@ const Navbar: React.FC<NavbarProps> = ({ showIcons = true }) => {
                     animate={{ rotate: 0, opacity: 1 }}
                     exit={{ rotate: -90, opacity: 0 }}
                     transition={{ duration: 0.2 }}
+                    className="flex items-center justify-center"
                   >
-                    <Menu className="w-5 h-5" />
+                    <Menu className="w-6 h-6 text-primary" />
                   </motion.div>
                 }
               </AnimatePresence>
@@ -192,6 +195,14 @@ const Navbar: React.FC<NavbarProps> = ({ showIcons = true }) => {
             variants={mobileMenuVariants}
           >
             <div className="flex flex-col items-center space-y-6">
+              {/* Gaming icon at the top of the menu */}
+              <motion.div
+                className="mb-4 text-primary"
+                variants={menuItemVariants}
+              >
+                <Gamepad className="w-10 h-10" />
+              </motion.div>
+              
               {navLinks.map((link, index) => (
                 <motion.a
                   key={index}

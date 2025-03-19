@@ -11,7 +11,7 @@ import Contact from '../components/Contact';
 import Footer from '../components/Footer';
 import TechnicalSkills from '../components/TechnicalSkills';
 import { toast } from 'sonner';
-import { Home, Linkedin, Github, Instagram, Twitter } from 'lucide-react';
+import { Home, Linkedin, Github, Instagram, Twitter, Gamepad } from 'lucide-react';
 import { useIsMobile } from '../hooks/use-mobile';
 
 const jokes = [
@@ -27,12 +27,20 @@ const jokes = [
   "The programmer got stuck in the shower because the instructions on the shampoo bottle said: Lather, Rinse, Repeat."
 ];
 
+// Gaming jokes - add some gaming themed humor
+const gamingJokes = [
+  "I would tell you a joke about lag, but you wouldn't get it until later.",
+  "Why don't developers play video games? Because they prefer to debug than to play.",
+  "What do you call a game developer's favorite coffee? Java.",
+  "Why was the gamer always broke? Too many micro-transactions.",
+  "How many gamers does it take to change a light bulb? None, they'll do it when the next patch comes out."
+];
+
 const Index: React.FC = () => {
   const [randomJoke, setRandomJoke] = useState('');
   const isMobile = useIsMobile();
   const [showSidebar, setShowSidebar] = useState(false);
   const [hasScrolled, setHasScrolled] = useState(false);
-  // Properly typing cursorVariant to fix TypeScript error
   const [cursorVariant, setCursorVariant] = useState<'default' | 'hover' | 'click'>('default');
   
   // Use useCallback to improve performance
@@ -42,58 +50,84 @@ const Index: React.FC = () => {
   const handleMouseUp = useCallback(() => setCursorVariant('hover'), []);
   
   useEffect(() => {
-    // Add event listener for cursor hover effects
-    // Add these event listeners to interactive elements
-    const interactiveElements = document.querySelectorAll('a, button, .interactive-project');
+    // Performance optimization - reduce animations on mobile
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     
-    interactiveElements.forEach(element => {
-      element.addEventListener('mouseover', handleMouseOver);
-      element.addEventListener('mouseout', handleMouseOut);
-      element.addEventListener('mousedown', handleMouseDown);
-      element.addEventListener('mouseup', handleMouseUp);
-    });
-    
-    // Check window size for sidebar visibility
+    // Add event listener for cursor hover effects - only on desktop
+    if (!isMobile && !prefersReducedMotion) {
+      // Add these event listeners to interactive elements
+      const interactiveElements = document.querySelectorAll('a, button, .interactive-project');
+      
+      interactiveElements.forEach(element => {
+        element.addEventListener('mouseover', handleMouseOver);
+        element.addEventListener('mouseout', handleMouseOut);
+        element.addEventListener('mousedown', handleMouseDown);
+        element.addEventListener('mouseup', handleMouseUp);
+      });
+      
+      // Clean up cursor event listeners
+      return () => {
+        interactiveElements.forEach(element => {
+          element.removeEventListener('mouseover', handleMouseOver);
+          element.removeEventListener('mouseout', handleMouseOut);
+          element.removeEventListener('mousedown', handleMouseDown);
+          element.removeEventListener('mouseup', handleMouseUp);
+        });
+      };
+    }
+  }, [isMobile, handleMouseOver, handleMouseOut, handleMouseDown, handleMouseUp]);
+  
+  useEffect(() => {
+    // Check window size for sidebar visibility with debounced resize handler
     const checkSidebar = () => {
       setShowSidebar(window.innerWidth >= 1024); // lg breakpoint in Tailwind
     };
     
-    checkSidebar();
-    window.addEventListener('resize', checkSidebar);
+    let resizeTimer: NodeJS.Timeout;
+    const handleResize = () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(checkSidebar, 100);
+    };
     
-    // Get random joke
-    const joke = jokes[Math.floor(Math.random() * jokes.length)];
+    checkSidebar();
+    window.addEventListener('resize', handleResize);
+    
+    // Get random joke - Include gaming jokes if they're on desktop
+    const allJokes = [...jokes, ...gamingJokes];
+    const joke = allJokes[Math.floor(Math.random() * allJokes.length)];
     setRandomJoke(joke);
 
-    // Welcome toast with slight delay for better UX
-    const toastTimer = setTimeout(() => {
-      toast("Welcome to my portfolio", {
-        description: joke,
-        duration: 5000
-      });
-    }, 2000);
+    // Welcome toast with slight delay for better UX - don't show on slow connections
+    const connection = navigator.connection as any;
+    const isSlowConnection = connection && 
+      (connection.effectiveType === '2g' || connection.saveData);
     
-    // Check if page has scrolled
+    if (!isSlowConnection) {
+      const toastTimer = setTimeout(() => {
+        toast("Welcome to my portfolio", {
+          description: joke,
+          duration: 5000
+        });
+      }, 2000);
+      
+      return () => clearTimeout(toastTimer);
+    }
+    
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      clearTimeout(resizeTimer);
+    };
+  }, []);
+  
+  useEffect(() => {
+    // Check if page has scrolled with passive event listener for better performance
     const handleScroll = () => {
       setHasScrolled(window.scrollY > 100);
     };
     
-    window.addEventListener('scroll', handleScroll);
-    
-    return () => {
-      window.removeEventListener('resize', checkSidebar);
-      window.removeEventListener('scroll', handleScroll);
-      clearTimeout(toastTimer);
-      
-      // Clean up cursor event listeners
-      interactiveElements.forEach(element => {
-        element.removeEventListener('mouseover', handleMouseOver);
-        element.removeEventListener('mouseout', handleMouseOut);
-        element.removeEventListener('mousedown', handleMouseDown);
-        element.removeEventListener('mouseup', handleMouseUp);
-      });
-    };
-  }, [handleMouseOver, handleMouseOut, handleMouseDown, handleMouseUp]);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
     <div className="relative">
@@ -122,6 +156,11 @@ const Index: React.FC = () => {
               icon: <Twitter className="w-5 h-5" />, 
               href: "https://x.com/charan_5123", 
               label: "Twitter" 
+            },
+            {
+              icon: <Gamepad className="w-5 h-5" />,
+              href: "#", 
+              label: "Gaming"
             }
           ].map((item, i) => (
             <motion.a
@@ -136,7 +175,7 @@ const Index: React.FC = () => {
               whileHover={{ scale: 1.2, y: -5 }}
               aria-label={item.label}
               style={{
-                boxShadow: '0 0 10px hsla(var(--primary), 0.3)'
+                boxShadow: '0 0 15px hsla(var(--primary), 0.4)'
               }}
             >
               {item.icon}
@@ -151,7 +190,7 @@ const Index: React.FC = () => {
         </div>
       )}
       
-      {/* Back to top button - Enhanced for better visibility on mobile */}
+      {/* Back to top button - Enhanced visibility for mobile */}
       <motion.a
         href="#home"
         className="fixed bottom-6 right-4 sm:right-6 w-12 h-12 sm:w-12 sm:h-12 rounded-full bg-primary flex items-center justify-center hover:bg-primary/90 transition-all z-30"
@@ -165,7 +204,7 @@ const Index: React.FC = () => {
         whileHover={{ y: -5 }}
         aria-label="Back to top"
         style={{
-          boxShadow: '0 0 15px hsla(var(--primary), 0.5)'
+          boxShadow: '0 0 20px hsla(var(--primary), 0.6)'
         }}
       >
         <Home className="text-primary-foreground w-5 h-5 sm:w-5 sm:h-5" />

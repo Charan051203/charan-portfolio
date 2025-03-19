@@ -28,7 +28,7 @@ const CursorEffect: React.FC<CursorEffectProps> = ({ cursorVariant = 'default' }
   const trailCounter = useRef(0);
   
   // Use motion values and springs for smoother cursor movement
-  const springConfig = { damping: 25, stiffness: 300 };
+  const springConfig = { damping: 25, stiffness: 400 }; // More responsive springs
   const cursorX = useMotionValue(0);
   const cursorY = useMotionValue(0);
   const springX = useSpring(cursorX, springConfig);
@@ -42,7 +42,7 @@ const CursorEffect: React.FC<CursorEffectProps> = ({ cursorVariant = 'default' }
       if (isTouch) return; // Don't continue with cursor effect on touch devices
       
       // Show cursor after initial load
-      const timer = setTimeout(() => setIsHidden(false), 1000);
+      const timer = setTimeout(() => setIsHidden(false), 500);
       return () => clearTimeout(timer);
     }
   }, []);
@@ -51,52 +51,67 @@ const CursorEffect: React.FC<CursorEffectProps> = ({ cursorVariant = 'default' }
   useEffect(() => {
     if (isTouchDevice) return;
 
-    // Function to generate new particles
+    // Function to generate new particles - improved with gaming theme
     const generateParticle = (x: number, y: number, moving: boolean) => {
-      const speedFactor = moving ? 0.7 : 0.3;
+      const speedFactor = moving ? 0.9 : 0.4; // Faster particles
       
       // Only add particles occasionally when the mouse is moving
-      trailCounter.current += 1;
-      if (moving && trailCounter.current % 2 !== 0) return;
+      if (moving) {
+        trailCounter.current += 1;
+        if (trailCounter.current % 2 !== 0) return;
+      }
+      
+      // Gaming-themed colors
+      const colors = [
+        `hsla(191, 82%, ${Math.random() * 30 + 60}%, ${Math.random() * 0.6 + 0.4})`, // Cyan
+        `hsla(270, 70%, ${Math.random() * 30 + 60}%, ${Math.random() * 0.6 + 0.4})`, // Purple
+        `hsla(120, 70%, ${Math.random() * 30 + 60}%, ${Math.random() * 0.6 + 0.4})`, // Green
+        `hsla(60, 70%, ${Math.random() * 30 + 60}%, ${Math.random() * 0.6 + 0.4})`,  // Yellow
+      ];
       
       // Generate a new particle
       const particle: Particle = {
         id: Math.random(),
         x: x,
         y: y,
-        size: Math.random() * 4 + 1,
-        color: `hsla(191, 82%, ${Math.random() * 30 + 60}%, ${Math.random() * 0.6 + 0.4})`,
-        speed: Math.random() * 0.5 + 0.1 * speedFactor,
+        size: Math.random() * 5 + 1, // Larger particles for better visibility
+        color: colors[Math.floor(Math.random() * colors.length)],
+        speed: Math.random() * 0.7 + 0.2 * speedFactor, // Faster for more dynamic effect
         life: 0,
-        maxLife: Math.random() * 40 + 20,
+        maxLife: Math.random() * 50 + 20, // Longer lifetime
       };
       
       particleRef.current = [...particleRef.current, particle];
-      if (particleRef.current.length > 50) {
-        particleRef.current = particleRef.current.slice(-50);
+      if (particleRef.current.length > 70) { // More particles
+        particleRef.current = particleRef.current.slice(-70);
       }
       setParticles([...particleRef.current]);
     };
 
-    // Animation loop for particles
+    // Animation loop for particles - improved with smoother behavior
     const animateParticles = () => {
       if (particleRef.current.length === 0) {
         requestRef.current = requestAnimationFrame(animateParticles);
         return;
       }
       
-      // Update particle positions and lifetimes
+      // Update particle positions and lifetimes with improved following behavior
       const updatedParticles = particleRef.current.map(p => {
-        // Calculate direction towards cursor
+        // Calculate direction towards cursor with gravitational pull
         const dx = mousePosition.x - p.x;
         const dy = mousePosition.y - p.y;
         const distance = Math.sqrt(dx * dx + dy * dy);
         
-        // Update particle position
+        // Update particle position with gravitational pull effect
         if (distance > 5) {
-          p.x += (dx / distance) * p.speed;
-          p.y += (dy / distance) * p.speed;
+          const gravityFactor = 1 - Math.min(1, distance / 200); // Stronger pull when closer
+          p.x += (dx / distance) * p.speed * (1 + gravityFactor * 2);
+          p.y += (dy / distance) * p.speed * (1 + gravityFactor * 2);
         }
+        
+        // Add slight random movement for more natural effect
+        p.x += (Math.random() - 0.5) * 0.3;
+        p.y += (Math.random() - 0.5) * 0.3;
         
         // Update lifetime
         p.life += 1;
@@ -126,9 +141,15 @@ const CursorEffect: React.FC<CursorEffectProps> = ({ cursorVariant = 'default' }
       
       // Generate particles based on movement
       if (isMoving) {
-        generateParticle(e.clientX, e.clientY, true);
-      } else if (Math.random() < 0.05) {
-        // Occasionally generate particles even when not moving
+        // Generate multiple particles when moving for fuller trail
+        for (let i = 0; i < 3; i++) {
+          generateParticle(
+            e.clientX + (Math.random() - 0.5) * 10, 
+            e.clientY + (Math.random() - 0.5) * 10, 
+            true
+          );
+        }
+      } else if (Math.random() < 0.1) { // Occasionally generate particles even when not moving
         generateParticle(e.clientX, e.clientY, false);
       }
       
@@ -156,7 +177,7 @@ const CursorEffect: React.FC<CursorEffectProps> = ({ cursorVariant = 'default' }
     };
   }, [isTouchDevice, cursorX, cursorY, mousePosition]);
   
-  // Variants for cursor animations
+  // Enhanced variants for cursor animations with gaming theme
   const cursorVariants = {
     default: {
       height: 32,
@@ -165,8 +186,8 @@ const CursorEffect: React.FC<CursorEffectProps> = ({ cursorVariant = 'default' }
       mixBlendMode: 'difference' as 'difference',
       borderWidth: '1px',
       borderColor: 'rgba(72, 149, 239, 0.5)',
-      boxShadow: '0 0 15px rgba(72, 149, 239, 0.3), 0 0 5px rgba(72, 149, 239, 0.2) inset',
-      opacity: isHidden ? 0 : 0.6
+      boxShadow: '0 0 20px rgba(72, 149, 239, 0.4), 0 0 8px rgba(72, 149, 239, 0.3) inset',
+      opacity: isHidden ? 0 : 0.7
     },
     hover: {
       height: 48,
@@ -174,8 +195,8 @@ const CursorEffect: React.FC<CursorEffectProps> = ({ cursorVariant = 'default' }
       backgroundColor: 'rgba(72, 149, 239, 0.3)',
       borderWidth: '1.5px',
       borderColor: 'rgba(72, 149, 239, 0.7)',
-      boxShadow: '0 0 20px rgba(72, 149, 239, 0.5), 0 0 10px rgba(72, 149, 239, 0.3) inset',
-      opacity: isHidden ? 0 : 0.8
+      boxShadow: '0 0 25px rgba(72, 149, 239, 0.6), 0 0 12px rgba(72, 149, 239, 0.4) inset',
+      opacity: isHidden ? 0 : 0.9
     },
     click: {
       height: 32,
@@ -183,7 +204,7 @@ const CursorEffect: React.FC<CursorEffectProps> = ({ cursorVariant = 'default' }
       backgroundColor: 'rgba(72, 149, 239, 0.5)',
       borderWidth: '2px',
       borderColor: 'rgba(72, 149, 239, 1)',
-      boxShadow: '0 0 25px rgba(72, 149, 239, 0.7), 0 0 15px rgba(72, 149, 239, 0.5) inset',
+      boxShadow: '0 0 30px rgba(72, 149, 239, 0.8), 0 0 15px rgba(72, 149, 239, 0.6) inset',
       opacity: isHidden ? 0 : 1,
       scale: 0.9
     }
@@ -192,41 +213,41 @@ const CursorEffect: React.FC<CursorEffectProps> = ({ cursorVariant = 'default' }
   // Dot inside the cursor
   const dotVariants = {
     default: {
-      opacity: 0.6,
+      opacity: 0.7,
       scale: 0.3,
-      backgroundColor: 'rgba(72, 149, 239, 0.8)'
+      backgroundColor: 'rgba(72, 149, 239, 0.9)'
     },
     hover: {
-      opacity: 0.8,
+      opacity: 0.9,
       scale: 0.4,
-      backgroundColor: 'rgba(72, 149, 239, 0.9)'
+      backgroundColor: 'rgba(72, 149, 239, 1)'
     },
     click: {
       opacity: 1,
       scale: 0.5,
-      backgroundColor: 'rgba(72, 149, 239, 1)'
+      backgroundColor: 'rgba(255, 255, 255, 1)'
     }
   };
 
-  // Outer glow effect
+  // Outer glow effect - enhanced
   const glowVariants = {
     default: {
-      opacity: 0.2,
-      scale: 1.5,
-      backgroundColor: 'transparent',
-      boxShadow: '0 0 15px 5px rgba(72, 149, 239, 0.15)'
-    },
-    hover: {
       opacity: 0.3,
-      scale: 1.8,
+      scale: 1.7,
       backgroundColor: 'transparent',
       boxShadow: '0 0 20px 8px rgba(72, 149, 239, 0.25)'
     },
-    click: {
+    hover: {
       opacity: 0.4,
-      scale: 1.4,
+      scale: 2.0,
       backgroundColor: 'transparent',
       boxShadow: '0 0 25px 10px rgba(72, 149, 239, 0.35)'
+    },
+    click: {
+      opacity: 0.5,
+      scale: 1.6,
+      backgroundColor: 'transparent',
+      boxShadow: '0 0 30px 15px rgba(72, 149, 239, 0.45)'
     }
   };
 
@@ -235,7 +256,7 @@ const CursorEffect: React.FC<CursorEffectProps> = ({ cursorVariant = 'default' }
 
   return (
     <div className="cursor-container">
-      {/* Render particles */}
+      {/* Render particles - improved with better transitions */}
       {particles.map((particle) => (
         <motion.div
           key={`particle-${particle.id}`}
@@ -248,7 +269,9 @@ const CursorEffect: React.FC<CursorEffectProps> = ({ cursorVariant = 'default' }
             height: particle.size,
             backgroundColor: particle.color,
             opacity: 1 - (particle.life / particle.maxLife),
-            pointerEvents: 'none'
+            pointerEvents: 'none',
+            boxShadow: `0 0 ${particle.size * 2}px ${particle.color}`,
+            filter: 'blur(0.5px)'
           }}
           animate={{
             scale: [1, 0.5],
@@ -260,7 +283,7 @@ const CursorEffect: React.FC<CursorEffectProps> = ({ cursorVariant = 'default' }
         />
       ))}
       
-      {/* Outer glow effect */}
+      {/* Outer glow effect - enhanced */}
       <motion.div
         className="cursor-glow fixed pointer-events-none z-[49] rounded-full"
         style={{
@@ -271,10 +294,10 @@ const CursorEffect: React.FC<CursorEffectProps> = ({ cursorVariant = 'default' }
         }}
         variants={glowVariants}
         animate={cursorVariant}
-        transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+        transition={{ type: 'spring', stiffness: 400, damping: 25 }}
       />
       
-      {/* Main cursor circle */}
+      {/* Main cursor circle - improved with gaming-themed glow */}
       <motion.div
         className="cursor-outer fixed pointer-events-none z-50 rounded-full border"
         style={{
@@ -285,7 +308,7 @@ const CursorEffect: React.FC<CursorEffectProps> = ({ cursorVariant = 'default' }
         }}
         variants={cursorVariants}
         animate={cursorVariant}
-        transition={{ type: 'spring', stiffness: 400, damping: 28 }}
+        transition={{ type: 'spring', stiffness: 500, damping: 30 }} // More responsive
       >
         <motion.div 
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full"

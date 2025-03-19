@@ -1,6 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Gamepad } from 'lucide-react';
 
 const Hero: React.FC = () => {
   const [greetingIndex, setGreetingIndex] = useState(0);
@@ -82,15 +83,15 @@ const Hero: React.FC = () => {
         })}
       </div>
       
-      {/* On mobile, show scroll indicator first */}
+      {/* On mobile, show scroll indicator ABOVE content with more space - IMPROVED POSITIONING */}
       <motion.div 
-        className="flex md:hidden mb-8 mt-16 flex-col items-center"
+        className="flex md:hidden mb-4 mt-16 flex-col items-center z-20 absolute top-16 left-1/2 transform -translate-x-1/2"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.5, duration: 0.5 }}
       >
         <motion.div 
-          className="w-8 h-12 border-2 border-primary/50 rounded-full flex justify-center p-2" 
+          className="w-8 h-12 border-2 border-primary/50 rounded-full flex justify-center p-2 shadow-[0_0_15px_rgba(72,149,239,0.5)]" 
         >
           <motion.div 
             className="w-1 h-2 bg-primary rounded-full" 
@@ -105,13 +106,13 @@ const Hero: React.FC = () => {
           />
         </motion.div>
         <motion.p 
-          className="mt-2 text-sm text-foreground/60"
+          className="mt-2 text-sm text-foreground/90 font-medium"
         >
           Scroll Down
         </motion.p>
       </motion.div>
       
-      <div className="container px-4 sm:px-6 mx-auto">
+      <div className="container px-4 sm:px-6 mx-auto mt-10 sm:mt-0">
         <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-8 md:gap-12">
           {/* Left content */}
           <motion.div className="w-full lg:w-1/2" 
@@ -135,8 +136,8 @@ const Hero: React.FC = () => {
               CHARAN RK
             </motion.h1>
             
-            {/* Improved role text animation with AnimatePresence for smoother transitions */}
-            <div className="h-8 mb-6 relative">
+            {/* Gaming element - controller icon next to role */}
+            <div className="h-8 mb-6 relative flex items-center">
               <AnimatePresence mode="wait">
                 <motion.p 
                   key={roles[currentRoleIndex]}
@@ -144,9 +145,18 @@ const Hero: React.FC = () => {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
                   transition={{ duration: 0.5 }}
-                  className="text-xl text-sky-600 absolute"
+                  className="text-xl text-sky-600 absolute flex items-center"
                 >
                   {roles[currentRoleIndex]}
+                  {roles[currentRoleIndex].toLowerCase().includes('game') && (
+                    <motion.span 
+                      className="ml-2 text-primary"
+                      animate={{ rotate: [0, 10, 0, -10, 0] }}
+                      transition={{ repeat: Infinity, duration: 2 }}
+                    >
+                      <Gamepad className="w-5 h-5" />
+                    </motion.span>
+                  )}
                 </motion.p>
               </AnimatePresence>
             </div>
@@ -165,7 +175,7 @@ const Hero: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.2, duration: 0.8 }}
             >
-              <a href="#projects" className="px-4 sm:px-6 py-2 sm:py-3 bg-primary text-primary-foreground rounded-full font-medium hover:bg-primary/90 transition-colors text-sm sm:text-base">
+              <a href="#projects" className="px-4 sm:px-6 py-2 sm:py-3 bg-primary text-primary-foreground rounded-full font-medium hover:bg-primary/90 transition-colors text-sm sm:text-base shadow-[0_0_15px_rgba(72,149,239,0.5)]">
                 View Work
               </a>
               
@@ -200,19 +210,24 @@ const Hero: React.FC = () => {
                 }}
               />
               
-              {/* Orbital particles */}
+              {/* Gaming-themed orbital particles */}
               {Array.from({length: 8}).map((_, i) => {
                 const angle = (i / 8) * Math.PI * 2;
                 const delay = i * 0.2;
                 const radius = Math.min(window.innerWidth / 7, 150); // More responsive radius
+                const colors = ["#48f", "#0ff", "#0f8", "#f0f"]; // Gaming-themed colors
+                const color = colors[i % colors.length];
+                
                 return (
                   <motion.div
                     key={`orbit-${i}`}
-                    className="absolute w-2 h-2 bg-primary/70 rounded-full"
+                    className="absolute w-2 h-2 rounded-full"
                     style={{
                       left: '50%',
                       top: '50%',
-                      margin: '-1px'
+                      margin: '-1px',
+                      backgroundColor: color,
+                      boxShadow: `0 0 10px ${color}`
                     }}
                     animate={{
                       x: [Math.cos(angle) * radius, Math.cos(angle + Math.PI) * radius, Math.cos(angle + Math.PI * 2) * radius],
@@ -266,9 +281,9 @@ const Hero: React.FC = () => {
                   }}
                 />
 
-                {/* Scan line effect */}
+                {/* Scan line effect - gaming style */}
                 <motion.div
-                  className="absolute w-full h-8 bg-primary/10 blur-sm"
+                  className="absolute w-full h-8 bg-primary/20 blur-sm"
                   animate={{
                     y: [-400, 400],
                     opacity: [0, 0.8, 0]
@@ -279,11 +294,20 @@ const Hero: React.FC = () => {
                     ease: "linear"
                   }}
                 />
+                
+                {/* Pixelated effect overlay for gaming theme */}
+                <div className="absolute inset-0 opacity-10 pointer-events-none" 
+                  style={{
+                    backgroundImage: `linear-gradient(to right, rgba(72,149,239,0.1) 1px, transparent 1px), 
+                                      linear-gradient(to bottom, rgba(72,149,239,0.1) 1px, transparent 1px)`,
+                    backgroundSize: '8px 8px'
+                  }}
+                />
               </motion.div>
               
-              {/* Decorative elements around the photo - Smaller for better mobile view */}
+              {/* Decorative elements around the photo - Gaming themed */}
               <motion.div 
-                className="absolute -top-4 -right-4 w-8 h-8 sm:w-12 sm:h-12 bg-primary/40 rounded-full blur-md" 
+                className="absolute -top-4 -right-4 w-8 h-8 sm:w-12 sm:h-12 bg-cyan-500/40 rounded-full blur-md" 
                 animate={{
                   scale: [1, 1.5, 1],
                   opacity: [0.5, 1, 0.5]
@@ -295,7 +319,7 @@ const Hero: React.FC = () => {
                 }} 
               />
               <motion.div 
-                className="absolute -bottom-4 -left-4 w-10 h-10 sm:w-16 sm:h-16 bg-primary/30 rounded-full blur-md" 
+                className="absolute -bottom-4 -left-4 w-10 h-10 sm:w-16 sm:h-16 bg-fuchsia-500/30 rounded-full blur-md" 
                 animate={{
                   scale: [1, 1.3, 1],
                   opacity: [0.5, 1, 0.5]
@@ -306,7 +330,7 @@ const Hero: React.FC = () => {
                 }} 
               />
               <motion.div 
-                className="absolute top-1/2 -right-4 w-6 h-6 sm:w-8 sm:h-8 bg-blue-500/40 rounded-full blur-sm" 
+                className="absolute top-1/2 -right-4 w-6 h-6 sm:w-8 sm:h-8 bg-green-500/40 rounded-full blur-sm" 
                 animate={{
                   scale: [1, 1.4, 1],
                   opacity: [0.3, 0.7, 0.3]
@@ -318,7 +342,7 @@ const Hero: React.FC = () => {
                 }} 
               />
               <motion.div 
-                className="absolute bottom-1/4 -left-4 w-8 h-8 sm:w-10 sm:h-10 bg-purple-500/30 rounded-full blur-sm" 
+                className="absolute bottom-1/4 -left-4 w-8 h-8 sm:w-10 sm:h-10 bg-blue-500/30 rounded-full blur-sm" 
                 animate={{
                   scale: [1, 1.2, 1],
                   opacity: [0.3, 0.6, 0.3]
@@ -337,7 +361,7 @@ const Hero: React.FC = () => {
       {/* Desktop scroll indicator */}
       <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 hidden md:flex flex-col items-center">
         <motion.div 
-          className="w-8 h-12 border-2 border-primary/50 rounded-full flex justify-center p-2" 
+          className="w-8 h-12 border-2 border-primary/50 rounded-full flex justify-center p-2 shadow-[0_0_15px_rgba(72,149,239,0.5)]" 
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.5, duration: 0.5 }}
