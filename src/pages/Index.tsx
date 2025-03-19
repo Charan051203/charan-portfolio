@@ -98,7 +98,7 @@ const Index: React.FC = () => {
     setRandomJoke(joke);
 
     // Welcome toast with slight delay for better UX - don't show on slow connections
-    const connection = navigator.connection as any;
+    const connection = (navigator as any).connection;
     const isSlowConnection = connection && 
       (connection.effectiveType === '2g' || connection.saveData);
     
@@ -147,7 +147,7 @@ const Index: React.FC = () => {
       
       {/* Fixed social media sidebar - Only visible on desktop */}
       {showSidebar && (
-        <div className="fixed left-4 sm:left-6 bottom-1/2 transform translate-y-1/2 flex flex-col gap-4 sm:gap-5 z-30 hidden lg:flex">
+        <div className="fixed left-4 sm:left-6 bottom-1/2 transform translate-y-1/2 flex-col gap-4 sm:gap-5 z-30 hidden lg:flex">
           {[
             { icon: <Linkedin className="w-5 h-5" />, href: "https://www.linkedin.com/in/charan051203/", label: "LinkedIn" },
             { icon: <Github className="w-5 h-5" />, href: "https://github.com/Charan051203", label: "GitHub" },
