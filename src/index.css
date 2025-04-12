@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -205,27 +206,34 @@
 /* Responsive styles for different screen sizes */
 @media (max-width: 640px) {
   .container {
-    @apply px-4;
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
   
   h1 {
-    @apply text-3xl;
+    font-size: 1.875rem;
+    line-height: 2.25rem;
   }
   
   h2 {
-    @apply text-2xl;
+    font-size: 1.5rem;
+    line-height: 2rem;
   }
   
   h3 {
-    @apply text-xl;
+    font-size: 1.25rem;
+    line-height: 1.75rem;
   }
   
   .grid {
-    @apply gap-4;
+    gap: 1rem;
   }
   
   section {
-    @apply py-12 px-4;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
   
   .mobile-menu-button {
@@ -250,27 +258,35 @@
 
 @media (max-width: 360px) {
   h1 {
-    @apply text-2xl;
+    font-size: 1.5rem;
+    line-height: 2rem;
   }
   
   h2 {
-    @apply text-xl;
+    font-size: 1.25rem;
+    line-height: 1.75rem;
   }
   
   h3 {
-    @apply text-lg;
+    font-size: 1.125rem;
+    line-height: 1.75rem;
   }
   
   p {
-    @apply text-sm;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
   }
   
   .container {
-    @apply px-3;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
   }
   
   section {
-    @apply py-8 px-3;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
   }
   
   .profile-image {
@@ -298,23 +314,25 @@
 /* CSS Resets for smaller screens */
 @media (max-width: 480px) {
   .px-6 {
-    @apply px-3 !important;
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
   }
   
   .py-6 {
-    @apply py-3 !important;
+    padding-top: 0.75rem !important;
+    padding-bottom: 0.75rem !important;
   }
   
   .p-8 {
-    @apply p-4 !important;
+    padding: 1rem !important;
   }
   
   .m-8 {
-    @apply m-4 !important;
+    margin: 1rem !important;
   }
   
   .gap-8 {
-    @apply gap-4 !important;
+    gap: 1rem !important;
   }
   
   button.mobile-menu-button {
@@ -328,26 +346,29 @@
   }
   
   #home .container {
-    @apply mt-16 !important;
+    margin-top: 4rem !important;
   }
   
   #home .profile-image, 
-  #home .w-[280px],
-  #home .w-[240px] {
+  #home .w-\[280px\],
+  #home .w-\[240px\] {
     max-width: 180px !important;
     max-height: 180px !important;
   }
   
   .text-4xl {
-    @apply text-3xl !important;
+    font-size: 1.875rem !important;
+    line-height: 2.25rem !important;
   }
   
   .text-3xl {
-    @apply text-2xl !important;
+    font-size: 1.5rem !important;
+    line-height: 2rem !important;
   }
   
   .text-2xl {
-    @apply text-xl !important;
+    font-size: 1.25rem !important;
+    line-height: 1.75rem !important;
   }
 }
 
@@ -386,5 +407,103 @@
     left: 1rem !important;
     transform: none !important;
     z-index: 40;
+  }
+}
+
+/* Extra small device styles */
+@media (max-width: 320px) {
+  body {
+    font-size: 0.8125rem; /* 13px */
+  }
+  
+  h1 {
+    font-size: 1.375rem !important;
+    line-height: 1.75rem !important;
+  }
+  
+  h2 {
+    font-size: 1.125rem !important;
+    line-height: 1.5rem !important;
+  }
+  
+  h3 {
+    font-size: 1rem !important;
+    line-height: 1.5rem !important;
+  }
+  
+  p {
+    font-size: 0.8125rem !important;
+    line-height: 1.25rem !important;
+  }
+  
+  .container {
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+  }
+  
+  .profile-image {
+    max-width: 140px !important;
+  }
+  
+  .mobile-menu-button {
+    top: 0.375rem !important;
+    right: 0.375rem !important;
+    transform: scale(0.85);
+    width: 2.25rem !important;
+    height: 2.25rem !important;
+    min-width: 2.25rem !important;
+    min-height: 2.25rem !important;
+  }
+  
+  .back-to-top {
+    bottom: 0.375rem !important;
+    right: 0.375rem !important;
+    transform: scale(0.85);
+    width: 2.25rem !important;
+    height: 2.25rem !important;
+  }
+  
+  .sonner-toast {
+    max-width: 98% !important;
+    font-size: 0.75rem !important;
+    padding: 0.5rem !important;
+  }
+  
+  /* Ensure all fixed elements are visible without zooming */
+  #home {
+    padding-top: 5rem !important;
+  }
+  
+  .scroll-indicator-mobile {
+    top: 5rem !important; 
+    left: 0.5rem !important;
+    transform: scale(0.85) !important;
+  }
+  
+  /* Adjust padding and margins throughout */
+  .px-4, .px-3 {
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+  }
+  
+  .py-4, .py-3 {
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+  }
+  
+  .m-4, .m-3 {
+    margin: 0.5rem !important;
+  }
+  
+  .gap-4, .gap-3 {
+    gap: 0.5rem !important;
+  }
+  
+  /* Make sure text doesn't overflow */
+  .truncate-xs {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
   }
 }
