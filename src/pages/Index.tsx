@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import CursorEffect from '../components/CursorEffect';
@@ -107,8 +106,8 @@ const Index: React.FC = () => {
         toast("Welcome to my portfolio", {
           description: joke,
           duration: 7000,
-          position: "bottom-center", // Changed to always show at bottom-center
-          className: "max-w-[90vw] md:max-w-md text-sm sm:text-base" // Improve responsive toast
+          position: "bottom-center",
+          className: "max-w-[85vw] md:max-w-md text-sm sm:text-base fixed-bottom-toast"
         });
       }, 2000);
       

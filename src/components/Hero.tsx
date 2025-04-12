@@ -6,6 +6,7 @@ import { useIsMobile } from '../hooks/use-mobile';
 const Hero: React.FC = () => {
   const [greetingIndex, setGreetingIndex] = useState(0);
   const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
+  const [hasScrolled, setHasScrolled] = useState(false);
   const isMobile = useIsMobile();
   const roles = ["AI Engineer", "Data Scientist", "Game Developer", "Prompt Engineer", "Gamer"];
   const greetings = [{
@@ -37,6 +38,16 @@ const Hero: React.FC = () => {
       setCurrentRoleIndex(prev => (prev + 1) % roles.length);
     }, 3000);
     return () => clearInterval(interval);
+  }, []);
+  
+  // Check if page has scrolled
+  useEffect(() => {
+    const handleScroll = () => {
+      setHasScrolled(window.scrollY > 100);
+    };
+    
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
   
   return (
@@ -84,19 +95,14 @@ const Hero: React.FC = () => {
         })}
       </div>
       
-      {/* On mobile, show scroll indicator at top with FIXED position to avoid overlap */}
-      {isMobile && (
+      {/* On mobile, show scroll indicator - only if not scrolled */}
+      {isMobile && !hasScrolled && (
         <motion.div 
-          className="flex mb-4 flex-col items-center z-20 scroll-indicator-mobile absolute"
+          className="flex mb-4 flex-col items-center z-20 absolute left-1/2 -translate-x-1/2 top-24"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0 }}
           transition={{ delay: 1.5, duration: 0.5 }}
-          style={{
-            position: 'absolute',
-            top: '1rem',
-            left: '1rem',
-            zIndex: 40
-          }}
         >
           <motion.div 
             className="w-6 h-10 border-2 border-primary/50 rounded-full flex justify-center p-2 shadow-[0_0_15px_rgba(72,149,239,0.5)] backdrop-blur-md" 
@@ -360,8 +366,8 @@ const Hero: React.FC = () => {
         </div>
       </div>
       
-      {/* Desktop scroll indicator - ONLY SHOW ON NON-MOBILE */}
-      {!isMobile && (
+      {/* Desktop scroll indicator - ONLY SHOW ON NON-MOBILE AND WHEN NOT SCROLLED */}
+      {!isMobile && !hasScrolled && (
         <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 hidden md:flex flex-col items-center">
           <motion.div 
             className="w-8 h-12 border-2 border-primary/50 rounded-full flex justify-center p-2 shadow-[0_0_15px_rgba(72,149,239,0.5)]" 
