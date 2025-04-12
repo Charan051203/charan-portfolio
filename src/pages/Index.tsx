@@ -98,15 +98,17 @@ const Index: React.FC = () => {
     setRandomJoke(joke);
 
     // Welcome toast with slight delay for better UX - don't show on slow connections
-    const connection = (navigator as any).connection;
-    const isSlowConnection = connection && 
-      (connection.effectiveType === '2g' || connection.saveData);
+    // Fix TypeScript error by checking for connection property safely
+    const isSlowConnection = 'connection' in navigator && 
+      ((navigator as any).connection?.effectiveType === '2g' || (navigator as any).connection?.saveData);
     
     if (!isSlowConnection) {
       const toastTimer = setTimeout(() => {
         toast("Welcome to my portfolio", {
           description: joke,
-          duration: 5000
+          duration: 7000,
+          position: isMobile ? "bottom-center" : "top-right",
+          className: "max-w-[90vw] mx-auto md:max-w-md" // Make toast wider and centered on mobile
         });
       }, 2000);
       
@@ -193,7 +195,7 @@ const Index: React.FC = () => {
       {/* Back to top button - Enhanced visibility for mobile */}
       <motion.a
         href="#home"
-        className="fixed bottom-6 right-4 sm:right-6 w-12 h-12 sm:w-12 sm:h-12 rounded-full bg-primary flex items-center justify-center hover:bg-primary/90 transition-all z-30"
+        className="fixed bottom-6 right-5 w-12 h-12 rounded-full bg-primary flex items-center justify-center hover:bg-primary/90 transition-all z-30 border-2 border-primary/30"
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ 
           opacity: hasScrolled ? 1 : 0,
@@ -204,10 +206,10 @@ const Index: React.FC = () => {
         whileHover={{ y: -5 }}
         aria-label="Back to top"
         style={{
-          boxShadow: '0 0 20px hsla(var(--primary), 0.6)'
+          boxShadow: '0 0 20px hsla(var(--primary), 0.8)'
         }}
       >
-        <Home className="text-primary-foreground w-5 h-5 sm:w-5 sm:h-5" />
+        <Home className="text-primary-foreground w-5 h-5" />
       </motion.a>
     </div>
   );

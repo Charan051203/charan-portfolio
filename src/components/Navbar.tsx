@@ -145,10 +145,10 @@ const Navbar: React.FC<NavbarProps> = ({ showIcons = true }) => {
             </div>
           )}
           
-          {/* Mobile menu button - MORE VISIBLE with gamepad icon and larger size */}
+          {/* Mobile menu button - ENSURE VISIBILITY with fixed position and shadow */}
           <div className="md:hidden">
             <motion.button 
-              className="w-12 h-12 glassmorphism rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(72,149,239,0.4)]"
+              className="w-12 h-12 glassmorphism rounded-full flex items-center justify-center fixed top-3 right-3 shadow-[0_0_15px_rgba(72,149,239,0.6)] border border-primary/30"
               aria-label="Menu"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               whileTap={{ scale: 0.95 }}

@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Gamepad } from 'lucide-react';
@@ -83,15 +82,15 @@ const Hero: React.FC = () => {
         })}
       </div>
       
-      {/* On mobile, show scroll indicator ABOVE content with more space - IMPROVED POSITIONING */}
+      {/* On mobile, show scroll indicator at top with FIXED position to avoid overlap */}
       <motion.div 
-        className="flex md:hidden mb-4 mt-16 flex-col items-center z-20 absolute top-16 left-1/2 transform -translate-x-1/2"
+        className="flex md:hidden mb-4 flex-col items-center z-20 fixed top-20 left-1/2 transform -translate-x-1/2 w-full"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.5, duration: 0.5 }}
       >
         <motion.div 
-          className="w-8 h-12 border-2 border-primary/50 rounded-full flex justify-center p-2 shadow-[0_0_15px_rgba(72,149,239,0.5)]" 
+          className="w-8 h-12 border-2 border-primary/50 rounded-full flex justify-center p-2 shadow-[0_0_15px_rgba(72,149,239,0.5)] backdrop-blur-md" 
         >
           <motion.div 
             className="w-1 h-2 bg-primary rounded-full" 
@@ -106,13 +105,13 @@ const Hero: React.FC = () => {
           />
         </motion.div>
         <motion.p 
-          className="mt-2 text-sm text-foreground/90 font-medium"
+          className="mt-2 text-sm text-foreground/90 font-medium backdrop-blur-sm px-2 py-1 rounded-full"
         >
           Scroll Down
         </motion.p>
       </motion.div>
       
-      <div className="container px-4 sm:px-6 mx-auto mt-10 sm:mt-0">
+      <div className="container px-4 sm:px-6 mx-auto mt-24 sm:mt-0">
         <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-8 md:gap-12">
           {/* Left content */}
           <motion.div className="w-full lg:w-1/2" 
