@@ -145,7 +145,7 @@ const Navbar: React.FC<NavbarProps> = ({ showIcons = true }) => {
             </div>
           )}
           
-          {/* Mobile menu button - ENSURE VISIBILITY with fixed position and shadow */}
+          {/* Mobile menu button - with absolute positioning and mandatory visibility */}
           <div className="md:hidden">
             <motion.button 
               className="mobile-menu-button w-10 h-10 sm:w-12 sm:h-12 glassmorphism rounded-full flex items-center justify-center fixed top-3 right-3 shadow-[0_0_15px_rgba(72,149,239,0.6)] border border-primary/30"
@@ -153,14 +153,16 @@ const Navbar: React.FC<NavbarProps> = ({ showIcons = true }) => {
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               whileTap={{ scale: 0.95 }}
               whileHover={{ scale: 1.05 }}
-              initial={{ opacity: 0 }}
+              initial={{ opacity: 1 }}
               animate={{ opacity: 1 }}
               style={{
                 opacity: 1,
                 visibility: "visible",
                 zIndex: 999,
                 minWidth: '2.5rem',
-                minHeight: '2.5rem'
+                minHeight: '2.5rem',
+                position: 'fixed',
+                display: 'flex'
               }}
             >
               <AnimatePresence mode="wait">

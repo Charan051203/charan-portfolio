@@ -1,458 +1,187 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-import { Send, Mail, MapPin, Linkedin, Github, Instagram, Twitter, FileText, Gamepad, Trophy, Joystick, Dice1, Target } from 'lucide-react';
+import { Send, MapPin, Mail, Phone } from 'lucide-react';
 import { toast } from 'sonner';
-import { Input } from './ui/input';
-import { Textarea } from './ui/textarea';
-import { Label } from './ui/label';
+import { useIsMobile } from '../hooks/use-mobile';
 
 const Contact: React.FC = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
+  const isMobile = useIsMobile();
+  
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsSubmitting(true);
-
-    // Form validation
-    if (!formData.name || !formData.email || !formData.message) {
-      toast.error("Please fill in all fields");
-      setIsSubmitting(false);
-      return;
-    }
-
-    // Basic email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) {
-      toast.error("Please enter a valid email address");
-      setIsSubmitting(false);
-      return;
-    }
-
-    try {
-      // Simulate form submission (this would be replaced with actual API call)
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      console.log('Sending email to charanrk5123@gmail.com', formData);
-
-      // Clear form after successful submission
-      setFormData({
-        name: '',
-        email: '',
-        message: ''
+    
+    const formData = new FormData(e.currentTarget);
+    const name = formData.get('name') as string;
+    const email = formData.get('email') as string;
+    const message = formData.get('message') as string;
+    
+    if (!name || !email || !message) {
+      toast.error("Please fill in all fields", {
+        position: isMobile ? "bottom-center" : "top-right",
       });
-      toast.success("Message sent successfully! I will get back to you soon.");
-    } catch (error) {
-      console.error("Error sending message:", error);
-      toast.error("Failed to send message. Please try again or contact directly via email.");
-    } finally {
-      setIsSubmitting(false);
+      return;
     }
+    
+    // This would be where you'd normally send the form data
+    // For now, we'll just show a success message
+    toast.success("Message sent successfully!", {
+      position: isMobile ? "bottom-center" : "top-right",
+      description: "Thanks for reaching out! I'll get back to you soon."
+    });
+    
+    // Reset form
+    e.currentTarget.reset();
   };
-
-  const handleDownloadResume = () => {
-    // Replace with your actual resume file path
-    const link = document.createElement('a');
-    link.href = '/Resume CHARAN RK.pdf';
-    link.download = 'Charan_Resume.pdf';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
-  // Gaming-themed icons for decoration
-  const gamingIcons = [
-    <Gamepad className="w-8 h-8 text-primary/70" />,
-    <Trophy className="w-7 h-7 text-yellow-500/70" />,
-    <Target className="w-8 h-8 text-green-500/70" />,
-    <Dice1 className="w-7 h-7 text-purple-500/70" />
+  
+  const contactInfo = [
+    {
+      icon: <Mail className="h-5 w-5 text-primary" />,
+      title: "Email",
+      value: "charanrokella123@gmail.com"
+    },
+    {
+      icon: <MapPin className="h-5 w-5 text-primary" />,
+      title: "Location",
+      value: "Chennai, India"
+    },
+    {
+      icon: <Phone className="h-5 w-5 text-primary" />,
+      title: "Phone",
+      value: "+91 9677293055"
+    }
   ];
-
+  
   return (
-    <section id="contact" className="py-16 md:py-20 lg:py-24 relative">
-      {/* Background elements */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-background to-background/50 opacity-80" />
-        <div className="absolute top-1/3 left-1/4 w-64 h-64 bg-primary/5 rounded-full blur-[80px]" />
-        <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-primary/5 rounded-full blur-[80px]" />
-        
-        {/* Gaming grid background */}
-        <div className="absolute inset-0 opacity-5 pointer-events-none" 
-          style={{
-            backgroundImage: `linear-gradient(to right, rgba(72,149,239,0.3) 1px, transparent 1px), 
-                              linear-gradient(to bottom, rgba(72,149,239,0.3) 1px, transparent 1px)`,
-            backgroundSize: '20px 20px'
-          }}
-        />
-      </div>
-      
-      <div className="container mx-auto px-4 md:px-6">
-        <motion.div className="text-center mb-12" 
+    <section id="contact" className="py-16 md:py-20 bg-gradient-to-b from-background to-background/90 relative">
+      <div className="container mx-auto px-4 sm:px-6">
+        <motion.div 
+          className="text-center mb-12"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
           viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.5 }}
         >
-          <h2 className="text-sm uppercase tracking-wider text-primary mb-3">Contact</h2>
-          <h3 className="text-3xl md:text-4xl font-bold mb-6">Get In Touch</h3>
-          <div className="w-20 h-1 bg-primary/30 mx-auto rounded-full">
-            <div className="w-10 h-1 bg-primary rounded-full" />
-          </div>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gradient">Get in Touch</h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Have a question or want to work together? Feel free to reach out.
+          </p>
         </motion.div>
         
-        <div className="max-w-5xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Contact Form */}
-            <motion.div className="glassmorphism rounded-2xl p-6 md:p-8 border border-primary/20 shadow-lg relative overflow-hidden" 
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true, margin: "-100px" }}
-            >
-              {/* Decorative elements */}
-              <div className="absolute -top-20 -right-20 w-40 h-40 bg-primary/10 rounded-full blur-xl" />
-              <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-primary/10 rounded-full blur-xl" />
-              
-              {/* Gaming controller floating in corner */}
-              <motion.div 
-                className="absolute top-4 right-4 text-primary"
-                animate={{ 
-                  y: [0, -5, 0],
-                  rotate: [0, 5, 0, -5, 0]
-                }}
-                transition={{
-                  repeat: Infinity,
-                  duration: 4,
-                  ease: "easeInOut"
-                }}
-              >
-                <Gamepad className="w-8 h-8 opacity-50" />
-              </motion.div>
-              
-              <motion.h4 className="text-xl md:text-2xl font-bold mb-6 text-gradient relative z-10 text-left" 
-                initial={{ opacity: 0, y: -10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                viewport={{ once: true }}
-              >
-                Send Me A Message
-              </motion.h4>
-              
-              <form onSubmit={handleSubmit} className="space-y-5 relative z-10">
-                <motion.div 
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3 }}
-                  viewport={{ once: true }}
-                >
-                  <Label htmlFor="name" className="block text-foreground/80 mb-2 text-left">
-                    Your Name
-                  </Label>
-                  <Input 
-                    type="text" 
-                    id="name" 
-                    name="name" 
-                    value={formData.name} 
-                    onChange={handleChange} 
-                    required 
-                    className="w-full px-4 py-2 bg-card/50 border border-primary/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all placeholder-foreground/40" 
-                    placeholder="John Doe" 
-                  />
-                </motion.div>
-                
-                <motion.div 
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4 }}
-                  viewport={{ once: true }}
-                >
-                  <Label htmlFor="email" className="block text-foreground/80 mb-2 text-left">
-                    Your Email
-                  </Label>
-                  <Input 
-                    type="email" 
-                    id="email" 
-                    name="email" 
-                    value={formData.email} 
-                    onChange={handleChange} 
-                    required 
-                    className="w-full px-4 py-2 bg-card/50 border border-primary/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all placeholder-foreground/40" 
-                    placeholder="john@example.com" 
-                  />
-                </motion.div>
-                
-                <motion.div 
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5 }}
-                  viewport={{ once: true }}
-                >
-                  <Label htmlFor="message" className="block text-foreground/80 mb-2 text-left">
-                    Your Message
-                  </Label>
-                  <Textarea 
-                    id="message" 
-                    name="message" 
-                    value={formData.message} 
-                    onChange={handleChange} 
-                    required 
-                    rows={4} 
-                    className="w-full px-4 py-2 bg-card/50 border border-primary/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all resize-none placeholder-foreground/40" 
-                    placeholder="Hello, I'd like to discuss a project..." 
-                  />
-                </motion.div>
-                
-                <motion.button 
-                  type="submit" 
-                  className="w-full px-5 py-3 bg-primary text-primary-foreground rounded-lg font-semibold hover:bg-primary/90 transition-colors flex items-center justify-center space-x-2 group" 
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  disabled={isSubmitting}
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.6 }}
-                  viewport={{ once: true }}
-                >
-                  <span>{isSubmitting ? 'Sending...' : 'Send Message'}</span>
-                  <Send className="w-4 h-4 transform transition-transform group-hover:translate-x-1" />
-                </motion.button>
-              </form>
-            </motion.div>
-            
-            {/* Profile image with animation - SMALLER SIZE FOR MOBILE */}
-            <div className="relative flex items-center justify-center h-full min-h-[220px] lg:min-h-[280px]">
-              {/* Gaming elements floating around the image */}
-              {gamingIcons.map((icon, index) => {
-                const angle = (index / gamingIcons.length) * Math.PI * 2;
-                const distance = 100;
-                const x = Math.cos(angle) * distance;
-                const y = Math.sin(angle) * distance;
-                
-                return (
-                  <motion.div
-                    key={index}
-                    className="absolute z-10"
-                    style={{
-                      x: x,
-                      y: y,
-                    }}
-                    animate={{
-                      x: [x, x + 20, x],
-                      y: [y, y - 20, y],
-                      rotate: [0, 10, 0, -10, 0]
-                    }}
-                    transition={{
-                      repeat: Infinity,
-                      duration: 4 + index,
-                      ease: "easeInOut"
-                    }}
-                  >
-                    {icon}
-                  </motion.div>
-                );
-              })}
-              
-              {/* Animated glow behind the image */}
-              <motion.div 
-                className="absolute inset-0 bg-gradient-to-r from-primary/20 via-cyan-500/20 to-purple-500/20 rounded-full blur-3xl"
-                animate={{
-                  scale: [1, 1.1, 1],
-                  opacity: [0.5, 0.7, 0.5]
-                }}
-                transition={{
-                  repeat: Infinity,
-                  duration: 3,
-                  ease: "easeInOut"
-                }}
-              />
-              
-              {/* Gaming-inspired pixelated background */}
-              <motion.div 
-                className="absolute inset-0 opacity-20"
-                style={{
-                  backgroundImage: `linear-gradient(to right, rgba(72,149,239,0.5) 1px, transparent 1px), 
-                                    linear-gradient(to bottom, rgba(72,149,239,0.5) 1px, transparent 1px)`,
-                  backgroundSize: '10px 10px'
-                }}
-                animate={{
-                  opacity: [0.1, 0.2, 0.1]
-                }}
-                transition={{
-                  repeat: Infinity,
-                  duration: 5
-                }}
-              />
-              
-              {/* The animated floating image - REDUCED SIZE */}
-              <motion.div 
-                className="relative z-10 w-full max-w-[220px] md:max-w-[260px] rounded-2xl overflow-hidden border-2 border-primary/20" 
-                animate={{
-                  y: [0, -15, 0],
-                  rotate: [0, 1, 0]
-                }}
-                transition={{
-                  repeat: Infinity,
-                  duration: 6,
-                  ease: "easeInOut"
-                }}
-              >
-                {/* Profile image */}
-                <motion.img 
-                  src="/Profile.svg" 
-                  alt="Profile" 
-                  className="w-full h-full object-cover" 
-                  animate={{
-                    scale: [1, 1.03, 1]
-                  }}
-                  transition={{
-                    repeat: Infinity,
-                    duration: 10,
-                    ease: "easeInOut"
-                  }}
-                />
-                
-                {/* Overlay effect */}
-                <motion.div 
-                  className="absolute inset-0 bg-gradient-to-t from-background/50 to-transparent" 
-                  animate={{
-                    opacity: [0.3, 0.5, 0.3]
-                  }}
-                  transition={{
-                    repeat: Infinity,
-                    duration: 4
-                  }}
-                />
-                
-                {/* Game-inspired scan line effect */}
-                <motion.div
-                  className="absolute w-full h-10 bg-cyan-500/10 mix-blend-overlay"
-                  animate={{
-                    y: [-200, 200],
-                    opacity: [0, 0.8, 0]
-                  }}
-                  transition={{
-                    repeat: Infinity,
-                    duration: 2,
-                    ease: "linear"
-                  }}
-                />
-              </motion.div>
-            </div>
-          </div>
-          
-          {/* Contact Information Card - Below the message form - IMPROVED LAYOUT FOR MOBILE */}
+        <div className="grid md:grid-cols-5 gap-8 md:gap-12">
+          {/* Contact Form */}
           <motion.div 
-            className="mt-8 glassmorphism rounded-2xl p-6 md:p-8 border border-primary/20 shadow-lg relative overflow-hidden" 
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
+            className="md:col-span-3 glassmorphism p-6 rounded-xl border border-border/40"
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <div className="absolute -top-20 -right-20 w-40 h-40 bg-primary/10 rounded-full blur-xl" />
-            <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-primary/10 rounded-full blur-xl" />
+            <h3 className="text-xl font-semibold mb-4">Send me a message</h3>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <label htmlFor="name" className="block text-sm font-medium text-foreground mb-1">
+                  Name
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  className="w-full px-4 py-2 rounded-md bg-secondary/30 border border-border/40 focus:outline-none focus:ring-2 focus:ring-primary/50"
+                  placeholder="Your name"
+                />
+              </div>
+              
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-foreground mb-1">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  className="w-full px-4 py-2 rounded-md bg-secondary/30 border border-border/40 focus:outline-none focus:ring-2 focus:ring-primary/50"
+                  placeholder="your.email@example.com"
+                />
+              </div>
+              
+              <div>
+                <label htmlFor="message" className="block text-sm font-medium text-foreground mb-1">
+                  Message
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows={5}
+                  className="w-full px-4 py-2 rounded-md bg-secondary/30 border border-border/40 focus:outline-none focus:ring-2 focus:ring-primary/50"
+                  placeholder="Your message here..."
+                ></textarea>
+              </div>
+              
+              <button
+                type="submit"
+                className="flex items-center justify-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors w-full sm:w-auto"
+              >
+                <Send className="h-4 w-4" />
+                Send Message
+              </button>
+            </form>
+          </motion.div>
+          
+          {/* Contact Information */}
+          <motion.div 
+            className="md:col-span-2 glassmorphism p-6 rounded-xl border border-border/40 flex flex-col justify-center"
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+          >
+            <h3 className="text-xl font-semibold mb-6 text-center md:text-left">Contact Information</h3>
+            <div className="space-y-6">
+              {contactInfo.map((info, index) => (
+                <motion.div 
+                  key={index}
+                  className="contact-info-item flex flex-col md:flex-row items-center md:items-start gap-3 md:gap-4"
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.3, delay: 0.4 + index * 0.1 }}
+                >
+                  <div className="contact-info-icon p-3 bg-secondary/30 rounded-full flex items-center justify-center">
+                    {info.icon}
+                  </div>
+                  <div className="text-center md:text-left">
+                    <h4 className="text-sm font-medium text-muted-foreground">{info.title}</h4>
+                    <p className="text-base">{info.value}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
             
-            <div className="relative z-10">
-              <motion.h4 
-                className="text-xl md:text-2xl font-bold mb-6 text-center text-gradient" 
-                initial={{ opacity: 0, y: -10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                viewport={{ once: true }}
-              >
-                Contact Information
-              </motion.h4>
-              
-              {/* IMPROVED GRID LAYOUT for better mobile experience */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 items-center max-w-2xl mx-auto">
-                <motion.div 
-                  className="flex flex-col items-center space-y-2 text-center" 
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.3 }}
+            {/* Social Media Icons */}
+            <div className="mt-8 flex justify-center md:justify-start gap-4">
+              <div className="h-px w-16 bg-border/30 my-auto"></div>
+              <p className="text-sm text-muted-foreground">Find me on</p>
+            </div>
+            <div className="flex justify-center md:justify-start gap-3 mt-4">
+              {['LinkedIn', 'GitHub', 'Instagram', 'Twitter'].map((platform, index) => (
+                <motion.a
+                  key={platform}
+                  href="#"
+                  className="p-2 glassmorphism rounded-full hover:text-primary hover:border-primary transition-colors"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
-                  whileHover={{ y: -5 }}
+                  transition={{ duration: 0.3, delay: 0.7 + index * 0.1 }}
+                  whileHover={{ y: -3 }}
                 >
-                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                    <Mail className="w-6 h-6 text-primary" />
-                  </div>
-                  <p className="text-foreground/70 text-base">Email</p>
-                  <a 
-                    href="mailto:charanrk5123@gmail.com" 
-                    className="text-foreground hover:text-primary transition-colors font-medium break-all"
-                  >
-                    charanrk5123@gmail.com
-                  </a>
-                </motion.div>
-                
-                <motion.div 
-                  className="flex flex-col items-center space-y-2 text-center" 
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.4 }}
-                  viewport={{ once: true }}
-                  whileHover={{ y: -5 }}
-                >
-                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                    <MapPin className="w-6 h-6 text-primary" />
-                  </div>
-                  <p className="text-foreground/70 text-base">Location</p>
-                  <p className="text-foreground font-medium">
-                    Bengaluru, Karnataka, India
-                  </p>
-                </motion.div>
-              </div>
-              
-              {/* Social Media Icons - Centered with improved spacing */}
-              <div className="flex justify-center mt-8 space-x-4 flex-wrap gap-y-4">
-                {[
-                  { icon: <Linkedin className="w-5 h-5" />, href: "https://www.linkedin.com/in/charan051203/", label: "LinkedIn" },
-                  { icon: <Github className="w-5 h-5" />, href: "https://github.com/Charan051203", label: "GitHub" },
-                  { icon: <Instagram className="w-5 h-5" />, href: "https://www.instagram.com/chrn_._/", label: "Instagram" },
-                  { icon: <Twitter className="w-5 h-5" />, href: "https://x.com/charan_5123", label: "Twitter" }
-                ].map((item, i) => (
-                  <motion.a
-                    key={i}
-                    href={item.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-10 h-10 rounded-full glassmorphism flex items-center justify-center text-foreground hover:text-primary hover:border-primary border border-border/50 transition-all"
-                    whileHover={{ scale: 1.2, y: -5 }}
-                    aria-label={item.label}
-                  >
-                    {item.icon}
-                  </motion.a>
-                ))}
-              </div>
-              
-              <motion.div 
-                className="flex items-center justify-center mt-6" 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 }}
-                viewport={{ once: true }}
-              >
-                <motion.button 
-                  onClick={handleDownloadResume} 
-                  className="flex items-center justify-center space-x-3 px-6 py-3 rounded-lg border border-primary/30 hover:bg-primary/10 transition-colors" 
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <FileText className="w-5 h-5 text-primary" />
-                  <span className="font-medium">Download Resume</span>
-                </motion.button>
-              </motion.div>
+                  <span className="sr-only">{platform}</span>
+                  {platform === 'LinkedIn' && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>}
+                  {platform === 'GitHub' && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>}
+                  {platform === 'Instagram' && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z"/></svg>}
+                  {platform === 'Twitter' && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>}
+                </motion.a>
+              ))}
             </div>
           </motion.div>
         </div>

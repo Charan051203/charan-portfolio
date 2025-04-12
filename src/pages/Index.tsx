@@ -107,7 +107,7 @@ const Index: React.FC = () => {
         toast("Welcome to my portfolio", {
           description: joke,
           duration: 7000,
-          position: isMobile ? "bottom-center" : "top-right",
+          position: "bottom-center", // Changed to always show at bottom-center
           className: "max-w-[90vw] md:max-w-md text-sm sm:text-base" // Improve responsive toast
         });
       }, 2000);
