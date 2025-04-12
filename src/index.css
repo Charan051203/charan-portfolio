@@ -248,128 +248,106 @@
   }
 }
 
-@media (min-width: 641px) and (max-width: 768px) {
-  section {
-    @apply py-16 px-5;
+@media (max-width: 360px) {
+  h1 {
+    @apply text-2xl;
+  }
+  
+  h2 {
+    @apply text-xl;
+  }
+  
+  h3 {
+    @apply text-lg;
+  }
+  
+  p {
+    @apply text-sm;
   }
   
   .container {
-    @apply px-5;
-  }
-}
-
-@media (min-width: 769px) and (max-width: 1024px) {
-  section {
-    @apply py-18 px-6;
-  }
-}
-
-#skills .skill-icon {
-  @apply w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14;
-}
-
-#skills .skill-icon-container .glow-bg {
-  background-color: hsla(var(--primary), 0.4);
-  animation: pulse-icon-glow 3s ease-in-out infinite;
-}
-
-#skills .skill-icon-container {
-  position: relative;
-  transition: transform 0.3s ease;
-}
-
-#skills .skill-icon-container:hover {
-  transform: translateY(-5px);
-}
-
-#skills .skill-icon-container::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 0.125rem;
-  filter: blur(0.85rem);
-  background-color: hsla(var(--primary), 0.3);
-  animation: pulse-icon-glow 3s ease-in-out infinite;
-  z-index: -1;
-}
-
-#skills .glow-effect {
-  box-shadow: 0 0 15px hsla(var(--primary), 0.5);
-  transition: all 0.3s ease;
-  overflow: visible !important;
-}
-
-#skills .glow-effect:hover {
-  box-shadow: 0 0 20px hsla(var(--primary), 0.8);
-  transform: scale(1.05);
-}
-
-@keyframes pulse-icon-glow {
-  0%, 100% {
-    opacity: 0.8;
-    filter: blur(0.75rem);
-  }
-  50% {
-    opacity: 0.4;
-    filter: blur(0.9rem);
-  }
-}
-
-.social-icon {
-  transition: all 0.3s ease;
-}
-
-.social-icon:hover {
-  transform: translateY(-5px);
-  filter: drop-shadow(0 0 8px hsla(var(--primary), 0.5));
-}
-
-@media (min-width: 768px) {
-  .contact-label {
-    @apply text-left;
-  }
-  
-  .contact-value {
-    @apply text-center;
-  }
-}
-
-.profile-image {
-  max-width: 100%;
-  height: auto;
-}
-
-img {
-  content-visibility: auto;
-}
-
-@media (max-width: 640px) {
-  .p-8 {
-    @apply p-4;
-  }
-  
-  .px-6 {
     @apply px-3;
   }
   
-  .py-4 {
-    @apply py-3;
+  section {
+    @apply py-8 px-3;
   }
   
-  .text-sm {
-    @apply text-xs;
+  .profile-image {
+    max-width: 180px;
   }
   
-  button, 
-  a[role="button"],
-  .button-like {
-    @apply min-h-10 min-w-10 flex items-center justify-center;
+  .mobile-menu-button {
+    top: 0.5rem !important;
+    right: 0.5rem !important;
+    transform: scale(0.9);
   }
   
-  input, 
-  textarea, 
-  select {
-    @apply text-base py-2;
+  .back-to-top {
+    bottom: 0.5rem !important;
+    right: 0.5rem !important;
+    transform: scale(0.9);
+  }
+  
+  .sonner-toast {
+    max-width: 95% !important;
+    font-size: 0.8rem !important;
+  }
+}
+
+/* CSS Resets for smaller screens */
+@media (max-width: 480px) {
+  .px-6 {
+    @apply px-3 !important;
+  }
+  
+  .py-6 {
+    @apply py-3 !important;
+  }
+  
+  .p-8 {
+    @apply p-4 !important;
+  }
+  
+  .m-8 {
+    @apply m-4 !important;
+  }
+  
+  .gap-8 {
+    @apply gap-4 !important;
+  }
+  
+  button.mobile-menu-button {
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: flex !important;
+    width: 2.5rem !important;
+    height: 2.5rem !important;
+    min-width: 2.5rem !important;
+    min-height: 2.5rem !important;
+  }
+  
+  #home .container {
+    @apply mt-16 !important;
+  }
+  
+  #home .profile-image, 
+  #home .w-[280px],
+  #home .w-[240px] {
+    max-width: 180px !important;
+    max-height: 180px !important;
+  }
+  
+  .text-4xl {
+    @apply text-3xl !important;
+  }
+  
+  .text-3xl {
+    @apply text-2xl !important;
+  }
+  
+  .text-2xl {
+    @apply text-xl !important;
   }
 }
 
@@ -394,9 +372,19 @@ img {
     width: auto !important;
     max-width: 90% !important;
     margin: 0 auto !important;
+    font-size: 0.9rem !important;
+    line-height: 1.3 !important;
   }
   
   #home {
     padding-top: 7rem !important;
+  }
+  
+  .scroll-indicator-mobile {
+    position: fixed !important;
+    top: 6rem !important;
+    left: 1rem !important;
+    transform: none !important;
+    z-index: 40;
   }
 }

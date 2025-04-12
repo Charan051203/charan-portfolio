@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Gamepad } from 'lucide-react';
+import { useIsMobile } from '../hooks/use-mobile';
 
 const Hero: React.FC = () => {
   const [greetingIndex, setGreetingIndex] = useState(0);
   const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
+  const isMobile = useIsMobile();
   const roles = ["AI Engineer", "Data Scientist", "Game Developer", "Prompt Engineer", "Gamer"];
   const greetings = [{
     text: "Hello",
@@ -83,36 +85,44 @@ const Hero: React.FC = () => {
       </div>
       
       {/* On mobile, show scroll indicator at top with FIXED position to avoid overlap */}
-      <motion.div 
-        className="flex md:hidden mb-4 flex-col items-center z-20 fixed top-20 left-1/2 transform -translate-x-1/2 w-full"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.5, duration: 0.5 }}
-      >
+      {isMobile && (
         <motion.div 
-          className="w-8 h-12 border-2 border-primary/50 rounded-full flex justify-center p-2 shadow-[0_0_15px_rgba(72,149,239,0.5)] backdrop-blur-md" 
+          className="flex mb-4 flex-col items-center z-20 scroll-indicator-mobile absolute"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.5, duration: 0.5 }}
+          style={{
+            position: 'absolute',
+            top: '1rem',
+            left: '1rem',
+            zIndex: 40
+          }}
         >
           <motion.div 
-            className="w-1 h-2 bg-primary rounded-full" 
-            animate={{
-              y: [0, 12, 0],
-              opacity: [0.6, 1, 0.6]
-            }} 
-            transition={{
-              repeat: Infinity,
-              duration: 1.5
-            }} 
-          />
+            className="w-6 h-10 border-2 border-primary/50 rounded-full flex justify-center p-2 shadow-[0_0_15px_rgba(72,149,239,0.5)] backdrop-blur-md" 
+          >
+            <motion.div 
+              className="w-1 h-2 bg-primary rounded-full" 
+              animate={{
+                y: [0, 8, 0],
+                opacity: [0.6, 1, 0.6]
+              }} 
+              transition={{
+                repeat: Infinity,
+                duration: 1.5
+              }} 
+            />
+          </motion.div>
+          <motion.p 
+            className="mt-1 text-xs text-foreground/90 font-medium backdrop-blur-sm px-2 py-1 rounded-full"
+          >
+            Scroll
+          </motion.p>
         </motion.div>
-        <motion.p 
-          className="mt-2 text-sm text-foreground/90 font-medium backdrop-blur-sm px-2 py-1 rounded-full"
-        >
-          Scroll Down
-        </motion.p>
-      </motion.div>
+      )}
       
-      <div className="container px-4 sm:px-6 mx-auto mt-24 sm:mt-0">
-        <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-8 md:gap-12">
+      <div className="container px-4 sm:px-6 mx-auto mt-16 sm:mt-0">
+        <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-6 md:gap-8 lg:gap-12">
           {/* Left content */}
           <motion.div className="w-full lg:w-1/2" 
             initial={{ opacity: 0, x: -50 }}
@@ -169,16 +179,16 @@ const Hero: React.FC = () => {
               AI Engineer and Data Scientist skilled in Machine Learning, Deep Learning, Prompt Engineering and Data Analytics. Proficient in predictive modeling, AI-driven solutions, and optimization techniques. As a game enthusiast, I love spending my free time exploring virtual worlds and playing video games.
             </motion.p>
             
-            <motion.div className="flex flex-wrap gap-4" 
+            <motion.div className="flex flex-wrap gap-3 sm:gap-4" 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.2, duration: 0.8 }}
             >
-              <a href="#projects" className="px-4 sm:px-6 py-2 sm:py-3 bg-primary text-primary-foreground rounded-full font-medium hover:bg-primary/90 transition-colors text-sm sm:text-base shadow-[0_0_15px_rgba(72,149,239,0.5)]">
+              <a href="#projects" className="px-3 sm:px-6 py-2 sm:py-3 bg-primary text-primary-foreground rounded-full font-medium hover:bg-primary/90 transition-colors text-sm sm:text-base shadow-[0_0_15px_rgba(72,149,239,0.5)]">
                 View Work
               </a>
               
-              <a href="/Resume CHARAN RK.pdf" download className="px-4 sm:px-6 py-2 sm:py-3 border border-primary/30 text-foreground rounded-full font-medium hover:bg-primary/10 transition-colors text-sm sm:text-base">
+              <a href="/Resume CHARAN RK.pdf" download className="px-3 sm:px-6 py-2 sm:py-3 border border-primary/30 text-foreground rounded-full font-medium hover:bg-primary/10 transition-colors text-sm sm:text-base">
                 Download Resume
               </a>
             </motion.div>
@@ -191,10 +201,9 @@ const Hero: React.FC = () => {
             transition={{ duration: 0.8 }}
           >
             <motion.div 
-              className="relative w-[240px] h-[240px] sm:w-[280px] sm:h-[280px] md:w-[320px] md:h-[320px] lg:w-[380px] lg:h-[380px] transition-all duration-300 ease-out"
+              className="relative w-[180px] h-[180px] xs:w-[200px] xs:h-[200px] sm:w-[240px] sm:h-[240px] md:w-[280px] md:h-[280px] lg:w-[320px] lg:h-[320px] transition-all duration-300 ease-out"
               whileHover={{ scale: 1.05 }}
             >
-              {/* Enhanced glowing effects */}
               <motion.div 
                 className="absolute inset-0 bg-gradient-to-r from-primary/30 via-blue-500/20 to-purple-500/30 rounded-full blur-3xl"
                 animate={{ 
@@ -209,12 +218,11 @@ const Hero: React.FC = () => {
                 }}
               />
               
-              {/* Gaming-themed orbital particles */}
               {Array.from({length: 8}).map((_, i) => {
                 const angle = (i / 8) * Math.PI * 2;
                 const delay = i * 0.2;
-                const radius = Math.min(window.innerWidth / 7, 150); // More responsive radius
-                const colors = ["#48f", "#0ff", "#0f8", "#f0f"]; // Gaming-themed colors
+                const radius = Math.min(window.innerWidth / 7, 150);
+                const colors = ["#48f", "#0ff", "#0f8", "#f0f"];
                 const color = colors[i % colors.length];
                 
                 return (
@@ -261,13 +269,11 @@ const Hero: React.FC = () => {
                   className="w-full h-full object-cover" 
                   loading="eager" 
                   onError={e => {
-                    // Fallback if image doesn't load
                     const target = e.target as HTMLImageElement;
                     target.src = "/placeholder.svg";
                   }} 
                 />
                 
-                {/* Enhanced overlay gradient with dynamic effect */}
                 <motion.div 
                   className="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent" 
                   animate={{
@@ -280,7 +286,6 @@ const Hero: React.FC = () => {
                   }}
                 />
 
-                {/* Scan line effect - gaming style */}
                 <motion.div
                   className="absolute w-full h-8 bg-primary/20 blur-sm"
                   animate={{
@@ -294,7 +299,6 @@ const Hero: React.FC = () => {
                   }}
                 />
                 
-                {/* Pixelated effect overlay for gaming theme */}
                 <div className="absolute inset-0 opacity-10 pointer-events-none" 
                   style={{
                     backgroundImage: `linear-gradient(to right, rgba(72,149,239,0.1) 1px, transparent 1px), 
@@ -304,7 +308,6 @@ const Hero: React.FC = () => {
                 />
               </motion.div>
               
-              {/* Decorative elements around the photo - Gaming themed */}
               <motion.div 
                 className="absolute -top-4 -right-4 w-8 h-8 sm:w-12 sm:h-12 bg-cyan-500/40 rounded-full blur-md" 
                 animate={{
@@ -357,35 +360,37 @@ const Hero: React.FC = () => {
         </div>
       </div>
       
-      {/* Desktop scroll indicator */}
-      <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 hidden md:flex flex-col items-center">
-        <motion.div 
-          className="w-8 h-12 border-2 border-primary/50 rounded-full flex justify-center p-2 shadow-[0_0_15px_rgba(72,149,239,0.5)]" 
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.5, duration: 0.5 }}
-        >
+      {/* Desktop scroll indicator - ONLY SHOW ON NON-MOBILE */}
+      {!isMobile && (
+        <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 hidden md:flex flex-col items-center">
           <motion.div 
-            className="w-1 h-2 bg-primary rounded-full" 
-            animate={{
-              y: [0, 12, 0],
-              opacity: [0.6, 1, 0.6]
-            }} 
-            transition={{
-              repeat: Infinity,
-              duration: 1.5
-            }} 
-          />
-        </motion.div>
-        <motion.p 
-          className="mt-2 text-sm text-foreground/60" 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.6, duration: 0.5 }}
-        >
-          Scroll Down
-        </motion.p>
-      </div>
+            className="w-8 h-12 border-2 border-primary/50 rounded-full flex justify-center p-2 shadow-[0_0_15px_rgba(72,149,239,0.5)]" 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.5, duration: 0.5 }}
+          >
+            <motion.div 
+              className="w-1 h-2 bg-primary rounded-full" 
+              animate={{
+                y: [0, 12, 0],
+                opacity: [0.6, 1, 0.6]
+              }} 
+              transition={{
+                repeat: Infinity,
+                duration: 1.5
+              }} 
+            />
+          </motion.div>
+          <motion.p 
+            className="mt-2 text-sm text-foreground/60" 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.6, duration: 0.5 }}
+          >
+            Scroll Down
+          </motion.p>
+        </div>
+      )}
     </section>
   );
 };

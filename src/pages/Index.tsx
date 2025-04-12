@@ -108,7 +108,7 @@ const Index: React.FC = () => {
           description: joke,
           duration: 7000,
           position: isMobile ? "bottom-center" : "top-right",
-          className: "max-w-[90vw] mx-auto md:max-w-md" // Make toast wider and centered on mobile
+          className: "max-w-[90vw] md:max-w-md text-sm sm:text-base" // Improve responsive toast
         });
       }, 2000);
       
@@ -195,7 +195,7 @@ const Index: React.FC = () => {
       {/* Back to top button - Enhanced visibility for mobile */}
       <motion.a
         href="#home"
-        className="fixed bottom-6 right-5 w-12 h-12 rounded-full bg-primary flex items-center justify-center hover:bg-primary/90 transition-all z-30 border-2 border-primary/30"
+        className="fixed bottom-4 right-4 sm:bottom-6 sm:right-5 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-primary flex items-center justify-center hover:bg-primary/90 transition-all z-30 border-2 border-primary/30 back-to-top"
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ 
           opacity: hasScrolled ? 1 : 0,
@@ -209,7 +209,7 @@ const Index: React.FC = () => {
           boxShadow: '0 0 20px hsla(var(--primary), 0.8)'
         }}
       >
-        <Home className="text-primary-foreground w-5 h-5" />
+        <Home className="text-primary-foreground w-4 h-4 sm:w-5 sm:h-5" />
       </motion.a>
     </div>
   );
