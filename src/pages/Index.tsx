@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import CursorEffect from '../components/CursorEffect';
@@ -107,7 +108,7 @@ const Index: React.FC = () => {
           description: joke,
           duration: 7000,
           position: "bottom-center",
-          className: "max-w-[85vw] md:max-w-md text-sm sm:text-base fixed-bottom-toast"
+          className: "fixed-bottom-toast max-w-[90vw] md:max-w-md text-sm sm:text-base"
         });
       }, 2000);
       
