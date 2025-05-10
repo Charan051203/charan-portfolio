@@ -1,12 +1,36 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Gamepad, MousePointerClick, ChevronDown } from 'lucide-react';
+import { Gamepad, ChevronDown } from 'lucide-react';
 import { useIsMobile } from '../hooks/use-mobile';
+
+const gamingJokes = [
+  "I would tell you a joke about lag, but you wouldn't get it until later.",
+  "Why don't developers play video games? Because they prefer to debug than to play.",
+  "What do you call a game developer's favorite coffee? Java.",
+  "Why was the gamer always broke? Too many micro-transactions.",
+  "How many gamers does it take to change a light bulb? None, they'll do it when the next patch comes out.",
+];
+
+const jokes = [
+  "Why do programmers prefer dark mode? Because light attracts bugs.",
+  "I told my computer I needed a break, and now it won't stop sending me vacation ads.",
+  "Why don't programmers like nature? It has too many bugs and no debugging tool.",
+  "How many programmers does it take to change a light bulb? None, that's a hardware problem.",
+  "What's a programmer's favorite place? Function junction.",
+  "Why did the developer go broke? Because they lost their domain.",
+  "What do you call a programmer from Finland? Nerdic.",
+  "I would tell you a UDP joke, but you might not get it.",
+  "Why was the JavaScript developer sad? Because they didn't know how to 'null' their feelings.",
+  "The programmer got stuck in the shower because the instructions on the shampoo bottle said: Lather, Rinse, Repeat.",
+];
 
 const Hero: React.FC = () => {
   const [greetingIndex, setGreetingIndex] = useState(0);
   const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
+  const [showWelcome, setShowWelcome] = useState(true);
+  const [randomJoke, setRandomJoke] = useState("");
   const isMobile = useIsMobile();
+  
   const roles = ["AI Engineer", "Data Scientist", "Game Developer", "Prompt Engineer", "Gamer"];
   const greetings = [{
     text: "Hello",
@@ -28,6 +52,18 @@ const Hero: React.FC = () => {
   useEffect(() => {
     const randomIndex = Math.floor(Math.random() * greetings.length);
     setGreetingIndex(randomIndex);
+
+    // Set random joke
+    const allJokes = [...jokes, ...gamingJokes];
+    const joke = allJokes[Math.floor(Math.random() * allJokes.length)];
+    setRandomJoke(joke);
+
+    // Hide welcome message after 4 seconds
+    const timer = setTimeout(() => {
+      setShowWelcome(false);
+    }, 4000);
+
+    return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
@@ -90,6 +126,19 @@ const Hero: React.FC = () => {
             >
               CHARAN RK
             </motion.h1>
+
+            <AnimatePresence>
+              {showWelcome && (
+                <motion.div
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  className="mb-4 p-4 rounded-lg glassmorphism border border-primary/20"
+                >
+                  <p className="text-sm text-foreground/90">{randomJoke}</p>
+                </motion.div>
+              )}
+            </AnimatePresence>
             
             <div className="h-8 mb-6 relative flex items-center">
               <AnimatePresence mode="wait">
@@ -157,6 +206,7 @@ const Hero: React.FC = () => {
             </motion.div>
           </motion.div>
           
+          {/* Profile Image Section - Unchanged */}
           <motion.div className="w-full lg:w-1/2 flex justify-center" 
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
