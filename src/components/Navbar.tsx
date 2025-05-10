@@ -77,10 +77,10 @@ const Navbar: React.FC<NavbarProps> = ({ showIcons = true }) => {
             <Menu className="w-6 h-6 text-primary" />
           </motion.button>
 
-          {/* Logo on the right for desktop, centered for mobile */}
+          {/* Logo on the right for desktop, next to menu for mobile */}
           <motion.a
             href="#home"
-            className={`text-lg sm:text-xl md:text-2xl font-bold ${isMobile ? 'absolute left-1/2 transform -translate-x-1/2' : 'ml-auto'}`}
+            className={`text-lg sm:text-xl md:text-2xl font-bold ${isMobile ? 'ml-4' : 'ml-auto'}`}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
