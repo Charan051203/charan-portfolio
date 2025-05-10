@@ -56,31 +56,6 @@ const Navbar: React.FC<NavbarProps> = ({ showIcons = true }) => {
     { icon: <Twitter className="w-5 h-5" />, href: "https://x.com/charan_5123", label: "Twitter" }
   ];
 
-  const mobileMenuVariants = {
-    hidden: { 
-      opacity: 0,
-      x: '-100%',
-      transition: {
-        duration: 0.3,
-        staggerChildren: 0.05,
-        staggerDirection: -1
-      }
-    },
-    visible: {
-      opacity: 1,
-      x: 0,
-      transition: {
-        duration: 0.3,
-        staggerChildren: 0.1
-      }
-    }
-  };
-
-  const menuItemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 }
-  };
-
   return (
     <>
       <motion.nav
@@ -177,12 +152,33 @@ const Navbar: React.FC<NavbarProps> = ({ showIcons = true }) => {
             initial="hidden"
             animate="visible"
             exit="hidden"
-            variants={mobileMenuVariants}
+            variants={{
+              hidden: { 
+                opacity: 0,
+                x: '-100%',
+                transition: {
+                  duration: 0.3,
+                  staggerChildren: 0.05,
+                  staggerDirection: -1
+                }
+              },
+              visible: {
+                opacity: 1,
+                x: 0,
+                transition: {
+                  duration: 0.3,
+                  staggerChildren: 0.1
+                }
+              }
+            }}
           >
             <div className="flex flex-col items-center space-y-6">
               <motion.div
                 className="mb-4 text-primary"
-                variants={menuItemVariants}
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0 }
+                }}
               >
                 <Gamepad className="w-8 h-8 sm:w-10 sm:h-10" />
               </motion.div>
@@ -192,7 +188,10 @@ const Navbar: React.FC<NavbarProps> = ({ showIcons = true }) => {
                   key={index}
                   href={link.href}
                   className="text-lg sm:text-xl font-medium text-foreground hover:text-primary transition-colors px-4 py-2"
-                  variants={menuItemVariants}
+                  variants={{
+                    hidden: { opacity: 0, y: 20 },
+                    visible: { opacity: 1, y: 0 }
+                  }}
                   onClick={() => setMobileMenuOpen(false)}
                   whileHover={{ scale: 1.05, x: 5 }}
                   whileTap={{ scale: 0.95 }}
@@ -203,7 +202,10 @@ const Navbar: React.FC<NavbarProps> = ({ showIcons = true }) => {
               
               <motion.div 
                 className="flex space-x-5 mt-6 pt-6 border-t border-border/30 w-64 justify-center"
-                variants={menuItemVariants}
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0 }
+                }}
               >
                 {socialLinks.map((item, i) => (
                   <motion.a

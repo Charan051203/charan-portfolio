@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Gamepad } from 'lucide-react';
+import { Gamepad, Home } from 'lucide-react';
 import { useIsMobile } from '../hooks/use-mobile';
 
 const Hero: React.FC = () => {
@@ -48,10 +48,27 @@ const Hero: React.FC = () => {
   }, []);
   
   return (
-    <section id="home" className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden">
-      {/* Background elements */}
+    <section id="home" className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden py-16 md:py-0">
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-background to-background/80" />
+        
+        <motion.div 
+          className="absolute inset-0 opacity-20"
+          animate={{
+            background: [
+              "radial-gradient(circle at 0% 0%, rgba(72,149,239,0.1) 0%, transparent 50%)",
+              "radial-gradient(circle at 100% 100%, rgba(72,149,239,0.1) 0%, transparent 50%)",
+              "radial-gradient(circle at 0% 100%, rgba(72,149,239,0.1) 0%, transparent 50%)",
+              "radial-gradient(circle at 100% 0%, rgba(72,149,239,0.1) 0%, transparent 50%)"
+            ]
+          }}
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+        />
+        
         <div className="absolute inset-0 opacity-10" 
           style={{
             backgroundImage: `linear-gradient(to right, rgba(255,255,255,0.1) 1px, transparent 1px), 
@@ -61,12 +78,9 @@ const Hero: React.FC = () => {
         />
       </div>
 
-      {/* Scroll indicator - positioned above profile image on mobile */}
       {!hasScrolled && (
         <motion.div 
-          className={`flex flex-col items-center z-20 absolute left-1/2 -translate-x-1/2 ${
-            isMobile ? 'top-24' : 'bottom-10'
-          }`}
+          className="flex flex-col items-center z-20 absolute left-1/2 -translate-x-1/2 top-20"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0 }}
@@ -95,10 +109,9 @@ const Hero: React.FC = () => {
         </motion.div>
       )}
       
-      <div className="container px-4 sm:px-6 mx-auto">
+      <div className="container px-4 sm:px-6 mx-auto mt-12 md:mt-0">
         <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-6 md:gap-8 lg:gap-12">
-          {/* Left content */}
-          <motion.div className="w-full lg:w-1/2" 
+          <motion.div className="w-full lg:w-1/2 text-center lg:text-left" 
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
@@ -119,7 +132,7 @@ const Hero: React.FC = () => {
               CHARAN RK
             </motion.h1>
             
-            <div className="h-8 mb-6 relative flex items-center">
+            <div className="h-8 mb-6 relative flex items-center justify-center lg:justify-start">
               <AnimatePresence mode="wait">
                 <motion.p 
                   key={roles[currentRoleIndex]}
@@ -147,12 +160,12 @@ const Hero: React.FC = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1, duration: 0.8 }} 
-              className="mb-8 max-w-xl text-slate-50 text-sm sm:text-base"
+              className="mb-8 max-w-xl text-slate-50 text-sm sm:text-base mx-auto lg:mx-0"
             >
               AI Engineer and Data Scientist skilled in Machine Learning, Deep Learning, Prompt Engineering and Data Analytics. Proficient in predictive modeling, AI-driven solutions, and optimization techniques. As a game enthusiast, I love spending my free time exploring virtual worlds and playing video games.
             </motion.p>
             
-            <motion.div className="flex flex-wrap gap-3 sm:gap-4" 
+            <motion.div className="flex flex-wrap gap-3 sm:gap-4 justify-center lg:justify-start" 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.2, duration: 0.8 }}
@@ -161,13 +174,18 @@ const Hero: React.FC = () => {
                 View Work
               </a>
               
-              <a href="/Resume CHARAN RK.pdf" download className="interactive-element px-3 sm:px-6 py-2 sm:py-3 border border-primary/30 text-foreground rounded-full font-medium hover:bg-primary/10 transition-colors text-sm sm:text-base">
-                Download Resume
-              </a>
+              <div className="flex items-center gap-3">
+                <a href="/Resume CHARAN RK.pdf" download className="interactive-element px-3 sm:px-6 py-2 sm:py-3 border border-primary/30 text-foreground rounded-full font-medium hover:bg-primary/10 transition-colors text-sm sm:text-base">
+                  Download Resume
+                </a>
+                
+                <a href="#home" className="interactive-element w-10 h-10 flex items-center justify-center rounded-full bg-primary/10 border border-primary/30 hover:bg-primary/20 transition-all">
+                  <Home className="w-5 h-5 text-primary" />
+                </a>
+              </div>
             </motion.div>
           </motion.div>
           
-          {/* Right content - Profile Photo */}
           <motion.div className="w-full lg:w-1/2 flex justify-center" 
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
