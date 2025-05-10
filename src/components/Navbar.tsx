@@ -67,58 +67,17 @@ const Navbar: React.FC<NavbarProps> = ({ showIcons = true }) => {
         }`}
       >
         <div className="container mx-auto flex justify-between items-center">
+          <motion.button 
+            className="text-lg sm:text-xl md:text-2xl font-bold"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+            <Menu className="w-6 h-6 text-primary" />
+          </motion.button>
+          
           <a href="#home" className="text-lg sm:text-xl md:text-2xl font-bold">
             <span className="text-gradient">CHARAN</span>
             <span className="text-white shadow-glow">RK</span>
           </a>
-          
-          <div className="hidden md:flex items-center space-x-8">
-            {navLinks.map((link, index) => (
-              <motion.a
-                key={index}
-                href={link.href}
-                className="text-foreground hover:text-primary transition-colors"
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: 0.1 * index }}
-              >
-                {link.name}
-              </motion.a>
-            ))}
-          </div>
-
-          {isMobile && (
-            <motion.button 
-              className="fixed top-3 right-3 w-10 h-10 rounded-full glassmorphism flex items-center justify-center shadow-[0_0_15px_rgba(72,149,239,0.6)] border border-primary/30 z-50 mobile-menu-button"
-              aria-label="Menu"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              whileTap={{ scale: 0.95 }}
-              whileHover={{ scale: 1.05 }}
-            >
-              <AnimatePresence mode="wait">
-                {mobileMenuOpen ? 
-                  <motion.div
-                    key="close"
-                    initial={{ rotate: -90, opacity: 0 }}
-                    animate={{ rotate: 0, opacity: 1 }}
-                    exit={{ rotate: 90, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <X className="w-5 h-5 text-primary" />
-                  </motion.div> : 
-                  <motion.div
-                    key="menu"
-                    initial={{ rotate: 90, opacity: 0 }}
-                    animate={{ rotate: 0, opacity: 1 }}
-                    exit={{ rotate: -90, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <Menu className="w-5 h-5 text-primary" />
-                  </motion.div>
-                }
-              </AnimatePresence>
-            </motion.button>
-          )}
         </div>
       </motion.nav>
       
