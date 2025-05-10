@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Gamepad, MousePointerClick } from 'lucide-react';
+import { Gamepad, MousePointerClick, ChevronDown } from 'lucide-react';
 import { useIsMobile } from '../hooks/use-mobile';
 
 const Hero: React.FC = () => {
@@ -138,8 +138,9 @@ const Hero: React.FC = () => {
                   Download Resume
                 </a>
                 
-                <motion.div 
-                  className="flex items-center justify-center px-3 py-2 text-primary"
+                <motion.button
+                  onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
+                  className="flex items-center justify-center p-2 text-primary hover:text-primary/80 transition-colors"
                   animate={{
                     y: [0, -5, 0],
                     opacity: [0.5, 1, 0.5]
@@ -150,8 +151,8 @@ const Hero: React.FC = () => {
                     ease: "easeInOut"
                   }}
                 >
-                  <MousePointerClick className="w-5 h-5" />
-                </motion.div>
+                  <ChevronDown className="w-6 h-6" />
+                </motion.button>
               </div>
             </motion.div>
           </motion.div>
