@@ -26,13 +26,11 @@ const Hero: React.FC = () => {
     language: "Japanese"
   }];
 
-  // Set random greeting on page load
   useEffect(() => {
     const randomIndex = Math.floor(Math.random() * greetings.length);
     setGreetingIndex(randomIndex);
   }, []);
 
-  // Cycle through roles with improved animation
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentRoleIndex(prev => (prev + 1) % roles.length);
@@ -40,10 +38,9 @@ const Hero: React.FC = () => {
     return () => clearInterval(interval);
   }, []);
   
-  // Check if page has scrolled
   useEffect(() => {
     const handleScroll = () => {
-      setHasScrolled(window.scrollY > 100);
+      setHasScrolled(window.scrollY > 50);
     };
     
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -51,54 +48,10 @@ const Hero: React.FC = () => {
   }, []);
   
   return (
-    <section id="home" className="min-h-screen flex flex-col items-center justify-center pt-16 md:pt-20 lg:pt-24 pb-12 md:pb-16 relative overflow-hidden">
-      {/* Background geometric shapes */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-background to-background/80" />
-        
-        {/* Improved background design with subtle grid pattern */}
-        <div className="absolute inset-0 opacity-10" 
-          style={{
-            backgroundImage: `linear-gradient(to right, rgba(255,255,255,0.1) 1px, transparent 1px), 
-                              linear-gradient(to bottom, rgba(255,255,255,0.1) 1px, transparent 1px)`,
-            backgroundSize: '40px 40px'
-          }}
-        />
-        
-        {/* Subtle animated gradient orbs */}
-        {Array.from({length: 6}).map((_, index) => {
-          const size = Math.random() * 300 + 100;
-          const posX = Math.random() * 100;
-          const posY = Math.random() * 100;
-          return (
-            <motion.div 
-              key={index}
-              className="absolute rounded-full blur-[100px]"
-              style={{
-                background: `radial-gradient(circle at center, rgba(72, 149, 239, 0.15), rgba(20, 184, 166, 0.08))`,
-                width: `${size}px`,
-                height: `${size}px`,
-                left: `${posX}%`,
-                top: `${posY}%`,
-              }}
-              animate={{
-                x: [0, 30, 0, -30, 0],
-                y: [0, -30, 0, 30, 0],
-              }}
-              transition={{
-                duration: 25 + index * 5,
-                ease: "easeInOut",
-                repeat: Infinity,
-              }}
-            />
-          );
-        })}
-      </div>
-      
-      {/* On mobile, show scroll indicator - only if not scrolled */}
+    <section id="home" className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden">
       {isMobile && !hasScrolled && (
         <motion.div 
-          className="flex mb-4 flex-col items-center z-20 absolute left-1/2 -translate-x-1/2 top-[75vh]"
+          className="flex flex-col items-center z-20 absolute left-1/2 -translate-x-1/2 top-[85vh]"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0 }}
@@ -127,9 +80,8 @@ const Hero: React.FC = () => {
         </motion.div>
       )}
       
-      <div className="container px-4 sm:px-6 mx-auto mt-16 sm:mt-0">
+      <div className="container px-4 sm:px-6 mx-auto">
         <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-6 md:gap-8 lg:gap-12">
-          {/* Left content */}
           <motion.div className="w-full lg:w-1/2" 
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
@@ -151,7 +103,6 @@ const Hero: React.FC = () => {
               CHARAN RK
             </motion.h1>
             
-            {/* Gaming element - controller icon next to role */}
             <div className="h-8 mb-6 relative flex items-center">
               <AnimatePresence mode="wait">
                 <motion.p 
@@ -200,7 +151,6 @@ const Hero: React.FC = () => {
             </motion.div>
           </motion.div>
           
-          {/* Right content - Profile Photo with hover effect (responsive size) */}
           <motion.div className="w-full lg:w-1/2 flex justify-center" 
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -224,7 +174,6 @@ const Hero: React.FC = () => {
                 }}
               />
               
-              {/* Animated dots around the profile */}
               {Array.from({length: 8}).map((_, i) => {
                 const angle = (i / 8) * Math.PI * 2;
                 const delay = i * 0.2;
@@ -311,7 +260,6 @@ const Hero: React.FC = () => {
                 />
               </motion.div>
               
-              {/* Removed cyan square */}
               <motion.div 
                 className="absolute -bottom-4 -left-4 w-10 h-10 sm:w-16 sm:h-16 bg-fuchsia-500/30 rounded-full blur-md" 
                 animate={{
@@ -352,7 +300,6 @@ const Hero: React.FC = () => {
         </div>
       </div>
       
-      {/* Desktop scroll indicator - ONLY SHOW ON NON-MOBILE AND WHEN NOT SCROLLED */}
       {!isMobile && !hasScrolled && (
         <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 hidden md:flex flex-col items-center">
           <motion.div 

@@ -56,7 +56,7 @@
     overflow-x: hidden;
     overscroll-behavior: none;
   }
-  
+
   .cursor-dot, .cursor-outer, .cursor-glow {
     pointer-events: none;
     position: fixed;
