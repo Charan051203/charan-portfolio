@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Gamepad } from 'lucide-react';
+import { Gamepad, MousePointerClick } from 'lucide-react';
 import { useIsMobile } from '../hooks/use-mobile';
 
 const Hero: React.FC = () => {
   const [greetingIndex, setGreetingIndex] = useState(0);
   const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
-  const [hasScrolled, setHasScrolled] = useState(false);
   const isMobile = useIsMobile();
   const roles = ["AI Engineer", "Data Scientist", "Game Developer", "Prompt Engineer", "Gamer"];
   const greetings = [{
@@ -38,17 +37,8 @@ const Hero: React.FC = () => {
     return () => clearInterval(interval);
   }, []);
   
-  useEffect(() => {
-    const handleScroll = () => {
-      setHasScrolled(window.scrollY > 50);
-    };
-    
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-  
   return (
-    <section id="home" className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden py-16 md:py-0">
+    <section id="home" className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden py-8 md:py-0">
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-background to-background/80" />
         
@@ -77,37 +67,8 @@ const Hero: React.FC = () => {
           }}
         />
       </div>
-
-      {/* Centered scroll indicator above profile image */}
-      <motion.div 
-        className="absolute top-1/4 left-1/2 -translate-x-1/2 flex flex-col items-center z-20"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: hasScrolled ? 0 : 1, y: hasScrolled ? -40 : 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <motion.div 
-          className="w-6 h-10 border-2 border-primary/50 rounded-full flex justify-center p-2 shadow-[0_0_15px_rgba(72,149,239,0.5)] backdrop-blur-md" 
-        >
-          <motion.div 
-            className="w-1 h-2 bg-primary rounded-full" 
-            animate={{
-              y: [0, 8, 0],
-              opacity: [0.6, 1, 0.6]
-            }} 
-            transition={{
-              repeat: Infinity,
-              duration: 1.5
-            }} 
-          />
-        </motion.div>
-        <motion.p 
-          className="mt-1 text-xs text-foreground/90 font-medium backdrop-blur-sm px-2 py-1 rounded-full"
-        >
-          Scroll
-        </motion.p>
-      </motion.div>
       
-      <div className="container px-4 sm:px-6 mx-auto mt-12 md:mt-0">
+      <div className="container px-4 sm:px-6 mx-auto">
         <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-6 md:gap-8 lg:gap-12">
           <motion.div className="w-full lg:w-1/2 text-left" 
             initial={{ opacity: 0, x: -50 }}
@@ -163,7 +124,7 @@ const Hero: React.FC = () => {
               AI Engineer and Data Scientist skilled in Machine Learning, Deep Learning, Prompt Engineering and Data Analytics. Proficient in predictive modeling, AI-driven solutions, and optimization techniques. As a game enthusiast, I love spending my free time exploring virtual worlds and playing video games.
             </motion.p>
             
-            <motion.div className="flex flex-wrap gap-3 sm:gap-4" 
+            <motion.div className="flex flex-wrap items-center gap-3 sm:gap-4" 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.2, duration: 0.8 }}
@@ -172,9 +133,26 @@ const Hero: React.FC = () => {
                 View Work
               </a>
               
-              <a href="/Resume CHARAN RK.pdf" download className="interactive-element px-3 sm:px-6 py-2 sm:py-3 border border-primary/30 text-foreground rounded-full font-medium hover:bg-primary/10 transition-colors text-sm sm:text-base">
-                Download Resume
-              </a>
+              <div className="flex items-center gap-2">
+                <a href="/Resume CHARAN RK.pdf" download className="interactive-element px-3 sm:px-6 py-2 sm:py-3 border border-primary/30 text-foreground rounded-full font-medium hover:bg-primary/10 transition-colors text-sm sm:text-base">
+                  Download Resume
+                </a>
+                
+                <motion.div 
+                  className="flex items-center justify-center px-3 py-2 text-primary"
+                  animate={{
+                    y: [0, -5, 0],
+                    opacity: [0.5, 1, 0.5]
+                  }}
+                  transition={{
+                    repeat: Infinity,
+                    duration: 2,
+                    ease: "easeInOut"
+                  }}
+                >
+                  <MousePointerClick className="w-5 h-5" />
+                </motion.div>
+              </div>
             </motion.div>
           </motion.div>
           
