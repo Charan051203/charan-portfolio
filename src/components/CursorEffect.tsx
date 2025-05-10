@@ -6,25 +6,26 @@ interface CursorEffectProps {
   cursorVariant: 'default' | 'hover' | 'click';
 }
 
+interface Particle {
+  x: number;
+  y: number;
+  size: number;
+  opacity: number;
+  id: number;
+  color: string;
+  velocityX: number;
+  velocityY: number;
+}
+
 const CursorEffect: React.FC<CursorEffectProps> = ({ cursorVariant }) => {
-  const [particles, setParticles] = useState<{
-    x: number;
-    y: number;
-    size: number;
-    opacity: number;
-    id: number;
-    color: string;
-  }[]>([]);
-  
+  const [particles, setParticles] = useState<Particle[]>([]);
   const [isActive, setIsActive] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const isMobile = useIsMobile();
   
-  // Mouse position for tracking
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   
-  // Particle colors
   const colors = [
     "hsla(var(--primary), 0.8)",
     "hsla(var(--primary), 0.6)",
@@ -46,7 +47,11 @@ const CursorEffect: React.FC<CursorEffectProps> = ({ cursorVariant }) => {
         prevParticles
           .map(particle => ({
             ...particle,
-            opacity: particle.opacity - 0.035, // Faster fade out
+            x: particle.x + particle.velocityX,
+            y: particle.y + particle.velocityY,
+            velocityX: particle.velocityX * 0.98, // Gradually slow down
+            velocityY: particle.velocityY * 0.98,
+            opacity: particle.opacity - 0.04 // Faster fade out
           }))
           .filter(particle => particle.opacity > 0)
       );
@@ -64,26 +69,29 @@ const CursorEffect: React.FC<CursorEffectProps> = ({ cursorVariant }) => {
       const dy = clientY - lastPositionY;
       const speed = Math.sqrt(dx * dx + dy * dy);
       
-      if (speed > 2) {
-        const particlesToAdd = Math.min(2, Math.floor(speed / 10)) || 1;
+      if (speed > 1) {
+        // Create new particles based on cursor movement
+        const angle = Math.atan2(dy, dx);
+        const particlesToAdd = Math.min(2, Math.floor(speed / 8)) || 1;
         
         for (let i = 0; i < particlesToAdd; i++) {
           currentParticleId++;
           
-          const angle = Math.random() * Math.PI * 2;
-          const distance = Math.random() * 5;
-          const size = Math.random() * 4 + 2;
-          const colorIndex = Math.floor(Math.random() * colors.length);
+          const randomAngleOffset = (Math.random() - 0.5) * Math.PI / 2;
+          const finalAngle = angle + randomAngleOffset;
+          const velocity = speed * 0.15;
           
           setParticles(prevParticles => [
             ...prevParticles,
             {
-              x: clientX + Math.cos(angle) * distance,
-              y: clientY + Math.sin(angle) * distance,
-              size,
-              opacity: 0.6,
+              x: clientX,
+              y: clientY,
+              size: Math.random() * 3 + 2,
+              opacity: 0.8,
               id: currentParticleId,
-              color: colors[colorIndex]
+              color: colors[Math.floor(Math.random() * colors.length)],
+              velocityX: Math.cos(finalAngle) * velocity,
+              velocityY: Math.sin(finalAngle) * velocity
             }
           ]);
         }
@@ -94,16 +102,13 @@ const CursorEffect: React.FC<CursorEffectProps> = ({ cursorVariant }) => {
       setIsActive(true);
     };
     
-    // Start animation loop
     animationFrameId = requestAnimationFrame(updateParticles);
-    
-    // Add event listener for mouse movement
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
     
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       cancelAnimationFrame(animationFrameId);
-      setParticles([]); // Clear particles on cleanup
+      setParticles([]);
     };
   }, [isMobile, mouseX, mouseY]);
 
@@ -119,7 +124,6 @@ const CursorEffect: React.FC<CursorEffectProps> = ({ cursorVariant }) => {
             opacity: particle.opacity,
             scale: 0.8
           }}
-          exit={{ opacity: 0, scale: 0 }}
           style={{
             position: 'fixed',
             left: particle.x,
