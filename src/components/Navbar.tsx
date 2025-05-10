@@ -72,45 +72,23 @@ const Navbar: React.FC<NavbarProps> = ({ showIcons = true }) => {
             <span className="text-white shadow-glow">RK</span>
           </a>
           
-          <div className="hidden md:flex items-center">
-            <div className="flex space-x-6 lg:space-x-8">
-              {navLinks.map((link, index) => (
-                <motion.a
-                  key={index}
-                  href={link.href}
-                  className="navbar-link text-foreground hover:text-primary transition-colors"
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, delay: 0.1 * index }}
-                >
-                  {link.name}
-                </motion.a>
-              ))}
-            </div>
+          <div className="hidden md:flex items-center space-x-8">
+            {navLinks.map((link, index) => (
+              <motion.a
+                key={index}
+                href={link.href}
+                className="text-foreground hover:text-primary transition-colors"
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: 0.1 * index }}
+              >
+                {link.name}
+              </motion.a>
+            ))}
           </div>
 
-          {showSocialIcons && (
-            <div className="hidden md:flex items-center space-x-4">
-              {socialLinks.map((item, i) => (
-                <motion.a
-                  key={i}
-                  href={item.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-foreground hover:text-primary transition-all"
-                  initial={{ opacity: 0, x: 10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.1 }}
-                  aria-label={item.label}
-                >
-                  {item.icon}
-                </motion.a>
-              ))}
-            </div>
-          )}
-          
           <motion.button 
-            className="md:hidden w-9 h-9 xs:w-10 xs:h-10 sm:w-12 sm:h-12 glassmorphism rounded-full flex items-center justify-center fixed top-3 right-3 shadow-[0_0_15px_rgba(72,149,239,0.6)] border border-primary/30 z-50"
+            className="md:hidden fixed top-4 right-4 w-10 h-10 rounded-full glassmorphism flex items-center justify-center shadow-[0_0_15px_rgba(72,149,239,0.6)] border border-primary/30 z-50"
             aria-label="Menu"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             whileTap={{ scale: 0.95 }}
@@ -118,25 +96,8 @@ const Navbar: React.FC<NavbarProps> = ({ showIcons = true }) => {
           >
             <AnimatePresence mode="wait">
               {mobileMenuOpen ? 
-                <motion.div
-                  key="close"
-                  initial={{ rotate: -90, opacity: 0 }}
-                  animate={{ rotate: 0, opacity: 1 }}
-                  exit={{ rotate: 90, opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <X className="w-4 h-4 xs:w-5 xs:h-5 sm:w-6 sm:h-6 text-primary" />
-                </motion.div> : 
-                <motion.div
-                  key="menu"
-                  initial={{ rotate: 90, opacity: 0 }}
-                  animate={{ rotate: 0, opacity: 1 }}
-                  exit={{ rotate: -90, opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                  className="flex items-center justify-center"
-                >
-                  <Menu className="w-4 h-4 xs:w-5 xs:h-5 sm:w-6 sm:h-6 text-primary" />
-                </motion.div>
+                <X className="w-5 h-5 text-primary" /> : 
+                <Menu className="w-5 h-5 text-primary" />
               }
             </AnimatePresence>
           </motion.button>
@@ -147,28 +108,10 @@ const Navbar: React.FC<NavbarProps> = ({ showIcons = true }) => {
         {mobileMenuOpen && (
           <motion.div
             className="fixed inset-0 bg-background/95 backdrop-blur-lg z-40 md:hidden flex flex-col items-center justify-center"
-            initial="hidden"
-            animate="visible"
-            exit="hidden"
-            variants={{
-              hidden: { 
-                opacity: 0,
-                x: '-100%',
-                transition: {
-                  duration: 0.3,
-                  staggerChildren: 0.05,
-                  staggerDirection: -1
-                }
-              },
-              visible: {
-                opacity: 1,
-                x: 0,
-                transition: {
-                  duration: 0.3,
-                  staggerChildren: 0.1
-                }
-              }
-            }}
+            initial={{ opacity: 0, x: '-100%' }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: '100%' }}
+            transition={{ duration: 0.3 }}
           >
             <div className="flex flex-col items-center space-y-6">
               <motion.div
