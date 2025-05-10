@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Gamepad, Home } from 'lucide-react';
+import { Gamepad } from 'lucide-react';
 import { useIsMobile } from '../hooks/use-mobile';
 
 const Hero: React.FC = () => {
@@ -80,7 +80,7 @@ const Hero: React.FC = () => {
 
       {/* Centered scroll indicator above profile image */}
       <motion.div 
-        className="absolute top-24 left-1/2 -translate-x-1/2 flex flex-col items-center z-20"
+        className="absolute top-1/4 left-1/2 -translate-x-1/2 flex flex-col items-center z-20"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: hasScrolled ? 0 : 1, y: hasScrolled ? -40 : 0 }}
         transition={{ duration: 0.5 }}
@@ -109,7 +109,7 @@ const Hero: React.FC = () => {
       
       <div className="container px-4 sm:px-6 mx-auto mt-12 md:mt-0">
         <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-6 md:gap-8 lg:gap-12">
-          <motion.div className="w-full lg:w-1/2 text-center lg:text-left" 
+          <motion.div className="w-full lg:w-1/2 text-left" 
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
@@ -130,7 +130,7 @@ const Hero: React.FC = () => {
               CHARAN RK
             </motion.h1>
             
-            <div className="h-8 mb-6 relative flex items-center justify-center lg:justify-start">
+            <div className="h-8 mb-6 relative flex items-center">
               <AnimatePresence mode="wait">
                 <motion.p 
                   key={roles[currentRoleIndex]}
@@ -158,12 +158,12 @@ const Hero: React.FC = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1, duration: 0.8 }} 
-              className="mb-8 max-w-xl text-slate-50 text-sm sm:text-base mx-auto lg:mx-0"
+              className="mb-8 max-w-xl text-slate-50 text-sm sm:text-base"
             >
               AI Engineer and Data Scientist skilled in Machine Learning, Deep Learning, Prompt Engineering and Data Analytics. Proficient in predictive modeling, AI-driven solutions, and optimization techniques. As a game enthusiast, I love spending my free time exploring virtual worlds and playing video games.
             </motion.p>
             
-            <motion.div className="flex flex-wrap gap-3 sm:gap-4 justify-center lg:justify-start" 
+            <motion.div className="flex flex-wrap gap-3 sm:gap-4" 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.2, duration: 0.8 }}
@@ -172,27 +172,9 @@ const Hero: React.FC = () => {
                 View Work
               </a>
               
-              <div className="flex items-center gap-3">
-                <a href="/Resume CHARAN RK.pdf" download className="interactive-element px-3 sm:px-6 py-2 sm:py-3 border border-primary/30 text-foreground rounded-full font-medium hover:bg-primary/10 transition-colors text-sm sm:text-base">
-                  Download Resume
-                </a>
-                
-                <motion.a 
-                  href="#home" 
-                  className="interactive-element w-10 h-10 flex items-center justify-center rounded-full bg-primary/10 border border-primary/30 hover:bg-primary/20 transition-all fixed bottom-6 right-6 z-50"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ 
-                    opacity: hasScrolled ? 1 : 0,
-                    scale: hasScrolled ? 1 : 0.8,
-                    y: hasScrolled ? 0 : 20
-                  }}
-                  transition={{ duration: 0.3 }}
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                >
-                  <Home className="w-5 h-5 text-primary" />
-                </motion.a>
-              </div>
+              <a href="/Resume CHARAN RK.pdf" download className="interactive-element px-3 sm:px-6 py-2 sm:py-3 border border-primary/30 text-foreground rounded-full font-medium hover:bg-primary/10 transition-colors text-sm sm:text-base">
+                Download Resume
+              </a>
             </motion.div>
           </motion.div>
           
