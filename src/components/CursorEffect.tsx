@@ -12,12 +12,14 @@ const CursorEffect: React.FC<CursorEffectProps> = ({ cursorVariant }) => {
   
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-  
-  // Fixed number of particles that will rotate around the cursor
-  const particles = Array.from({ length: 8 }, (_, i) => ({
+
+  // Create particles with different sizes and colors
+  const particles = Array.from({ length: 12 }, (_, i) => ({
     id: i,
-    angle: (i / 8) * Math.PI * 2,
-    color: `hsla(var(--primary), ${0.3 + (i % 3) * 0.2})`
+    angle: (i / 12) * Math.PI * 2,
+    size: 4 + (i % 3) * 2, // Varying sizes
+    color: `hsla(var(--primary), ${0.4 + (i % 3) * 0.2})`,
+    speed: 1 + (i % 3) * 0.5 // Varying speeds
   }));
 
   useEffect(() => {
@@ -25,8 +27,6 @@ const CursorEffect: React.FC<CursorEffectProps> = ({ cursorVariant }) => {
     
     const handleMouseMove = (e: MouseEvent) => {
       const { clientX, clientY } = e;
-      mouseX.set(clientX);
-      mouseY.set(clientY);
       setMousePosition({ x: clientX, y: clientY });
     };
     
@@ -35,15 +35,68 @@ const CursorEffect: React.FC<CursorEffectProps> = ({ cursorVariant }) => {
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
     };
-  }, [isMobile, mouseX, mouseY]);
+  }, [isMobile]);
 
   if (isMobile) return null;
 
-  const radius = cursorVariant === 'hover' ? 20 : 15;
-  const scale = cursorVariant === 'click' ? 0.8 : 1;
+  // Adjust radius and scale based on cursor state
+  const baseRadius = cursorVariant === 'hover' ? 25 : 20;
+  const scale = cursorVariant === 'click' ? 0.7 : 1;
 
   return (
     <>
+      {/* Main cursor dot */}
+      <motion.div
+        style={{
+          position: 'fixed',
+          left: mousePosition.x,
+          top: mousePosition.y,
+          width: 8,
+          height: 8,
+          backgroundColor: 'hsl(var(--primary))',
+          borderRadius: '50%',
+          pointerEvents: 'none',
+          zIndex: 9999,
+          transform: 'translate(-50%, -50%)',
+        }}
+        animate={{
+          scale: scale,
+          opacity: 1
+        }}
+        transition={{
+          type: "spring",
+          stiffness: 500,
+          damping: 25
+        }}
+      />
+
+      {/* Outer glow */}
+      <motion.div
+        style={{
+          position: 'fixed',
+          left: mousePosition.x,
+          top: mousePosition.y,
+          width: 24,
+          height: 24,
+          backgroundColor: 'transparent',
+          border: '2px solid hsl(var(--primary))',
+          borderRadius: '50%',
+          pointerEvents: 'none',
+          zIndex: 9998,
+          transform: 'translate(-50%, -50%)',
+        }}
+        animate={{
+          scale: scale * 1.2,
+          opacity: 0.5
+        }}
+        transition={{
+          type: "spring",
+          stiffness: 400,
+          damping: 20
+        }}
+      />
+
+      {/* Rotating particles */}
       {particles.map((particle) => (
         <motion.div
           key={particle.id}
@@ -51,22 +104,22 @@ const CursorEffect: React.FC<CursorEffectProps> = ({ cursorVariant }) => {
             position: 'fixed',
             left: mousePosition.x,
             top: mousePosition.y,
-            width: 4,
-            height: 4,
+            width: particle.size,
+            height: particle.size,
             backgroundColor: particle.color,
             borderRadius: '50%',
             pointerEvents: 'none',
-            zIndex: 9996,
+            zIndex: 9997,
             transform: 'translate(-50%, -50%)',
           }}
           animate={{
-            x: Math.cos(particle.angle) * radius * scale,
-            y: Math.sin(particle.angle) * radius * scale,
+            x: Math.cos(particle.angle) * baseRadius * scale,
+            y: Math.sin(particle.angle) * baseRadius * scale,
             scale: scale,
-            opacity: [0.5, 1, 0.5],
+            opacity: [0.3, 0.7, 0.3],
           }}
           transition={{
-            duration: 2,
+            duration: 2 / particle.speed,
             repeat: Infinity,
             ease: "linear"
           }}
