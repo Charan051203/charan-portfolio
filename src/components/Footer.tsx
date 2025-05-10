@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 
@@ -23,7 +22,7 @@ const Footer: React.FC = () => {
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
         >
-          <h4 className="text-lg font-semibold mb-6 text-gradient text-center">Quick Links</h4>
+          <h4 className="text-lg font-semibold mb-6 text-cyan-400 text-center">Quick Links</h4>
           <ul className="flex flex-wrap justify-center gap-4 sm:gap-8 mb-8">
             {footerLinks.map((link, index) => (
               <motion.li 

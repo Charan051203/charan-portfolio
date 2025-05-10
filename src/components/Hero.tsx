@@ -53,12 +53,10 @@ const Hero: React.FC = () => {
     const randomIndex = Math.floor(Math.random() * greetings.length);
     setGreetingIndex(randomIndex);
 
-    // Set random joke
     const allJokes = [...jokes, ...gamingJokes];
     const joke = allJokes[Math.floor(Math.random() * allJokes.length)];
     setRandomJoke(joke);
 
-    // Hide welcome message after 4 seconds
     const timer = setTimeout(() => {
       setShowWelcome(false);
     }, 4000);
@@ -119,12 +117,13 @@ const Hero: React.FC = () => {
               {greetings[greetingIndex].text}, I'm
             </motion.p>
             
-            <motion.h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 text-gradient" 
+            <motion.h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6" 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6, duration: 0.8 }}
             >
-              CHARAN RK
+              <span className="text-cyan-400">CHARAN</span>
+              <span className="text-white animate-pulse-glow ml-2">RK</span>
             </motion.h1>
 
             <AnimatePresence>
@@ -206,7 +205,6 @@ const Hero: React.FC = () => {
             </motion.div>
           </motion.div>
           
-          {/* Profile Image Section - Unchanged */}
           <motion.div className="w-full lg:w-1/2 flex justify-center" 
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
