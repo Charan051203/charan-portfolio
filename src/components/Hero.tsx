@@ -211,7 +211,7 @@ const Hero: React.FC = () => {
             transition={{ duration: 0.8 }}
           >
             <motion.div 
-              className="relative w-[180px] h-[180px] xs:w-[200px] xs:h-[200px] sm:w-[240px] sm:h-[240px] md:w-[280px] md:h-[280px] lg:w-[320px] lg:h-[320px] transition-all duration-300 ease-out"
+              className="relative w-[220px] h-[220px] xs:w-[240px] xs:h-[240px] sm:w-[280px] sm:h-[280px] md:w-[320px] md:h-[320px] lg:w-[380px] lg:h-[380px] transition-all duration-300 ease-out"
               whileHover={{ scale: 1.05 }}
             >
               <motion.div 
