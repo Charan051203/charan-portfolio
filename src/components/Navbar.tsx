@@ -68,16 +68,22 @@ const Navbar: React.FC<NavbarProps> = ({ showIcons = true }) => {
       >
         <div className="container mx-auto flex justify-between items-center">
           <motion.button 
-            className="text-lg sm:text-xl md:text-2xl font-bold"
+            className="text-lg sm:text-xl md:text-2xl font-bold flex items-center gap-2"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
             <Menu className="w-6 h-6 text-primary" />
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.2 }}
+              className="flex items-center"
+            >
+              <span className="text-gradient">CHARAN</span>
+              <span className="text-white shadow-glow">RK</span>
+            </motion.div>
           </motion.button>
-          
-          <a href="#home" className="text-lg sm:text-xl md:text-2xl font-bold">
-            <span className="text-gradient">CHARAN</span>
-            <span className="text-white shadow-glow">RK</span>
-          </a>
         </div>
       </motion.nav>
       
