@@ -107,7 +107,8 @@
     background-image: linear-gradient(to right, hsl(var(--primary)), #7dd3fc);
   }
 
-  .shadow-glow {
+  .shadow-g
+low {
     text-shadow: 0 0 5px rgba(255,255,255,0.7), 0 0 10px rgba(255,255,255,0.5);
   }
   
@@ -164,8 +165,8 @@
   
   .mobile-menu-button {
     position: fixed !important;
-    top: 0.75rem;
-    right: 0.75rem;
+    top: 1rem !important;
+    right: 1rem !important;
     z-index: 999;
   }
   
@@ -221,8 +222,8 @@
   }
   
   .mobile-menu-button {
-    top: 0.35rem !important;
-    right: 0.35rem !important;
+    top: 0.75rem !important;
+    right: 0.75rem !important;
     transform: scale(0.9) !important;
     width: 2.25rem !important;
     height: 2.25rem !important;
@@ -231,8 +232,8 @@
   }
   
   .back-to-top {
-    bottom: 0.35rem !important;
-    right: 0.35rem !important;
+    bottom: 0.75rem !important;
+    right: 0.75rem !important;
     transform: scale(0.9) !important;
     width: 2.25rem !important;
     height: 2.25rem !important;
@@ -340,8 +341,8 @@
   }
   
   .mobile-menu-button {
-    top: 0.2rem !important;
-    right: 0.2rem !important;
+    top: 0.5rem !important;
+    right: 0.5rem !important;
     transform: scale(0.8) !important;
     width: 2.25rem !important;
     height: 2.25rem !important;
@@ -352,8 +353,8 @@
   }
   
   .back-to-top {
-    bottom: 0.2rem !important;
-    right: 0.2rem !important;
+    bottom: 0.5rem !important;
+    right: 0.5rem !important;
     transform: scale(0.8) !important;
     width: 2.25rem !important;
     height: 2.25rem !important;

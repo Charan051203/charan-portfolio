@@ -98,7 +98,7 @@ const Hero: React.FC = () => {
       {/* On mobile, show scroll indicator - only if not scrolled */}
       {isMobile && !hasScrolled && (
         <motion.div 
-          className="flex mb-4 flex-col items-center z-20 absolute left-1/2 -translate-x-1/2 bottom-10"
+          className="flex mb-4 flex-col items-center z-20 absolute left-1/2 -translate-x-1/2 top-[75vh]"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0 }}

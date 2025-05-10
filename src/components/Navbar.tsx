@@ -53,11 +53,7 @@ const Navbar: React.FC<NavbarProps> = ({ showIcons = true }) => {
     { icon: <Linkedin className="w-5 h-5" />, href: "https://www.linkedin.com/in/charan051203/", label: "LinkedIn" },
     { icon: <Github className="w-5 h-5" />, href: "https://github.com/Charan051203", label: "GitHub" },
     { icon: <Instagram className="w-5 h-5" />, href: "https://www.instagram.com/chrn_._/", label: "Instagram" },
-    { 
-      icon: <Twitter className="w-5 h-5" />, 
-      href: "https://x.com/charan_5123", 
-      label: "Twitter" 
-    }
+    { icon: <Twitter className="w-5 h-5" />, href: "https://x.com/charan_5123", label: "Twitter" }
   ];
 
   const mobileMenuVariants = {
