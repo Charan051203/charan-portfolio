@@ -56,6 +56,24 @@
     overflow-x: hidden;
     overscroll-behavior: none;
   }
+  
+  /* Custom cursor styles */
+  .cursor-dot, .cursor-outer, .cursor-glow {
+    pointer-events: none;
+    position: fixed;
+    z-index: 9999;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  /* Hide the default cursor when custom cursor is active */
+  body:has(.cursor-dot) {
+    cursor: none !important;
+  }
+  
+  a, button, .interactive-project {
+    cursor: none !important;
+  }
 
   ::-webkit-scrollbar {
     width: 8px;

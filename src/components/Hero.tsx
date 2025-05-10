@@ -315,18 +315,7 @@ const Hero: React.FC = () => {
                 />
               </motion.div>
               
-              <motion.div 
-                className="absolute -top-4 -right-4 w-8 h-8 sm:w-12 sm:h-12 bg-cyan-500/40 rounded-full blur-md" 
-                animate={{
-                  scale: [1, 1.5, 1],
-                  opacity: [0.5, 1, 0.5]
-                }} 
-                transition={{
-                  repeat: Infinity,
-                  duration: 3,
-                  delay: 0.5
-                }} 
-              />
+              {/* Removed the cyan square here */}
               <motion.div 
                 className="absolute -bottom-4 -left-4 w-10 h-10 sm:w-16 sm:h-16 bg-fuchsia-500/30 rounded-full blur-md" 
                 animate={{

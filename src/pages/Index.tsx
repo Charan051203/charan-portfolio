@@ -19,6 +19,16 @@ import {
   Gamepad,
 } from "lucide-react";
 import { useIsMobile } from "../hooks/use-mobile";
+
+// Gaming jokes - add some gaming themed humor
+const gamingJokes = [
+  "I would tell you a joke about lag, but you wouldn't get it until later.",
+  "Why don't developers play video games? Because they prefer to debug than to play.",
+  "What do you call a game developer's favorite coffee? Java.",
+  "Why was the gamer always broke? Too many micro-transactions.",
+  "How many gamers does it take to change a light bulb? None, they'll do it when the next patch comes out.",
+];
+
 const jokes = [
   "Why do programmers prefer dark mode? Because light attracts bugs.",
   "I told my computer I needed a break, and now it won't stop sending me vacation ads.",
@@ -32,14 +42,6 @@ const jokes = [
   "The programmer got stuck in the shower because the instructions on the shampoo bottle said: Lather, Rinse, Repeat.",
 ];
 
-// Gaming jokes - add some gaming themed humor
-const gamingJokes = [
-  "I would tell you a joke about lag, but you wouldn't get it until later.",
-  "Why don't developers play video games? Because they prefer to debug than to play.",
-  "What do you call a game developer's favorite coffee? Java.",
-  "Why was the gamer always broke? Too many micro-transactions.",
-  "How many gamers does it take to change a light bulb? None, they'll do it when the next patch comes out.",
-];
 const Index: React.FC = () => {
   const [randomJoke, setRandomJoke] = useState("");
   const isMobile = useIsMobile();
@@ -244,15 +246,22 @@ const Index: React.FC = () => {
         }}
         whileHover={{
           y: -5,
+          scale: 1.05,
         }}
+        whileTap={{ scale: 0.95 }}
         aria-label="Back to top"
         style={{
           boxShadow: "0 0 20px hsla(var(--primary), 0.8)",
         }}
       >
-        <Home className="text-primary-foreground w-4 h-4 sm:w-5 sm:h-5" />
+        <Home 
+          className="text-primary-foreground w-4 h-4 sm:w-5 sm:h-5"
+          onMouseEnter={handleMouseOver}
+          onMouseLeave={handleMouseOut}
+        />
       </motion.a>
     </div>
   );
 };
+
 export default Index;
