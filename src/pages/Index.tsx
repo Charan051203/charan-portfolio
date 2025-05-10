@@ -1,10 +1,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Home } from 'lucide-react';
-import { useMobile } from '../hooks/use-mobile';
+import { useIsMobile } from '../hooks/use-mobile';
 
 const Index = () => {
-  const isMobile = useMobile();
+  const isMobile = useIsMobile();
   const [hasScrolled, setHasScrolled] = React.useState(false);
 
   React.useEffect(() => {
