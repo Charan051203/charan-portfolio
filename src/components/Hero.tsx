@@ -66,7 +66,7 @@ const Hero: React.FC = () => {
           }}
         />
         
-        {/* Subtle animated gradient orbs */}
+        {/* Subtle animated gradient orbs - removed the cyan square by adjusting colors */}
         {Array.from({length: 6}).map((_, index) => {
           const size = Math.random() * 300 + 100;
           const posX = Math.random() * 100;
@@ -76,7 +76,7 @@ const Hero: React.FC = () => {
               key={index}
               className="absolute rounded-full blur-[100px]"
               style={{
-                background: `radial-gradient(circle at center, rgba(72, 149, 239, 0.15), rgba(20, 184, 166, 0.08))`,
+                background: `radial-gradient(circle at center, rgba(72, 149, 239, 0.12), rgba(20, 184, 166, 0.05))`,
                 width: `${size}px`,
                 height: `${size}px`,
                 left: `${posX}%`,
@@ -99,7 +99,7 @@ const Hero: React.FC = () => {
       {/* On mobile, show scroll indicator - only if not scrolled */}
       {isMobile && !hasScrolled && (
         <motion.div 
-          className="flex mb-4 flex-col items-center z-20 absolute left-1/2 -translate-x-1/2 bottom-10"
+          className="flex mb-4 flex-col items-center z-20 absolute left-1/2 -translate-x-1/2 bottom-20 sm:bottom-10"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0 }}

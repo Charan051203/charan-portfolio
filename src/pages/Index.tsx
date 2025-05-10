@@ -226,10 +226,9 @@ const Index: React.FC = () => {
         </div>
       )}
 
-      {/* Back to top button - Enhanced visibility for mobile */}
-      <motion.a
-        href="#home"
-        className="fixed bottom-4 right-4 sm:bottom-6 sm:right-5 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-primary flex items-center justify-center hover:bg-primary/90 transition-all z-30 border-2 border-primary/30 back-to-top"
+      {/* Back to top button - Enhanced visibility for mobile with fixed position */}
+      <motion.div 
+        className="fixed bottom-4 right-4 sm:bottom-6 sm:right-5 z-30"
         initial={{
           opacity: 0,
           scale: 0.8,
@@ -242,16 +241,23 @@ const Index: React.FC = () => {
         transition={{
           duration: 0.3,
         }}
-        whileHover={{
-          y: -5,
-        }}
-        aria-label="Back to top"
-        style={{
-          boxShadow: "0 0 20px hsla(var(--primary), 0.8)",
-        }}
       >
-        <Home className="text-primary-foreground w-4 h-4 sm:w-5 sm:h-5" />
-      </motion.a>
+        <motion.a
+          href="#home"
+          className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-primary flex items-center justify-center hover:bg-primary/90 transition-all border-2 border-primary/30 back-to-top"
+          whileHover={{
+            scale: 1.1,
+            y: -5,
+            boxShadow: "0 0 25px hsla(var(--primary), 0.8)",
+          }}
+          aria-label="Back to top"
+          style={{
+            boxShadow: "0 0 20px hsla(var(--primary), 0.8)",
+          }}
+        >
+          <Home className="text-primary-foreground w-4 h-4 sm:w-5 sm:h-5" />
+        </motion.a>
+      </motion.div>
     </div>
   );
 };
