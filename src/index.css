@@ -68,11 +68,8 @@
                    0 0 30px rgba(255,255,255,0.5);
     }
   }
-
-  /* Rest of your existing CSS... */
 }
 
-/* Add new animations */
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-10px); }
@@ -98,10 +95,7 @@
   }
 
   body {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
+    overflow-y: auto;
     -webkit-overflow-scrolling: touch;
   }
 
