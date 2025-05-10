@@ -80,8 +80,8 @@ const Navbar: React.FC<NavbarProps> = ({ showIcons = true }) => {
               transition={{ delay: 0.2 }}
               className="flex items-center"
             >
-              <span className="text-gradient">CHARAN</span>
-              <span className="text-white shadow-glow">RK</span>
+              <span className="text-cyan-400 font-bold">CHARAN</span>
+              <span className="text-white font-bold animate-pulse-glow">RK</span>
             </motion.div>
           </motion.button>
         </div>
