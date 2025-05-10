@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Gamepad } from 'lucide-react';
@@ -191,11 +190,11 @@ const Hero: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.2, duration: 0.8 }}
             >
-              <a href="#projects" className="px-3 sm:px-6 py-2 sm:py-3 bg-primary text-primary-foreground rounded-full font-medium hover:bg-primary/90 transition-colors text-sm sm:text-base shadow-[0_0_15px_rgba(72,149,239,0.5)]">
+              <a href="#projects" className="interactive-element px-3 sm:px-6 py-2 sm:py-3 bg-primary text-primary-foreground rounded-full font-medium hover:bg-primary/90 transition-colors text-sm sm:text-base shadow-[0_0_15px_rgba(72,149,239,0.5)]">
                 View Work
               </a>
               
-              <a href="/Resume CHARAN RK.pdf" download className="px-3 sm:px-6 py-2 sm:py-3 border border-primary/30 text-foreground rounded-full font-medium hover:bg-primary/10 transition-colors text-sm sm:text-base">
+              <a href="/Resume CHARAN RK.pdf" download className="interactive-element px-3 sm:px-6 py-2 sm:py-3 border border-primary/30 text-foreground rounded-full font-medium hover:bg-primary/10 transition-colors text-sm sm:text-base">
                 Download Resume
               </a>
             </motion.div>
@@ -225,6 +224,7 @@ const Hero: React.FC = () => {
                 }}
               />
               
+              {/* Animated dots around the profile */}
               {Array.from({length: 8}).map((_, i) => {
                 const angle = (i / 8) * Math.PI * 2;
                 const delay = i * 0.2;
@@ -275,10 +275,6 @@ const Hero: React.FC = () => {
                   alt="Charan RK" 
                   className="w-full h-full object-cover" 
                   loading="eager" 
-                  onError={e => {
-                    const target = e.target as HTMLImageElement;
-                    target.src = "/placeholder.svg";
-                  }} 
                 />
                 
                 <motion.div 
@@ -315,7 +311,7 @@ const Hero: React.FC = () => {
                 />
               </motion.div>
               
-              {/* Removed the cyan square here */}
+              {/* Removed cyan square */}
               <motion.div 
                 className="absolute -bottom-4 -left-4 w-10 h-10 sm:w-16 sm:h-16 bg-fuchsia-500/30 rounded-full blur-md" 
                 animate={{

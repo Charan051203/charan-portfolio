@@ -16,7 +16,6 @@ import {
   Github,
   Instagram,
   Twitter,
-  Gamepad,
 } from "lucide-react";
 import { useIsMobile } from "../hooks/use-mobile";
 
@@ -66,8 +65,9 @@ const Index: React.FC = () => {
     if (!isMobile && !prefersReducedMotion) {
       // Add these event listeners to interactive elements
       const interactiveElements = document.querySelectorAll(
-        "a, button, .interactive-project"
+        "a, button, .interactive-project, [role='button']"
       );
+      
       interactiveElements.forEach((element) => {
         element.addEventListener("mouseover", handleMouseOver);
         element.addEventListener("mouseout", handleMouseOut);
@@ -228,10 +228,10 @@ const Index: React.FC = () => {
         </div>
       )}
 
-      {/* Back to top button - Enhanced visibility for mobile */}
+      {/* Back to top button - Enhanced visibility without hover issue */}
       <motion.a
         href="#home"
-        className="fixed bottom-4 right-4 sm:bottom-6 sm:right-5 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-primary flex items-center justify-center hover:bg-primary/90 transition-all z-30 border-2 border-primary/30 back-to-top"
+        className="fixed bottom-4 right-4 sm:bottom-6 sm:right-5 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-primary flex items-center justify-center hover:bg-primary/90 transition-all z-30 border-2 border-primary/30 back-to-top interactive-element"
         initial={{
           opacity: 0,
           scale: 0.8,

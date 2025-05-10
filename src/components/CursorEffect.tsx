@@ -14,26 +14,26 @@ const CursorEffect: React.FC<CursorEffectProps> = ({ cursorVariant }) => {
   const [particles, setParticles] = useState<{ x: number; y: number; size: number; opacity: number; id: number }[]>([]);
   const [isActive, setIsActive] = useState(false);
   const isMobile = useIsMobile();
-  const particleCount = 12; // Increased particles
+  const particleCount = 15; // Increased particles for more visual effect
   
-  // More refined springs for smoother motion
+  // More refined springs for extra smooth motion
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
   
-  // Smoother cursor with spring physics
-  const springConfig = { damping: 22, stiffness: 320 }; // Improved springiness
+  // Much smoother cursor with optimized spring physics
+  const springConfig = { damping: 20, stiffness: 300 }; // Improved springiness
   const smoothX = useSpring(cursorX, springConfig);
   const smoothY = useSpring(cursorY, springConfig);
   
-  // Even smoother outer cursor
-  const outerX = useSpring(cursorX, { damping: 28, stiffness: 180 });
-  const outerY = useSpring(cursorY, { damping: 28, stiffness: 180 });
+  // Even smoother outer cursor with different spring config
+  const outerX = useSpring(cursorX, { damping: 24, stiffness: 150 });
+  const outerY = useSpring(cursorY, { damping: 24, stiffness: 150 });
   
-  // Glow effect with different spring config
-  const glowX = useSpring(cursorX, { damping: 35, stiffness: 120 });
-  const glowY = useSpring(cursorY, { damping: 35, stiffness: 120 });
+  // Glow effect with very soft spring config
+  const glowX = useSpring(cursorX, { damping: 30, stiffness: 100 });
+  const glowY = useSpring(cursorY, { damping: 30, stiffness: 100 });
 
-  // Update particles when mouse moves
+  // Update particles and cursor position when mouse moves
   useEffect(() => {
     if (isMobile) return;
     
@@ -46,7 +46,7 @@ const CursorEffect: React.FC<CursorEffectProps> = ({ cursorVariant }) => {
       setParticles(prevParticles => 
         prevParticles.map(particle => ({
           ...particle,
-          opacity: particle.opacity - 0.025,
+          opacity: particle.opacity - 0.02, // Slower fade for longer trails
         })).filter(particle => particle.opacity > 0)
       );
     };
@@ -70,19 +70,19 @@ const CursorEffect: React.FC<CursorEffectProps> = ({ cursorVariant }) => {
       
       // Create a new particle at intervals only when moving
       if (isActive) {
-        // Add new particle
+        // Add new particle with improved distribution
         if (particles.length < particleCount) {
           currentParticleId++;
           const size = Math.random() * 3 + 1;
           const angle = Math.random() * Math.PI * 2;
-          const distance = Math.random() * 10;
+          const distance = Math.random() * 12; // Increased spread
           setParticles(prevParticles => [
             ...prevParticles,
             {
               x: clientX + Math.cos(angle) * distance,
               y: clientY + Math.sin(angle) * distance,
               size,
-              opacity: 0.8, // Increased starting opacity
+              opacity: 0.9, // Increased starting opacity
               id: currentParticleId
             }
           ]);
@@ -95,10 +95,11 @@ const CursorEffect: React.FC<CursorEffectProps> = ({ cursorVariant }) => {
       }, 100);
     };
     
-    // Start particle animation
-    particleInterval = setInterval(updateParticlePositions, 25); // Faster particle updates
+    // Start particle animation with faster updates for smoother motion
+    particleInterval = setInterval(updateParticlePositions, 20); 
     
-    window.addEventListener('mousemove', handleMouseMove);
+    // Add event listener with passive option for better performance
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
     
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
@@ -117,78 +118,78 @@ const CursorEffect: React.FC<CursorEffectProps> = ({ cursorVariant }) => {
       width: 12,
       height: 12,
       borderColor: 'hsla(var(--primary), 0.8)',
-      borderWidth: '1.5px',
-      backgroundColor: 'hsla(var(--primary), 0.7)',
-      opacity: 0.9,
-      boxShadow: '0 0 12px hsla(var(--primary), 0.6), 0 0 20px hsla(var(--primary), 0.3)',
+      borderWidth: '2px',
+      backgroundColor: 'hsla(var(--primary), 0.8)',
+      opacity: 0.95,
+      boxShadow: '0 0 15px hsla(var(--primary), 0.7), 0 0 25px hsla(var(--primary), 0.4)',
     },
     hover: {
-      width: 20, // Larger on hover
-      height: 20,
+      width: 22, // Larger on hover
+      height: 22,
       borderColor: 'white',
       backgroundColor: 'hsla(var(--primary), 0.9)',
       opacity: 1,
-      boxShadow: '0 0 20px hsla(var(--primary), 0.8), 0 0 30px hsla(var(--primary), 0.5)',
-      scale: 1.1,
+      boxShadow: '0 0 25px hsla(var(--primary), 0.9), 0 0 35px hsla(var(--primary), 0.6)',
+      scale: 1.2,
     },
     click: {
-      width: 16,
-      height: 16,
+      width: 18,
+      height: 18,
       borderColor: 'white',
       backgroundColor: 'transparent',
-      border: '2px solid hsla(var(--primary))',
-      opacity: 0.8,
-      scale: 0.9,
-    },
-  };
-  
-  const outerVariants = {
-    default: {
-      width: 36,
-      height: 36,
-      borderColor: 'hsla(var(--primary), 0.3)',
-      borderWidth: '1px',
-      opacity: 0.5,
-      backgroundColor: 'transparent',
-    },
-    hover: {
-      width: 56, // Larger on hover
-      height: 56,
-      borderColor: 'hsla(var(--primary), 0.7)',
-      borderWidth: '2px',
-      opacity: 0.6,
-      backgroundColor: 'hsla(var(--primary), 0.05)',
-      scale: 1.1,
-    },
-    click: {
-      width: 40,
-      height: 40,
-      borderColor: 'hsla(var(--primary), 0.9)',
+      border: '2.5px solid hsla(var(--primary))',
       opacity: 0.9,
       scale: 0.85,
     },
   };
   
-  const glowVariants = {
+  const outerVariants = {
     default: {
-      width: 90,
-      height: 90,
-      backgroundColor: 'hsla(var(--primary), 0.04)',
-      opacity: 0.4,
+      width: 40,
+      height: 40,
+      borderColor: 'hsla(var(--primary), 0.4)',
+      borderWidth: '1.5px',
+      opacity: 0.6,
+      backgroundColor: 'transparent',
     },
     hover: {
-      width: 150, // Larger glow on hover
-      height: 150,
-      backgroundColor: 'hsla(var(--primary), 0.09)',
-      opacity: 0.6,
-      scale: 1.1,
+      width: 60, // Larger on hover
+      height: 60,
+      borderColor: 'hsla(var(--primary), 0.8)',
+      borderWidth: '2px',
+      opacity: 0.7,
+      backgroundColor: 'hsla(var(--primary), 0.1)',
+      scale: 1.15,
     },
     click: {
-      width: 120,
-      height: 120,
-      backgroundColor: 'hsla(var(--primary), 0.07)',
-      opacity: 0.5,
+      width: 45,
+      height: 45,
+      borderColor: 'hsla(var(--primary), 0.9)',
+      opacity: 0.9,
       scale: 0.8,
+    },
+  };
+  
+  const glowVariants = {
+    default: {
+      width: 100,
+      height: 100,
+      backgroundColor: 'hsla(var(--primary), 0.05)',
+      opacity: 0.5,
+    },
+    hover: {
+      width: 160, // Larger glow on hover
+      height: 160,
+      backgroundColor: 'hsla(var(--primary), 0.12)',
+      opacity: 0.7,
+      scale: 1.15,
+    },
+    click: {
+      width: 130,
+      height: 130,
+      backgroundColor: 'hsla(var(--primary), 0.09)',
+      opacity: 0.6,
+      scale: 0.75,
     },
   };
   
@@ -200,6 +201,7 @@ const CursorEffect: React.FC<CursorEffectProps> = ({ cursorVariant }) => {
         style={{
           left: glowX,
           top: glowY,
+          filter: 'blur(12px)',
         }}
         animate={cursorVariant}
         variants={glowVariants}
@@ -212,7 +214,8 @@ const CursorEffect: React.FC<CursorEffectProps> = ({ cursorVariant }) => {
         style={{
           left: outerX,
           top: outerY,
-          border: '1px solid hsla(var(--primary), 0.5)',
+          border: '1.5px solid hsla(var(--primary), 0.6)',
+          backdropFilter: 'blur(2px)',
         }}
         animate={cursorVariant}
         variants={outerVariants}
@@ -225,6 +228,7 @@ const CursorEffect: React.FC<CursorEffectProps> = ({ cursorVariant }) => {
         style={{
           left: smoothX,
           top: smoothY,
+          backdropFilter: 'blur(1px)',
         }}
         animate={cursorVariant}
         variants={dotVariants}
@@ -236,8 +240,8 @@ const CursorEffect: React.FC<CursorEffectProps> = ({ cursorVariant }) => {
         {particles.map(particle => (
           <motion.div
             key={particle.id}
-            initial={{ opacity: particle.opacity, scale: 1 }}
-            animate={{ opacity: particle.opacity, scale: 0.7 }}
+            initial={{ opacity: particle.opacity, scale: 1.1 }}
+            animate={{ opacity: particle.opacity, scale: 0.8 }}
             exit={{ opacity: 0, scale: 0 }}
             style={{
               position: 'fixed',
@@ -246,9 +250,9 @@ const CursorEffect: React.FC<CursorEffectProps> = ({ cursorVariant }) => {
               width: particle.size,
               height: particle.size,
               borderRadius: '50%',
-              backgroundColor: 'hsla(var(--primary))',
-              boxShadow: '0 0 6px hsla(var(--primary), 0.4)',
-              zIndex: 9998,
+              backgroundColor: 'hsla(var(--primary), 0.9)',
+              boxShadow: '0 0 8px hsla(var(--primary), 0.5)',
+              zIndex: 9996,
               pointerEvents: 'none',
               transform: 'translate(-50%, -50%)',
             }}
