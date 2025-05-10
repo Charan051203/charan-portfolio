@@ -109,39 +109,37 @@ const Navbar: React.FC<NavbarProps> = ({ showIcons = true }) => {
             </div>
           )}
           
-          <div className="md:hidden">
-            <motion.button 
-              className="mobile-menu-button w-9 h-9 xs:w-10 xs:h-10 sm:w-12 sm:h-12 glassmorphism rounded-full flex items-center justify-center fixed top-3 right-3 shadow-[0_0_15px_rgba(72,149,239,0.6)] border border-primary/30 z-50"
-              aria-label="Menu"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              whileTap={{ scale: 0.95 }}
-              whileHover={{ scale: 1.05 }}
-            >
-              <AnimatePresence mode="wait">
-                {mobileMenuOpen ? 
-                  <motion.div
-                    key="close"
-                    initial={{ rotate: -90, opacity: 0 }}
-                    animate={{ rotate: 0, opacity: 1 }}
-                    exit={{ rotate: 90, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <X className="w-4 h-4 xs:w-5 xs:h-5 sm:w-6 sm:h-6 text-primary" />
-                  </motion.div> : 
-                  <motion.div
-                    key="menu"
-                    initial={{ rotate: 90, opacity: 0 }}
-                    animate={{ rotate: 0, opacity: 1 }}
-                    exit={{ rotate: -90, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                    className="flex items-center justify-center"
-                  >
-                    <Menu className="w-4 h-4 xs:w-5 xs:h-5 sm:w-6 sm:h-6 text-primary" />
-                  </motion.div>
-                }
-              </AnimatePresence>
-            </motion.button>
-          </div>
+          <motion.button 
+            className="md:hidden w-9 h-9 xs:w-10 xs:h-10 sm:w-12 sm:h-12 glassmorphism rounded-full flex items-center justify-center fixed top-3 right-3 shadow-[0_0_15px_rgba(72,149,239,0.6)] border border-primary/30 z-50"
+            aria-label="Menu"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            whileTap={{ scale: 0.95 }}
+            whileHover={{ scale: 1.05 }}
+          >
+            <AnimatePresence mode="wait">
+              {mobileMenuOpen ? 
+                <motion.div
+                  key="close"
+                  initial={{ rotate: -90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: 90, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <X className="w-4 h-4 xs:w-5 xs:h-5 sm:w-6 sm:h-6 text-primary" />
+                </motion.div> : 
+                <motion.div
+                  key="menu"
+                  initial={{ rotate: 90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: -90, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="flex items-center justify-center"
+                >
+                  <Menu className="w-4 h-4 xs:w-5 xs:h-5 sm:w-6 sm:h-6 text-primary" />
+                </motion.div>
+              }
+            </AnimatePresence>
+          </motion.button>
         </div>
       </motion.nav>
       

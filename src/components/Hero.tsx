@@ -78,36 +78,34 @@ const Hero: React.FC = () => {
         />
       </div>
 
-      {!hasScrolled && (
+      {/* Centered scroll indicator above profile image */}
+      <motion.div 
+        className="absolute top-24 left-1/2 -translate-x-1/2 flex flex-col items-center z-20"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: hasScrolled ? 0 : 1, y: hasScrolled ? -40 : 0 }}
+        transition={{ duration: 0.5 }}
+      >
         <motion.div 
-          className="flex flex-col items-center z-20 absolute left-1/2 -translate-x-1/2 top-20"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0 }}
-          transition={{ delay: 1.5, duration: 0.5 }}
+          className="w-6 h-10 border-2 border-primary/50 rounded-full flex justify-center p-2 shadow-[0_0_15px_rgba(72,149,239,0.5)] backdrop-blur-md" 
         >
           <motion.div 
-            className="w-6 h-10 border-2 border-primary/50 rounded-full flex justify-center p-2 shadow-[0_0_15px_rgba(72,149,239,0.5)] backdrop-blur-md" 
-          >
-            <motion.div 
-              className="w-1 h-2 bg-primary rounded-full" 
-              animate={{
-                y: [0, 8, 0],
-                opacity: [0.6, 1, 0.6]
-              }} 
-              transition={{
-                repeat: Infinity,
-                duration: 1.5
-              }} 
-            />
-          </motion.div>
-          <motion.p 
-            className="mt-1 text-xs text-foreground/90 font-medium backdrop-blur-sm px-2 py-1 rounded-full"
-          >
-            Scroll
-          </motion.p>
+            className="w-1 h-2 bg-primary rounded-full" 
+            animate={{
+              y: [0, 8, 0],
+              opacity: [0.6, 1, 0.6]
+            }} 
+            transition={{
+              repeat: Infinity,
+              duration: 1.5
+            }} 
+          />
         </motion.div>
-      )}
+        <motion.p 
+          className="mt-1 text-xs text-foreground/90 font-medium backdrop-blur-sm px-2 py-1 rounded-full"
+        >
+          Scroll
+        </motion.p>
+      </motion.div>
       
       <div className="container px-4 sm:px-6 mx-auto mt-12 md:mt-0">
         <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-6 md:gap-8 lg:gap-12">
@@ -179,9 +177,21 @@ const Hero: React.FC = () => {
                   Download Resume
                 </a>
                 
-                <a href="#home" className="interactive-element w-10 h-10 flex items-center justify-center rounded-full bg-primary/10 border border-primary/30 hover:bg-primary/20 transition-all">
+                <motion.a 
+                  href="#home" 
+                  className="interactive-element w-10 h-10 flex items-center justify-center rounded-full bg-primary/10 border border-primary/30 hover:bg-primary/20 transition-all fixed bottom-6 right-6 z-50"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ 
+                    opacity: hasScrolled ? 1 : 0,
+                    scale: hasScrolled ? 1 : 0.8,
+                    y: hasScrolled ? 0 : 20
+                  }}
+                  transition={{ duration: 0.3 }}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                >
                   <Home className="w-5 h-5 text-primary" />
-                </a>
+                </motion.a>
               </div>
             </motion.div>
           </motion.div>
