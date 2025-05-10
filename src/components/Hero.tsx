@@ -105,6 +105,19 @@ const Hero: React.FC = () => {
       </div>
       
       <div className="container px-4 sm:px-6 mx-auto">
+        <AnimatePresence>
+          {showWelcome && (
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="absolute top-24 left-0 right-0 z-10 mx-auto max-w-lg p-4 rounded-lg glassmorphism border border-primary/20"
+            >
+              <p className="text-sm text-foreground/90">{randomJoke}</p>
+            </motion.div>
+          )}
+        </AnimatePresence>
+        
         <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-6 md:gap-8 lg:gap-12">
           <motion.div className="w-full lg:w-1/2 text-left" 
             initial={{ opacity: 0, x: -50 }}
@@ -126,19 +139,6 @@ const Hero: React.FC = () => {
             >
               CHARAN RK
             </motion.h1>
-
-            <AnimatePresence>
-              {showWelcome && (
-                <motion.div
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  className="mb-4 p-4 rounded-lg glassmorphism border border-primary/20"
-                >
-                  <p className="text-sm text-foreground/90">{randomJoke}</p>
-                </motion.div>
-              )}
-            </AnimatePresence>
             
             <div className="h-8 mb-6 relative flex items-center">
               <AnimatePresence mode="wait">
@@ -206,7 +206,6 @@ const Hero: React.FC = () => {
             </motion.div>
           </motion.div>
           
-          {/* Profile Image Section - Unchanged */}
           <motion.div className="w-full lg:w-1/2 flex justify-center" 
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
