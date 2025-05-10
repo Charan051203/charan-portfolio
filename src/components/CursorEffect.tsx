@@ -14,6 +14,8 @@ const CursorEffect: React.FC<CursorEffectProps> = ({ cursorVariant }) => {
     opacity: number;
     id: number;
     color: string;
+    angle: number;
+    velocity: number;
   }[]>([]);
   
   const [isActive, setIsActive] = useState(false);
@@ -24,13 +26,15 @@ const CursorEffect: React.FC<CursorEffectProps> = ({ cursorVariant }) => {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   
-  // Particle colors
+  // Particle colors with more vibrant options
   const colors = [
     "hsla(var(--primary), 0.8)",
-    "hsla(var(--primary), 0.6)",
-    "rgba(72, 149, 239, 0.7)",
-    "rgba(20, 184, 166, 0.7)",
-    "rgba(139, 92, 246, 0.7)"
+    "hsla(var(--primary), 0.7)",
+    "rgba(72, 149, 239, 0.8)",
+    "rgba(20, 184, 166, 0.8)",
+    "rgba(139, 92, 246, 0.8)",
+    "rgba(99, 102, 241, 0.8)",
+    "rgba(236, 72, 153, 0.8)"
   ];
 
   useEffect(() => {
@@ -44,10 +48,19 @@ const CursorEffect: React.FC<CursorEffectProps> = ({ cursorVariant }) => {
     const updateParticles = () => {
       setParticles(prevParticles => 
         prevParticles
-          .map(particle => ({
-            ...particle,
-            opacity: particle.opacity - 0.035, // Faster fade out
-          }))
+          .map(particle => {
+            // Move particles along their trajectory
+            const newX = particle.x + Math.cos(particle.angle) * particle.velocity;
+            const newY = particle.y + Math.sin(particle.angle) * particle.velocity;
+            
+            return {
+              ...particle,
+              x: newX,
+              y: newY,
+              opacity: particle.opacity - 0.025, // Slightly slower fade for better trail
+              velocity: particle.velocity * 0.98 // Gradually slow down
+            };
+          })
           .filter(particle => particle.opacity > 0)
       );
       animationFrameId = requestAnimationFrame(updateParticles);
@@ -63,27 +76,32 @@ const CursorEffect: React.FC<CursorEffectProps> = ({ cursorVariant }) => {
       const dx = clientX - lastPositionX;
       const dy = clientY - lastPositionY;
       const speed = Math.sqrt(dx * dx + dy * dy);
+      const moveAngle = Math.atan2(dy, dx);
       
-      if (speed > 2) {
-        const particlesToAdd = Math.min(2, Math.floor(speed / 10)) || 1;
+      // Create more particles when moving faster
+      if (speed > 1) {
+        const particlesToAdd = Math.min(5, Math.floor(speed / 3)) || 1;
         
         for (let i = 0; i < particlesToAdd; i++) {
           currentParticleId++;
           
-          const angle = Math.random() * Math.PI * 2;
-          const distance = Math.random() * 5;
-          const size = Math.random() * 4 + 2;
+          // Create particles in a cone behind the cursor movement
+          const spreadAngle = moveAngle + (Math.random() - 0.5) * Math.PI / 2;
+          const distance = Math.random() * 10;
+          const size = Math.random() * 6 + 3;
           const colorIndex = Math.floor(Math.random() * colors.length);
           
           setParticles(prevParticles => [
             ...prevParticles,
             {
-              x: clientX + Math.cos(angle) * distance,
-              y: clientY + Math.sin(angle) * distance,
+              x: clientX + Math.cos(spreadAngle) * distance,
+              y: clientY + Math.sin(spreadAngle) * distance,
               size,
-              opacity: 0.6,
+              opacity: 0.8,
               id: currentParticleId,
-              color: colors[colorIndex]
+              color: colors[colorIndex],
+              angle: spreadAngle + Math.PI, // Particles move in opposite direction
+              velocity: speed * 0.2 * (Math.random() * 0.5 + 0.5) // Varied speeds
             }
           ]);
         }
@@ -114,23 +132,24 @@ const CursorEffect: React.FC<CursorEffectProps> = ({ cursorVariant }) => {
       {particles.map(particle => (
         <motion.div
           key={particle.id}
-          initial={{ opacity: particle.opacity, scale: 1.1 }}
+          initial={{ opacity: particle.opacity, scale: 1.2 }}
           animate={{ 
             opacity: particle.opacity,
-            scale: 0.8
+            scale: 0.8,
+            x: particle.x,
+            y: particle.y
           }}
           exit={{ opacity: 0, scale: 0 }}
           style={{
             position: 'fixed',
-            left: particle.x,
-            top: particle.y,
             width: particle.size,
             height: particle.size,
             backgroundColor: particle.color,
             borderRadius: '50%',
             pointerEvents: 'none',
             zIndex: 9996,
-            transform: 'translate(-50%, -50%)'
+            transform: 'translate(-50%, -50%)',
+            boxShadow: `0 0 ${particle.size * 2}px ${particle.color}`
           }}
         />
       ))}
