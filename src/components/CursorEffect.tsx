@@ -1,266 +1,233 @@
 
 import React, { useEffect, useState } from 'react';
 import { useIsMobile } from '../hooks/use-mobile';
-import { motion, useMotionValue, useSpring, AnimatePresence } from 'framer-motion';
-
-type CursorVariant = 'default' | 'hover' | 'click';
+import { motion, useMotionValue } from 'framer-motion';
 
 interface CursorEffectProps {
-  cursorVariant: CursorVariant;
+  cursorVariant: 'default' | 'hover' | 'click';
 }
 
+// Define different shapes for particles
+const particleShapes = [
+  "circle", "square", "triangle", "diamond", "star"
+];
+
 const CursorEffect: React.FC<CursorEffectProps> = ({ cursorVariant }) => {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [particles, setParticles] = useState<{ x: number; y: number; size: number; opacity: number; id: number }[]>([]);
+  const [particles, setParticles] = useState<{
+    x: number;
+    y: number;
+    size: number;
+    opacity: number;
+    id: number;
+    color: string;
+    shape: string;
+    rotation: number;
+  }[]>([]);
+  
   const [isActive, setIsActive] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const isMobile = useIsMobile();
-  const particleCount = 15; // Increased particles for more visual effect
   
-  // More refined springs for extra smooth motion
-  const cursorX = useMotionValue(-100);
-  const cursorY = useMotionValue(-100);
+  // Mouse position for tracking
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
   
-  // Much smoother cursor with optimized spring physics
-  const springConfig = { damping: 20, stiffness: 300 }; // Improved springiness
-  const smoothX = useSpring(cursorX, springConfig);
-  const smoothY = useSpring(cursorY, springConfig);
-  
-  // Even smoother outer cursor with different spring config
-  const outerX = useSpring(cursorX, { damping: 24, stiffness: 150 });
-  const outerY = useSpring(cursorY, { damping: 24, stiffness: 150 });
-  
-  // Glow effect with very soft spring config
-  const glowX = useSpring(cursorX, { damping: 30, stiffness: 100 });
-  const glowY = useSpring(cursorY, { damping: 30, stiffness: 100 });
+  // Particle colors
+  const colors = [
+    "hsla(var(--primary), 0.8)",
+    "hsla(var(--primary), 0.6)",
+    "rgba(72, 149, 239, 0.7)",
+    "rgba(20, 184, 166, 0.7)",
+    "rgba(139, 92, 246, 0.7)"
+  ];
 
   // Update particles and cursor position when mouse moves
   useEffect(() => {
     if (isMobile) return;
     
-    let mouseMoveTimeout: NodeJS.Timeout;
-    let mouseStoppedTimeout: NodeJS.Timeout;
-    let particleInterval: NodeJS.Timeout;
+    let lastPositionX = 0;
+    let lastPositionY = 0;
     let currentParticleId = 0;
+    let particleInterval: NodeJS.Timeout;
     
     const updateParticlePositions = () => {
       setParticles(prevParticles => 
-        prevParticles.map(particle => ({
-          ...particle,
-          opacity: particle.opacity - 0.02, // Slower fade for longer trails
-        })).filter(particle => particle.opacity > 0)
+        prevParticles
+          .map(particle => ({
+            ...particle,
+            opacity: particle.opacity - 0.02,
+          }))
+          .filter(particle => particle.opacity > 0)
       );
     };
     
     const handleMouseMove = (e: MouseEvent) => {
       const { clientX, clientY } = e;
       
-      // Update cursor position with motion values for smoother animation
-      cursorX.set(clientX);
-      cursorY.set(clientY);
-      
-      // Store the position for particle creation
+      // Update tracking values
+      mouseX.set(clientX);
+      mouseY.set(clientY);
       setMousePosition({ x: clientX, y: clientY });
       
-      // Clear existing timeouts
-      clearTimeout(mouseMoveTimeout);
-      clearTimeout(mouseStoppedTimeout);
+      // Create particles based on cursor speed
+      const dx = clientX - lastPositionX;
+      const dy = clientY - lastPositionY;
+      const speed = Math.sqrt(dx * dx + dy * dy);
       
-      // Set active state for particles
-      setIsActive(true);
-      
-      // Create a new particle at intervals only when moving
-      if (isActive) {
-        // Add new particle with improved distribution
-        if (particles.length < particleCount) {
+      // Only create particles if the cursor is moving
+      if (speed > 2) {
+        // Add 1-3 particles based on speed
+        const particlesToAdd = Math.min(3, Math.floor(speed / 5)) || 1;
+        
+        for (let i = 0; i < particlesToAdd; i++) {
           currentParticleId++;
-          const size = Math.random() * 3 + 1;
+          
+          // Random position around cursor
           const angle = Math.random() * Math.PI * 2;
-          const distance = Math.random() * 12; // Increased spread
+          const distance = Math.random() * 10;
+          const size = Math.random() * 6 + 2;
+          const colorIndex = Math.floor(Math.random() * colors.length);
+          const shapeIndex = Math.floor(Math.random() * particleShapes.length);
+          
           setParticles(prevParticles => [
             ...prevParticles,
             {
               x: clientX + Math.cos(angle) * distance,
               y: clientY + Math.sin(angle) * distance,
               size,
-              opacity: 0.9, // Increased starting opacity
-              id: currentParticleId
+              opacity: 0.8,
+              id: currentParticleId,
+              color: colors[colorIndex],
+              shape: particleShapes[shapeIndex],
+              rotation: Math.random() * 360
             }
           ]);
         }
       }
       
-      // Set timeout to determine when mouse has stopped
-      mouseStoppedTimeout = setTimeout(() => {
-        setIsActive(false);
-      }, 100);
+      lastPositionX = clientX;
+      lastPositionY = clientY;
+      setIsActive(true);
     };
     
-    // Start particle animation with faster updates for smoother motion
-    particleInterval = setInterval(updateParticlePositions, 20); 
+    // Start particle animation
+    particleInterval = setInterval(updateParticlePositions, 16); 
     
-    // Add event listener with passive option for better performance
+    // Add event listener for mouse movement
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
     
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
-      clearTimeout(mouseMoveTimeout);
-      clearTimeout(mouseStoppedTimeout);
       clearInterval(particleInterval);
     };
-  }, [isMobile, isActive, particles.length]);
+  }, [isMobile, isActive, mouseX, mouseY]);
 
   // Don't render cursor effect on mobile
   if (isMobile) return null;
-  
-  // Define cursor variants for different states with enhanced visual effects
-  const dotVariants = {
-    default: {
-      width: 12,
-      height: 12,
-      borderColor: 'hsla(var(--primary), 0.8)',
-      borderWidth: '2px',
-      backgroundColor: 'hsla(var(--primary), 0.8)',
-      opacity: 0.95,
-      boxShadow: '0 0 15px hsla(var(--primary), 0.7), 0 0 25px hsla(var(--primary), 0.4)',
-    },
-    hover: {
-      width: 22, // Larger on hover
-      height: 22,
-      borderColor: 'white',
-      backgroundColor: 'hsla(var(--primary), 0.9)',
-      opacity: 1,
-      boxShadow: '0 0 25px hsla(var(--primary), 0.9), 0 0 35px hsla(var(--primary), 0.6)',
-      scale: 1.2,
-    },
-    click: {
-      width: 18,
-      height: 18,
-      borderColor: 'white',
-      backgroundColor: 'transparent',
-      border: '2.5px solid hsla(var(--primary))',
-      opacity: 0.9,
-      scale: 0.85,
-    },
-  };
-  
-  const outerVariants = {
-    default: {
-      width: 40,
-      height: 40,
-      borderColor: 'hsla(var(--primary), 0.4)',
-      borderWidth: '1.5px',
-      opacity: 0.6,
-      backgroundColor: 'transparent',
-    },
-    hover: {
-      width: 60, // Larger on hover
-      height: 60,
-      borderColor: 'hsla(var(--primary), 0.8)',
-      borderWidth: '2px',
-      opacity: 0.7,
-      backgroundColor: 'hsla(var(--primary), 0.1)',
-      scale: 1.15,
-    },
-    click: {
-      width: 45,
-      height: 45,
-      borderColor: 'hsla(var(--primary), 0.9)',
-      opacity: 0.9,
-      scale: 0.8,
-    },
-  };
-  
-  const glowVariants = {
-    default: {
-      width: 100,
-      height: 100,
-      backgroundColor: 'hsla(var(--primary), 0.05)',
-      opacity: 0.5,
-    },
-    hover: {
-      width: 160, // Larger glow on hover
-      height: 160,
-      backgroundColor: 'hsla(var(--primary), 0.12)',
-      opacity: 0.7,
-      scale: 1.15,
-    },
-    click: {
-      width: 130,
-      height: 130,
-      backgroundColor: 'hsla(var(--primary), 0.09)',
-      opacity: 0.6,
-      scale: 0.75,
-    },
+
+  // Render the custom shape for each particle
+  const renderParticleShape = (shape: string, size: number, rotation: number) => {
+    switch (shape) {
+      case "square":
+        return (
+          <div 
+            style={{
+              width: `${size}px`,
+              height: `${size}px`,
+              transform: `rotate(${rotation}deg)`
+            }}
+          />
+        );
+      case "triangle":
+        return (
+          <div 
+            style={{
+              width: 0,
+              height: 0,
+              borderLeft: `${size/2}px solid transparent`,
+              borderRight: `${size/2}px solid transparent`,
+              borderBottom: `${size}px solid currentColor`,
+              transform: `rotate(${rotation}deg)`
+            }}
+          />
+        );
+      case "diamond":
+        return (
+          <div 
+            style={{
+              width: `${size}px`,
+              height: `${size}px`,
+              transform: `rotate(45deg) scale(0.7) rotate(${rotation}deg)`
+            }}
+          />
+        );
+      case "star":
+        // Simple star appearance
+        return (
+          <div 
+            style={{
+              width: `${size}px`,
+              height: `${size}px`,
+              clipPath: 'polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)',
+              transform: `rotate(${rotation}deg)`
+            }}
+          />
+        );
+      case "circle":
+      default:
+        return (
+          <div 
+            style={{
+              width: `${size}px`,
+              height: `${size}px`,
+              borderRadius: '50%'
+            }}
+          />
+        );
+    }
   };
   
   return (
     <>
-      {/* Glow effect */}
-      <motion.div
-        className="cursor-glow fixed pointer-events-none rounded-full -translate-x-1/2 -translate-y-1/2 z-[9997]"
-        style={{
-          left: glowX,
-          top: glowY,
-          filter: 'blur(12px)',
-        }}
-        animate={cursorVariant}
-        variants={glowVariants}
-        transition={{ duration: 0.3 }}
-      />
-      
-      {/* Outer cursor */}
-      <motion.div 
-        className="cursor-outer fixed pointer-events-none rounded-full -translate-x-1/2 -translate-y-1/2 z-[9998]"
-        style={{
-          left: outerX,
-          top: outerY,
-          border: '1.5px solid hsla(var(--primary), 0.6)',
-          backdropFilter: 'blur(2px)',
-        }}
-        animate={cursorVariant}
-        variants={outerVariants}
-        transition={{ duration: 0.2 }}
-      />
-      
-      {/* Main cursor dot */}
-      <motion.div 
-        className="cursor-dot fixed pointer-events-none rounded-full -translate-x-1/2 -translate-y-1/2 z-[9999]"
-        style={{
-          left: smoothX,
-          top: smoothY,
-          backdropFilter: 'blur(1px)',
-        }}
-        animate={cursorVariant}
-        variants={dotVariants}
-        transition={{ duration: 0.15 }}
-      />
-      
-      {/* Enhanced particles that follow the cursor */}
-      <AnimatePresence>
-        {particles.map(particle => (
-          <motion.div
-            key={particle.id}
-            initial={{ opacity: particle.opacity, scale: 1.1 }}
-            animate={{ opacity: particle.opacity, scale: 0.8 }}
-            exit={{ opacity: 0, scale: 0 }}
-            style={{
-              position: 'fixed',
-              left: particle.x,
-              top: particle.y,
-              width: particle.size,
-              height: particle.size,
-              borderRadius: '50%',
-              backgroundColor: 'hsla(var(--primary), 0.9)',
-              boxShadow: '0 0 8px hsla(var(--primary), 0.5)',
-              zIndex: 9996,
-              pointerEvents: 'none',
-              transform: 'translate(-50%, -50%)',
-            }}
-          />
-        ))}
-      </AnimatePresence>
+      {/* Only render particles, no cursor overrides */}
+      <AnimatedParticles particles={particles} renderParticleShape={renderParticleShape} />
     </>
   );
 };
+
+// Separate component for particles to optimize rendering
+const AnimatedParticles: React.FC<{
+  particles: any[],
+  renderParticleShape: (shape: string, size: number, rotation: number) => React.ReactNode
+}> = ({ particles, renderParticleShape }) => (
+  <>
+    {particles.map(particle => (
+      <motion.div
+        key={particle.id}
+        initial={{ opacity: particle.opacity, scale: 1.1 }}
+        animate={{ 
+          opacity: particle.opacity,
+          scale: 0.8,
+          rotate: particle.rotation + 180
+        }}
+        exit={{ opacity: 0, scale: 0 }}
+        style={{
+          position: 'fixed',
+          left: particle.x,
+          top: particle.y,
+          width: particle.size,
+          height: particle.size,
+          backgroundColor: particle.color,
+          zIndex: 9996,
+          pointerEvents: 'none',
+          transform: 'translate(-50%, -50%)',
+          color: particle.color
+        }}
+      >
+        {renderParticleShape(particle.shape, particle.size, particle.rotation)}
+      </motion.div>
+    ))}
+  </>
+);
 
 export default CursorEffect;

@@ -145,6 +145,7 @@ const Index: React.FC = () => {
   }, []);
   return (
     <div className="relative">
+      {/* Regular cursor is now visible with particle effects */}
       <CursorEffect cursorVariant={cursorVariant} />
       <Navbar showIcons={!showSidebar} />
 
