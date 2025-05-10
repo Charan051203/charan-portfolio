@@ -49,9 +49,24 @@ const Hero: React.FC = () => {
   
   return (
     <section id="home" className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden">
-      {isMobile && !hasScrolled && (
+      {/* Background elements */}
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-background to-background/80" />
+        <div className="absolute inset-0 opacity-10" 
+          style={{
+            backgroundImage: `linear-gradient(to right, rgba(255,255,255,0.1) 1px, transparent 1px), 
+                            linear-gradient(to bottom, rgba(255,255,255,0.1) 1px, transparent 1px)`,
+            backgroundSize: '40px 40px'
+          }}
+        />
+      </div>
+
+      {/* Scroll indicator - positioned above profile image on mobile */}
+      {!hasScrolled && (
         <motion.div 
-          className="flex flex-col items-center z-20 absolute left-1/2 -translate-x-1/2 top-[85vh]"
+          className={`flex flex-col items-center z-20 absolute left-1/2 -translate-x-1/2 ${
+            isMobile ? 'top-24' : 'bottom-10'
+          }`}
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0 }}
@@ -82,6 +97,7 @@ const Hero: React.FC = () => {
       
       <div className="container px-4 sm:px-6 mx-auto">
         <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-6 md:gap-8 lg:gap-12">
+          {/* Left content */}
           <motion.div className="w-full lg:w-1/2" 
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
@@ -151,6 +167,7 @@ const Hero: React.FC = () => {
             </motion.div>
           </motion.div>
           
+          {/* Right content - Profile Photo */}
           <motion.div className="w-full lg:w-1/2 flex justify-center" 
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -174,40 +191,6 @@ const Hero: React.FC = () => {
                 }}
               />
               
-              {Array.from({length: 8}).map((_, i) => {
-                const angle = (i / 8) * Math.PI * 2;
-                const delay = i * 0.2;
-                const radius = Math.min(window.innerWidth / 7, 150);
-                const colors = ["#48f", "#0ff", "#0f8", "#f0f"];
-                const color = colors[i % colors.length];
-                
-                return (
-                  <motion.div
-                    key={`orbit-${i}`}
-                    className="absolute w-2 h-2 rounded-full"
-                    style={{
-                      left: '50%',
-                      top: '50%',
-                      margin: '-1px',
-                      backgroundColor: color,
-                      boxShadow: `0 0 10px ${color}`
-                    }}
-                    animate={{
-                      x: [Math.cos(angle) * radius, Math.cos(angle + Math.PI) * radius, Math.cos(angle + Math.PI * 2) * radius],
-                      y: [Math.sin(angle) * radius, Math.sin(angle + Math.PI) * radius, Math.sin(angle + Math.PI * 2) * radius],
-                      opacity: [0.4, 1, 0.4],
-                      scale: [1, 1.5, 1]
-                    }}
-                    transition={{
-                      repeat: Infinity,
-                      duration: 8,
-                      delay,
-                      ease: "linear"
-                    }}
-                  />
-                )
-              })}
-
               <motion.div 
                 className="absolute inset-0 w-full h-full rounded-full overflow-hidden border-4 border-primary/30 profile-image" 
                 animate={{
@@ -250,86 +233,11 @@ const Hero: React.FC = () => {
                     ease: "linear"
                   }}
                 />
-                
-                <div className="absolute inset-0 opacity-10 pointer-events-none" 
-                  style={{
-                    backgroundImage: `linear-gradient(to right, rgba(72,149,239,0.1) 1px, transparent 1px), 
-                                      linear-gradient(to bottom, rgba(72,149,239,0.1) 1px, transparent 1px)`,
-                    backgroundSize: '8px 8px'
-                  }}
-                />
               </motion.div>
-              
-              <motion.div 
-                className="absolute -bottom-4 -left-4 w-10 h-10 sm:w-16 sm:h-16 bg-fuchsia-500/30 rounded-full blur-md" 
-                animate={{
-                  scale: [1, 1.3, 1],
-                  opacity: [0.5, 1, 0.5]
-                }} 
-                transition={{
-                  repeat: Infinity,
-                  duration: 4
-                }} 
-              />
-              <motion.div 
-                className="absolute top-1/2 -right-4 w-6 h-6 sm:w-8 sm:h-8 bg-green-500/40 rounded-full blur-sm" 
-                animate={{
-                  scale: [1, 1.4, 1],
-                  opacity: [0.3, 0.7, 0.3]
-                }} 
-                transition={{
-                  repeat: Infinity,
-                  duration: 2,
-                  delay: 1
-                }} 
-              />
-              <motion.div 
-                className="absolute bottom-1/4 -left-4 w-8 h-8 sm:w-10 sm:h-10 bg-blue-500/30 rounded-full blur-sm" 
-                animate={{
-                  scale: [1, 1.2, 1],
-                  opacity: [0.3, 0.6, 0.3]
-                }} 
-                transition={{
-                  repeat: Infinity,
-                  duration: 3,
-                  delay: 1.5
-                }} 
-              />
             </motion.div>
           </motion.div>
         </div>
       </div>
-      
-      {!isMobile && !hasScrolled && (
-        <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 hidden md:flex flex-col items-center">
-          <motion.div 
-            className="w-8 h-12 border-2 border-primary/50 rounded-full flex justify-center p-2 shadow-[0_0_15px_rgba(72,149,239,0.5)]" 
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.5, duration: 0.5 }}
-          >
-            <motion.div 
-              className="w-1 h-2 bg-primary rounded-full" 
-              animate={{
-                y: [0, 12, 0],
-                opacity: [0.6, 1, 0.6]
-              }} 
-              transition={{
-                repeat: Infinity,
-                duration: 1.5
-              }} 
-            />
-          </motion.div>
-          <motion.p 
-            className="mt-2 text-sm text-foreground/60" 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.6, duration: 0.5 }}
-          >
-            Scroll Down
-          </motion.p>
-        </div>
-      )}
     </section>
   );
 };
