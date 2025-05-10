@@ -98,7 +98,7 @@ const Index: React.FC = () => {
         toast("Welcome to my portfolio", {
           description: joke,
           duration: 7000,
-          position: isMobile ? "bottom-center" : "bottom-right",
+          position: "bottom-center",
           className: "welcome-toast fixed-toast",
         });
       }, 2000);
@@ -183,27 +183,25 @@ const Index: React.FC = () => {
         </div>
       )}
 
-      <motion.a
-        href="#home"
-        className="fixed bottom-6 right-6 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-primary flex items-center justify-center hover:bg-primary/90 transition-all z-30 border-2 border-primary/30 back-to-top interactive-element"
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{
-          opacity: hasScrolled ? 1 : 0,
-          scale: hasScrolled ? 1 : 0.8,
-          y: hasScrolled ? 0 : 20,
-        }}
-        transition={{ duration: 0.3 }}
-        whileHover={{ y: -5, scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        aria-label="Back to top"
-        style={{ boxShadow: "0 0 20px hsla(var(--primary), 0.8)" }}
-      >
-        <Home
-          className="text-primary-foreground w-4 h-4 sm:w-5 sm:h-5"
-          onMouseEnter={handleMouseOver}
-          onMouseLeave={handleMouseOut}
-        />
-      </motion.a>
+      {hasScrolled && (
+        <motion.a
+          href="#home"
+          className="fixed bottom-4 right-4 w-10 h-10 rounded-full bg-primary flex items-center justify-center hover:bg-primary/90 transition-all z-50 border-2 border-primary/30 back-to-top interactive-element"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.8 }}
+          whileHover={{ y: -5, scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          aria-label="Back to top"
+          style={{ boxShadow: "0 0 20px hsla(var(--primary), 0.8)" }}
+        >
+          <Home
+            className="text-primary-foreground w-4 h-4"
+            onMouseEnter={handleMouseOver}
+            onMouseLeave={handleMouseOut}
+          />
+        </motion.a>
+      )}
     </div>
   );
 };

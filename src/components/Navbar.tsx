@@ -88,7 +88,7 @@ const Navbar: React.FC<NavbarProps> = ({ showIcons = true }) => {
           </div>
 
           <motion.button 
-            className="md:hidden fixed top-4 right-4 w-10 h-10 rounded-full glassmorphism flex items-center justify-center shadow-[0_0_15px_rgba(72,149,239,0.6)] border border-primary/30 z-50"
+            className="md:hidden fixed top-3 right-3 w-10 h-10 rounded-full glassmorphism flex items-center justify-center shadow-[0_0_15px_rgba(72,149,239,0.6)] border border-primary/30 z-50 mobile-menu-button"
             aria-label="Menu"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             whileTap={{ scale: 0.95 }}
@@ -96,8 +96,24 @@ const Navbar: React.FC<NavbarProps> = ({ showIcons = true }) => {
           >
             <AnimatePresence mode="wait">
               {mobileMenuOpen ? 
-                <X className="w-5 h-5 text-primary" /> : 
-                <Menu className="w-5 h-5 text-primary" />
+                <motion.div
+                  key="close"
+                  initial={{ rotate: -90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: 90, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <X className="w-5 h-5 text-primary" />
+                </motion.div> : 
+                <motion.div
+                  key="menu"
+                  initial={{ rotate: 90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: -90, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <Menu className="w-5 h-5 text-primary" />
+                </motion.div>
               }
             </AnimatePresence>
           </motion.button>
@@ -116,10 +132,9 @@ const Navbar: React.FC<NavbarProps> = ({ showIcons = true }) => {
             <div className="flex flex-col items-center space-y-6">
               <motion.div
                 className="mb-4 text-primary"
-                variants={{
-                  hidden: { opacity: 0, y: 20 },
-                  visible: { opacity: 1, y: 0 }
-                }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
               >
                 <Gamepad className="w-8 h-8 sm:w-10 sm:h-10" />
               </motion.div>
@@ -129,10 +144,9 @@ const Navbar: React.FC<NavbarProps> = ({ showIcons = true }) => {
                   key={index}
                   href={link.href}
                   className="text-lg sm:text-xl font-medium text-foreground hover:text-primary transition-colors px-4 py-2"
-                  variants={{
-                    hidden: { opacity: 0, y: 20 },
-                    visible: { opacity: 1, y: 0 }
-                  }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 + index * 0.1 }}
                   onClick={() => setMobileMenuOpen(false)}
                   whileHover={{ scale: 1.05, x: 5 }}
                   whileTap={{ scale: 0.95 }}
@@ -143,10 +157,9 @@ const Navbar: React.FC<NavbarProps> = ({ showIcons = true }) => {
               
               <motion.div 
                 className="flex space-x-5 mt-6 pt-6 border-t border-border/30 w-64 justify-center"
-                variants={{
-                  hidden: { opacity: 0, y: 20 },
-                  visible: { opacity: 1, y: 0 }
-                }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.8 }}
               >
                 {socialLinks.map((item, i) => (
                   <motion.a
@@ -159,7 +172,7 @@ const Navbar: React.FC<NavbarProps> = ({ showIcons = true }) => {
                     whileTap={{ scale: 0.95 }}
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
-                    transition={{ delay: 0.2 + (i * 0.1) }}
+                    transition={{ delay: 0.9 + (i * 0.1) }}
                     onClick={(e) => e.stopPropagation()}
                     aria-label={item.label}
                   >

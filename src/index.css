@@ -259,7 +259,7 @@
     gap: 1rem !important;
   }
   
-  button.mobile-menu-button {
+  .mobile-menu-button {
     opacity: 1 !important;
     visibility: visible !important;
     display: flex !important;
