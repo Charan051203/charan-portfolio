@@ -107,8 +107,8 @@ const Index: React.FC = () => {
         toast("Welcome to my portfolio", {
           description: joke,
           duration: 7000,
-          position: "bottom-center",
-          className: "fixed-bottom-toast max-w-[90vw] md:max-w-md text-sm sm:text-base"
+          position: isMobile ? "bottom-center" : "bottom-right", // Position based on screen size
+          className: "welcome-toast fixed-toast"
         });
       }, 2000);
       
