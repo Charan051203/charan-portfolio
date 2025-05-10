@@ -140,7 +140,7 @@ const Index: React.FC = () => {
         </div>
       )}
 
-      {hasScrolled && (
+      {hasScrolled && !isMobile && (
         <motion.a
           href="#home"
           className="fixed bottom-4 right-4 w-10 h-10 rounded-full bg-primary flex items-center justify-center hover:bg-primary/90 transition-all z-50 border-2 border-primary/30 back-to-top interactive-element"
