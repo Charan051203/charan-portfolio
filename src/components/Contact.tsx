@@ -44,15 +44,15 @@ const Contact: React.FC = () => {
 
     try {
       const result = await emailjs.send(
-        'service_xxxxxxx', // Replace with your EmailJS service ID
-        'template_xxxxxxx', // Replace with your EmailJS template ID
+        'service_mlv7g8f', // Replace with your EmailJS service ID
+        'template_yoow3bh', // Replace with your EmailJS template ID
         {
           from_name: formData.name,
           from_email: formData.email,
           message: formData.message,
           to_email: 'charanrk2003@gmail.com'
         },
-        'your_public_key' // Replace with your EmailJS public key
+        'nsGb3asNh9kI_Mv7X' // Replace with your EmailJS public key
       );
 
       if (result.status === 200) {
