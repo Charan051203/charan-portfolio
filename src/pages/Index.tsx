@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import CursorEffect from "../components/CursorEffect";
+import CursorParticles from "../components/CursorParticles";
 import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
 import Projects from "../components/Projects";
@@ -78,6 +79,7 @@ const Index: React.FC = () => {
   return (
     <div className="relative">
       <CursorEffect cursorVariant={cursorVariant} />
+      <CursorParticles />
       <Navbar showIcons={!showSidebar} />
 
       <main className="min-h-screen">
