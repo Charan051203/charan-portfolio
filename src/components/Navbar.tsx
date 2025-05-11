@@ -12,6 +12,8 @@ const Navbar: React.FC<NavbarProps> = ({ showIcons = true }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const isMobile = useIsMobile();
   const [showSocialIcons, setShowSocialIcons] = useState(false);
+  const [hideNavbar, setHideNavbar] = useState(false);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
   useEffect(() => {
     const checkSidebar = () => {
@@ -26,19 +28,26 @@ const Navbar: React.FC<NavbarProps> = ({ showIcons = true }) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const offset = window.scrollY;
-      if (offset > 50) {
+      const currentScrollY = window.scrollY;
+      
+      if (currentScrollY > lastScrollY) {
+        setHideNavbar(true);
+      } else {
+        setHideNavbar(false);
+      }
+
+      if (currentScrollY > 50) {
         setScrolled(true);
       } else {
         setScrolled(false);
       }
+
+      setLastScrollY(currentScrollY);
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [lastScrollY]);
 
   const navLinks = [
     { name: 'Home', href: '#home' },
@@ -60,24 +69,16 @@ const Navbar: React.FC<NavbarProps> = ({ showIcons = true }) => {
     <>
       <motion.nav
         initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+        animate={{ 
+          opacity: hideNavbar ? 0 : 1, 
+          y: hideNavbar ? -100 : 0 
+        }}
+        transition={{ duration: 0.3 }}
         className={`fixed top-0 w-full z-50 transition-all duration-300 ${
           scrolled ? 'glassmorphism py-2 px-3 sm:py-3 sm:px-4' : 'bg-transparent py-3 px-3 sm:py-6 sm:px-4'
         }`}
       >
         <div className="container mx-auto flex justify-between items-center">
-          {/* Menu button on the left */}
-          <motion.button 
-            className="flex items-center gap-2"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <Menu className="w-6 h-6 text-primary" />
-          </motion.button>
-
-          {/* Logo on the right for desktop, next to menu for mobile */}
           <motion.a
             href="#home"
             className={`text-lg sm:text-xl md:text-2xl font-bold ${isMobile ? 'ml-4' : 'ml-auto'}`}
@@ -89,6 +90,18 @@ const Navbar: React.FC<NavbarProps> = ({ showIcons = true }) => {
           </motion.a>
         </div>
       </motion.nav>
+
+      {/* Floating Menu Button */}
+      <motion.button 
+        className="fixed top-4 left-4 z-50 flex items-center gap-2 bg-primary/10 p-2 rounded-full backdrop-blur-sm border border-primary/20"
+        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+      >
+        <Menu className="w-6 h-6 text-primary" />
+      </motion.button>
       
       <AnimatePresence>
         {mobileMenuOpen && (
