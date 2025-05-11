@@ -85,8 +85,8 @@ const Navbar: React.FC<NavbarProps> = ({ showIcons = true }) => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            <span className="font-burtons text-cyan-400">charan</span>
-            <span className="font-burtons text-white">rk</span>
+            <span className="font-burtons text-cyan-400">CHARAN</span>
+            <span className="font-burtons text-white">RK</span>
           </motion.a>
 
           {/* Desktop Navigation */}
