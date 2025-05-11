@@ -81,30 +81,47 @@ const Navbar: React.FC<NavbarProps> = ({ showIcons = true }) => {
         <div className="container mx-auto flex justify-between items-center">
           <motion.a
             href="#home"
-            className={`text-lg sm:text-xl md:text-2xl font-bold ${isMobile ? 'mr-4 ml-auto' : 'ml-auto'}`}
+            className="text-lg sm:text-xl md:text-2xl font-bold"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
             <span className="text-cyan-400">CHARAN</span>
             <span className="text-white">RK</span>
           </motion.a>
+
+          {/* Desktop Navigation */}
+          {!isMobile && (
+            <div className="hidden md:flex items-center space-x-8">
+              {navLinks.map((link, index) => (
+                <motion.a
+                  key={index}
+                  href={link.href}
+                  className="text-foreground hover:text-primary transition-colors"
+                  whileHover={{ y: -2 }}
+                >
+                  {link.name}
+                </motion.a>
+              ))}
+            </div>
+          )}
+
+          {/* Mobile Menu Button */}
+          {isMobile && (
+            <motion.button 
+              className="md:hidden flex items-center gap-2 bg-primary/10 p-2 rounded-full backdrop-blur-sm border border-primary/20"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Menu className="w-6 h-6 text-primary" />
+            </motion.button>
+          )}
         </div>
       </motion.nav>
-
-      {/* Floating Menu Button */}
-      <motion.button 
-        className="fixed top-4 left-4 z-50 flex items-center gap-2 bg-primary/10 p-2 rounded-full backdrop-blur-sm border border-primary/20"
-        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-      >
-        <Menu className="w-6 h-6 text-primary" />
-      </motion.button>
       
+      {/* Mobile Menu */}
       <AnimatePresence>
-        {mobileMenuOpen && (
+        {isMobile && mobileMenuOpen && (
           <motion.div
             className="fixed inset-0 bg-background/95 backdrop-blur-lg z-40 md:hidden flex flex-col items-center justify-center"
             initial={{ opacity: 0, x: '-100%' }}
