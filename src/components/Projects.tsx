@@ -5,17 +5,25 @@ import { motion } from 'framer-motion';
 
 // Placeholder images
 const projectImages = [
+  'Supplychain.jpg',
   '/CarParking.png',
   '/Sentiment.png',
   '/AutoComplete.png',
   '/Fruit.png',
   '/Pothole.png',
-  '/Weather.png',
+  //'/Weather.png',
   '/Malware.png',
   '/Dementia.png'
 ];
 
 const projectsData = [
+  {
+    title: 'BlockTrack - Blockchain-Enabled Supply Chain Management System',
+    description: 'BlockTrack is a decentralized web application that enhances supply chain transparency and traceability using Blockchain (Ethereum Smart Contracts) and RFID technology.',
+    image: projectImages[0],
+    technologies: ['Solidity', 'Ethereum', 'Web3.js', 'RFID'],
+    link: 'https://github.com/Charan051203/BlockTrack'
+  },
   {
     title: 'Car Parking Space Detector',
     description: 'A real-time object detection system that identifies available and occupied parking spaces using YOLOv8n. Ideal for smart cities, shopping malls, and automated parking systems.',
@@ -51,13 +59,13 @@ const projectsData = [
     technologies: ['CNN', 'TensorFlow', 'ShaP', 'Python'],
     link: 'https://github.com/Charan051203/Pothole-Detection-Using-various-CNN-architecture'
   },
-  {
+  /*{
     title: 'Weather app using HTML CSS JavaScript',
     description: 'This project focused on simple yet functional weather application built using HTML, CSS, and JavaScript. The app allows users to retrieve and display real-time weather information for any city.',
     image: projectImages[5],
     technologies: ['HTML', 'CSS', 'JavaScript', 'OpenWeather API'],
     link: 'https://github.com/Charan051203/Weather-app-using-HTML-CSS-JavaScript'
-  },
+  },*/
   {
     title: 'Malware classification using ANN',
     description: 'This project focused on classifying malware using Artificial Neural Networks (ANN). The project aims to accurately identify and categorize various types of malware by leveraging the capabilities of ANN models.',
