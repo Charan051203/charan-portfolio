@@ -77,7 +77,7 @@ const Contact: React.FC = () => {
   const handleDownloadResume = () => {
     const link = document.createElement('a');
     link.href = '/Resume CHARAN RK.pdf';
-    link.download = 'Charan_Resume.pdf';
+    link.download = 'Resume CHARAN RK.pdf';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
