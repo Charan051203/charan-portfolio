@@ -81,12 +81,12 @@ const Navbar: React.FC<NavbarProps> = ({ showIcons = true }) => {
         <div className="container mx-auto flex justify-between items-center">
           <motion.a
             href="#home"
-            className={`text-lg sm:text-xl md:text-2xl font-bold ${isMobile ? 'ml-4' : 'ml-auto'}`}
+            className={`text-lg sm:text-xl md:text-2xl font-bold ${isMobile ? 'mr-4 ml-auto' : 'ml-auto'}`}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
             <span className="text-cyan-400">CHARAN</span>
-            <span className="text-white animate-pulse-glow">RK</span>
+            <span className="text-white">RK</span>
           </motion.a>
         </div>
       </motion.nav>
