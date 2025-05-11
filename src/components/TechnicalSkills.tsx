@@ -11,10 +11,10 @@ const skills = [{
   }, {
     name: "C",
     icon: "/C.png"
-  }, {
+  }, /*{
     name: "C#",
     icon: "/C_sharp.png"
-  }, {
+  },*/ {
     name: "SQL",
     icon: "/SQL.png"
   }]
