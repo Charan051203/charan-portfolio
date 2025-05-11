@@ -66,7 +66,7 @@ const skills = [{
     name: "Tableau",
     icon: "/Tableau-Logo.png"
   }]
-}, {
+}, /*{
   category: "Game Development",
   items: [{
     name: "Unity",
@@ -81,7 +81,7 @@ const skills = [{
     name: "Blender",
     icon: "/Blender.png"
   }]
-}, {
+}*/, {
   category: "Others",
   items: [{
     name: "GitHub",
