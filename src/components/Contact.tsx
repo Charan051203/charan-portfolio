@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Send, Mail, MapPin, Linkedin, Github, Instagram, Twitter, FileText, Gamepad, Trophy, Joystick, Dice1, Target } from 'lucide-react';
@@ -6,6 +5,7 @@ import { toast } from 'sonner';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
 import { Label } from './ui/label';
+import emailjs from '@emailjs/browser';
 
 const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -43,17 +43,29 @@ const Contact: React.FC = () => {
     }
 
     try {
-      // Simulate form submission (this would be replaced with actual API call)
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      console.log('Sending email to charanrk2003@gmail.com', formData);
+      const result = await emailjs.send(
+        'service_xxxxxxx', // Replace with your EmailJS service ID
+        'template_xxxxxxx', // Replace with your EmailJS template ID
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          message: formData.message,
+          to_email: 'charanrk2003@gmail.com'
+        },
+        'your_public_key' // Replace with your EmailJS public key
+      );
 
-      // Clear form after successful submission
-      setFormData({
-        name: '',
-        email: '',
-        message: ''
-      });
-      toast.success("Message sent successfully! I will get back to you soon.");
+      if (result.status === 200) {
+        // Clear form after successful submission
+        setFormData({
+          name: '',
+          email: '',
+          message: ''
+        });
+        toast.success("Message sent successfully! I will get back to you soon.");
+      } else {
+        throw new Error('Failed to send message');
+      }
     } catch (error) {
       console.error("Error sending message:", error);
       toast.error("Failed to send message. Please try again or contact directly via email.");
@@ -63,7 +75,6 @@ const Contact: React.FC = () => {
   };
 
   const handleDownloadResume = () => {
-    // Replace with your actual resume file path
     const link = document.createElement('a');
     link.href = '/Resume CHARAN RK.pdf';
     link.download = 'Charan_Resume.pdf';
