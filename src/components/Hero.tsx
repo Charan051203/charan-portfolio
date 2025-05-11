@@ -182,7 +182,7 @@ const Hero: React.FC = () => {
               </a>
               
               <div className="flex items-center gap-2">
-                <a href="/Resume CHARAN RK.pdf" download className="interactive-element px-3 sm:px-6 py-2 sm:py-3 border border-primary/30 text-foreground rounded-full font-medium hover:bg-primary/10 transition-colors text-sm sm:text-base">
+                <a href="/Resume CHARAN RK.pdf" download="Resume CHARAN RK.pdf" className="interactive-element px-3 sm:px-6 py-2 sm:py-3 border border-primary/30 text-foreground rounded-full font-medium hover:bg-primary/10 transition-colors text-sm sm:text-base">
                   Download Resume
                 </a>
                 
