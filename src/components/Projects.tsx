@@ -5,67 +5,59 @@ import { motion } from 'framer-motion';
 
 // Placeholder images
 const projectImages = [
-  '/Suppluchain.jpg'
   '/CarParking.png',
   '/Sentiment.png',
   '/AutoComplete.png',
   '/Fruit.png',
   '/Pothole.png',
-  //'/Weather.png',
+  '/Weather.png',
   '/Malware.png',
   '/Dementia.png'
 ];
 
 const projectsData = [
   {
-    title: 'BlockTrack - Blockchain-Enabled Supply Chain Management System',
-    description: 'BlockTrack is a decentralized web application that enhances supply chain transparency and traceability using Blockchain (Ethereum Smart Contracts) and RFID technology.',
-    image: projectImages[0],
-    technologies: ['Solidity', 'Ethereum', 'Web3.js', 'RFID'],
-    link: 'https://github.com/Charan051203/BlockTrack'
-  },
-  {
     title: 'Car Parking Space Detector',
     description: 'A real-time object detection system that identifies available and occupied parking spaces using YOLOv8n. Ideal for smart cities, shopping malls, and automated parking systems.',
-    image: projectImages[1],
+    image: projectImages[0],
     technologies: ['Computer Vision', 'YOLOV8', 'Deep Learning', 'Python'],
     link: 'https://github.com/Charan051203/Car_Parking_Space_Detector_YOLOv8'
   },
   {
     title: 'Multilingual Sentiment Analysis ',
     description: 'This project implements Multilingual Sentiment Analysis using XML-RoBERTa. It classifies tweets into positive, negative, or neutral sentiment while handling language translation for unsupported languages.',
-    image: projectImages[2],
+    image: projectImages[1],
     technologies: ['Transformers', 'NLP', 'XML-roBERTa','Python'],
     link: 'https://github.com/Charan051203/Multilingual-Sentiment-Analysis'
   },
   {
     title: 'Sentence Auto-Completion using LSTM',
     description: 'This project implements a Sentence Auto-Completion model using a LSTM neural network. The model is trained on the Holmes.txt dataset from Kaggle to predict and complete sentences based on input text.',
-    image: projectImages[3],
+    image: projectImages[2],
     technologies: ['LSTM', 'NLP', 'TensorFlow', 'Python'],
     link: 'https://github.com/Charan051203/Sentence-Auto-Completion-LSTM'
   },
   {
     title: 'Fruit detection using Imagesegmentation',
     description: 'An Image Segmentation and Fruit Counting project using Deep Learning. This model detects fruits (apples, oranges, and more) in an image, places bounding boxes around them, and counts the total number of detected fruits.',
-    image: projectImages[4],
+    image: projectImages[3],
     technologies: ['OpenCV', 'TensorFlow', 'Matplotlib', 'Python'],
     link: 'https://github.com/Charan051203/Counting-fruits-Image-segmentation'
   },
   {
     title: 'Pothole Detection Using various CNN architecture',
     description: 'This Project focused on detecting potholes using different CNN architectures. The project aims to identify and classify road conditions by leveraging the power of deep learning techniques, specifically CNNs.',
-    image: projectImages[5],
+    image: projectImages[4],
     technologies: ['CNN', 'TensorFlow', 'ShaP', 'Python'],
     link: 'https://github.com/Charan051203/Pothole-Detection-Using-various-CNN-architecture'
   },
-  /*{
+  {
     title: 'Weather app using HTML CSS JavaScript',
     description: 'This project focused on simple yet functional weather application built using HTML, CSS, and JavaScript. The app allows users to retrieve and display real-time weather information for any city.',
     image: projectImages[5],
     technologies: ['HTML', 'CSS', 'JavaScript', 'OpenWeather API'],
     link: 'https://github.com/Charan051203/Weather-app-using-HTML-CSS-JavaScript'
-  },*/
+  },
   {
     title: 'Malware classification using ANN',
     description: 'This project focused on classifying malware using Artificial Neural Networks (ANN). The project aims to accurately identify and categorize various types of malware by leveraging the capabilities of ANN models.',
