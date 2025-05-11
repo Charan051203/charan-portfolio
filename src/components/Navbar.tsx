@@ -70,8 +70,8 @@ const Navbar: React.FC<NavbarProps> = ({ showIcons = true }) => {
       <motion.nav
         initial={{ opacity: 0, y: -20 }}
         animate={{ 
-          opacity: hideNavbar ? 0 : 1, 
-          y: hideNavbar ? -100 : 0 
+          opacity: 1,
+          y: 0,
         }}
         transition={{ duration: 0.3 }}
         className={`fixed top-0 w-full z-50 transition-all duration-300 ${
@@ -81,7 +81,7 @@ const Navbar: React.FC<NavbarProps> = ({ showIcons = true }) => {
         <div className="container mx-auto flex justify-between items-center">
           <motion.a
             href="#home"
-            className="text-lg sm:text-xl md:text-2xl font-bold"
+            className={`text-lg sm:text-xl md:text-2xl font-bold transition-opacity duration-300 ${hideNavbar && isMobile ? 'opacity-0' : 'opacity-100'}`}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
@@ -108,7 +108,7 @@ const Navbar: React.FC<NavbarProps> = ({ showIcons = true }) => {
           {/* Mobile Menu Button */}
           {isMobile && (
             <motion.button 
-              className="md:hidden flex items-center gap-2 bg-primary/10 p-2 rounded-full backdrop-blur-sm border border-primary/20"
+              className="fixed top-4 right-4 z-50 flex items-center gap-2 bg-primary/10 p-2 rounded-full backdrop-blur-sm border border-primary/20"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
