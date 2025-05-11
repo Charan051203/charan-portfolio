@@ -27,35 +27,35 @@ const projectsData = [
   {
     title: 'Car Parking Space Detector',
     description: 'A real-time object detection system that identifies available and occupied parking spaces using YOLOv8n. Ideal for smart cities, shopping malls, and automated parking systems.',
-    image: projectImages[0],
+    image: projectImages[1],
     technologies: ['Computer Vision', 'YOLOV8', 'Deep Learning', 'Python'],
     link: 'https://github.com/Charan051203/Car_Parking_Space_Detector_YOLOv8'
   },
   {
     title: 'Multilingual Sentiment Analysis ',
     description: 'This project implements Multilingual Sentiment Analysis using XML-RoBERTa. It classifies tweets into positive, negative, or neutral sentiment while handling language translation for unsupported languages.',
-    image: projectImages[1],
+    image: projectImages[2],
     technologies: ['Transformers', 'NLP', 'XML-roBERTa','Python'],
     link: 'https://github.com/Charan051203/Multilingual-Sentiment-Analysis'
   },
   {
     title: 'Sentence Auto-Completion using LSTM',
     description: 'This project implements a Sentence Auto-Completion model using a LSTM neural network. The model is trained on the Holmes.txt dataset from Kaggle to predict and complete sentences based on input text.',
-    image: projectImages[2],
+    image: projectImages[3],
     technologies: ['LSTM', 'NLP', 'TensorFlow', 'Python'],
     link: 'https://github.com/Charan051203/Sentence-Auto-Completion-LSTM'
   },
   {
     title: 'Fruit detection using Imagesegmentation',
     description: 'An Image Segmentation and Fruit Counting project using Deep Learning. This model detects fruits (apples, oranges, and more) in an image, places bounding boxes around them, and counts the total number of detected fruits.',
-    image: projectImages[3],
+    image: projectImages[4],
     technologies: ['OpenCV', 'TensorFlow', 'Matplotlib', 'Python'],
     link: 'https://github.com/Charan051203/Counting-fruits-Image-segmentation'
   },
   {
     title: 'Pothole Detection Using various CNN architecture',
     description: 'This Project focused on detecting potholes using different CNN architectures. The project aims to identify and classify road conditions by leveraging the power of deep learning techniques, specifically CNNs.',
-    image: projectImages[4],
+    image: projectImages[5],
     technologies: ['CNN', 'TensorFlow', 'ShaP', 'Python'],
     link: 'https://github.com/Charan051203/Pothole-Detection-Using-various-CNN-architecture'
   },
