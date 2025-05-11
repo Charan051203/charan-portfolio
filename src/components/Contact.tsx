@@ -45,7 +45,7 @@ const Contact: React.FC = () => {
     try {
       // Simulate form submission (this would be replaced with actual API call)
       await new Promise(resolve => setTimeout(resolve, 1000));
-      console.log('Sending email to charanrk5123@gmail.com', formData);
+      console.log('Sending email to charanrk2003@gmail.com', formData);
 
       // Clear form after successful submission
       setFormData({
@@ -389,10 +389,10 @@ const Contact: React.FC = () => {
                   </div>
                   <p className="text-foreground/70 text-base">Email</p>
                   <a 
-                    href="mailto:charanrk5123@gmail.com" 
+                    href="mailto:charanrk2003@gmail.com" 
                     className="text-foreground hover:text-primary transition-colors font-medium break-all"
                   >
-                    charanrk5123@gmail.com
+                    charanrk2003@gmail.com
                   </a>
                 </motion.div>
                 
