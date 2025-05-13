@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Gamepad, ChevronDown } from 'lucide-react';
@@ -74,16 +75,18 @@ const Hero: React.FC = () => {
   return (
     <section id="home" className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden py-8 md:py-0">
       <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-background to-background/80" />
+        {/* Enhanced background with more vibrant gradient */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#1A1F2C]/80 via-background to-background/90" />
         
+        {/* Animated gradient background */}
         <motion.div 
-          className="absolute inset-0 opacity-20"
+          className="absolute inset-0 opacity-30"
           animate={{
             background: [
-              "radial-gradient(circle at 0% 0%, rgba(72,149,239,0.1) 0%, transparent 50%)",
-              "radial-gradient(circle at 100% 100%, rgba(72,149,239,0.1) 0%, transparent 50%)",
-              "radial-gradient(circle at 0% 100%, rgba(72,149,239,0.1) 0%, transparent 50%)",
-              "radial-gradient(circle at 100% 0%, rgba(72,149,239,0.1) 0%, transparent 50%)"
+              "radial-gradient(circle at 0% 0%, rgba(139, 92, 246, 0.4) 0%, transparent 50%)",
+              "radial-gradient(circle at 100% 100%, rgba(14, 165, 233, 0.4) 0%, transparent 50%)",
+              "radial-gradient(circle at 0% 100%, rgba(217, 70, 239, 0.4) 0%, transparent 50%)",
+              "radial-gradient(circle at 100% 0%, rgba(14, 165, 233, 0.4) 0%, transparent 50%)"
             ]
           }}
           transition={{
@@ -93,13 +96,42 @@ const Hero: React.FC = () => {
           }}
         />
         
+        {/* Grid overlay effect */}
         <div className="absolute inset-0 opacity-10" 
           style={{
-            backgroundImage: `linear-gradient(to right, rgba(255,255,255,0.1) 1px, transparent 1px), 
-                            linear-gradient(to bottom, rgba(255,255,255,0.1) 1px, transparent 1px)`,
+            backgroundImage: `linear-gradient(to right, rgba(139, 92, 246, 0.2) 1px, transparent 1px), 
+                            linear-gradient(to bottom, rgba(139, 92, 246, 0.2) 1px, transparent 1px)`,
             backgroundSize: '40px 40px'
           }}
         />
+        
+        {/* Additional animated particle effect */}
+        <div className="absolute inset-0 overflow-hidden">
+          {[...Array(8)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-32 h-32 rounded-full opacity-20"
+              style={{
+                background: i % 2 === 0 
+                  ? "radial-gradient(circle, rgba(139, 92, 246, 0.5) 0%, rgba(139, 92, 246, 0) 70%)" 
+                  : "radial-gradient(circle, rgba(14, 165, 233, 0.5) 0%, rgba(14, 165, 233, 0) 70%)",
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+              }}
+              animate={{
+                x: [0, Math.random() * 100 - 50],
+                y: [0, Math.random() * 100 - 50],
+                opacity: [0.1, 0.3, 0.1],
+                scale: [1, 1.5, 1],
+              }}
+              transition={{
+                duration: 15 + Math.random() * 10,
+                repeat: Infinity,
+                ease: "linear"
+              }}
+            />
+          ))}
+        </div>
       </div>
       
       <div className="container px-4 sm:px-6 mx-auto">

@@ -103,7 +103,9 @@ const Navbar: React.FC<NavbarProps> = ({ showIcons = true }) => {
         }}
         transition={{ duration: 0.3 }}
         className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-          scrolled ? 'backdrop-blur-xl bg-background/70 border-b border-border/10 shadow-lg py-2 px-3 sm:py-3 sm:px-4' : 'backdrop-blur-sm bg-background/30 py-3 px-3 sm:py-6 sm:px-4'
+          scrolled ? 
+            'bg-gradient-to-r from-[#1A1F2C]/85 to-[#2d3748]/85 backdrop-blur-xl border-b border-primary/20 shadow-lg py-2 px-3 sm:py-3 sm:px-4' : 
+            'bg-gradient-to-r from-[#1A1F2C]/60 to-[#2d3748]/60 backdrop-blur-md py-3 px-3 sm:py-6 sm:px-4'
         }`}
       >
         <div className="container mx-auto flex justify-between items-center">
@@ -145,7 +147,7 @@ const Navbar: React.FC<NavbarProps> = ({ showIcons = true }) => {
           {/* Mobile Menu Button */}
           {isMobile && (
             <motion.button 
-              className="fixed top-4 right-4 z-50 flex items-center gap-2 bg-primary/10 p-2 rounded-full backdrop-blur-sm border border-primary/20"
+              className="fixed top-4 right-4 z-50 flex items-center gap-2 bg-primary/20 p-2 rounded-full backdrop-blur-sm border border-primary/20"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -160,7 +162,7 @@ const Navbar: React.FC<NavbarProps> = ({ showIcons = true }) => {
       <AnimatePresence>
         {isMobile && mobileMenuOpen && (
           <motion.div
-            className="fixed inset-0 bg-background/95 backdrop-blur-lg z-40 md:hidden flex flex-col items-center justify-center"
+            className="fixed inset-0 bg-gradient-to-br from-[#1A1F2C]/95 to-[#2d3748]/95 backdrop-blur-lg z-40 md:hidden flex flex-col items-center justify-center"
             initial={{ opacity: 0, x: '-100%' }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: '100%' }}

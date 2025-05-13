@@ -51,6 +51,10 @@
     overflow-x: hidden;
     overscroll-behavior: none;
     touch-action: manipulation;
+    background-image: 
+      radial-gradient(circle at 20% 20%, rgba(139, 92, 246, 0.15) 0%, transparent 35%),
+      radial-gradient(circle at 80% 80%, rgba(14, 165, 233, 0.15) 0%, transparent 35%);
+    background-attachment: fixed;
   }
 
   .animate-pulse-glow {
@@ -72,6 +76,16 @@
   .glassmorphism {
     @apply backdrop-blur-xl bg-background/70 border border-white/10 shadow-[0_4px_12px_-2px_rgba(0,0,0,0.3)];
   }
+
+  /* Enhanced glassmorphism with purple accent */
+  .glassmorphism-purple {
+    @apply backdrop-blur-xl bg-[#1A1F2C]/70 border border-purple-500/20 shadow-[0_4px_12px_-2px_rgba(139,92,246,0.3)];
+  }
+
+  /* Enhanced glassmorphism with blue accent */
+  .glassmorphism-blue {
+    @apply backdrop-blur-xl bg-[#1A1F2C]/70 border border-blue-500/20 shadow-[0_4px_12px_-2px_rgba(14,165,233,0.3)];
+  }
 }
 
 @keyframes float {
@@ -90,6 +104,16 @@
 
 .glow-animation {
   animation: glow 3s ease-in-out infinite;
+}
+
+/* Enhanced animations */
+@keyframes float-rotate {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(2deg); }
+}
+
+.float-rotate-animation {
+  animation: float-rotate 4s ease-in-out infinite;
 }
 
 /* Enhance mobile experience */
