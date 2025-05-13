@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Gamepad, ChevronDown } from 'lucide-react';
@@ -74,81 +75,92 @@ const Hero: React.FC = () => {
   return (
     <section id="home" className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden py-8 md:py-0">
       <div className="absolute inset-0 -z-10">
-        {/* New enhanced background with deep space theme */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0f172a] via-[#1e293b] to-[#161e2f]" />
+        {/* Modern geometric background */}
+        <div className="absolute inset-0 bg-[#0c1222]" />
         
-        {/* Animated stars effect */}
-        {[...Array(50)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute rounded-full bg-white"
-            style={{
-              width: Math.random() * 3 + 1 + "px",
-              height: Math.random() * 3 + 1 + "px",
-              left: Math.random() * 100 + "%",
-              top: Math.random() * 100 + "%",
-              opacity: Math.random() * 0.8 + 0.2,
-            }}
-            animate={{
-              opacity: [0.2, 0.8, 0.2],
-              scale: [1, 1.2, 1],
-            }}
-            transition={{
-              duration: 3 + Math.random() * 5,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: Math.random() * 5,
-            }}
-          />
-        ))}
+        {/* Subtle geometric shapes */}
+        <div className="absolute inset-0 opacity-10">
+          <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="smallGrid" width="20" height="20" patternUnits="userSpaceOnUse">
+                <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth="0.5" />
+              </pattern>
+              <pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse">
+                <rect width="100" height="100" fill="url(#smallGrid)" />
+                <path d="M 100 0 L 0 0 0 100" fill="none" stroke="rgba(255,255,255,0.5)" strokeWidth="1" />
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#grid)" />
+          </svg>
+        </div>
         
-        {/* Cosmic nebula effect */}
+        {/* Accent color gradients */}
         <motion.div 
-          className="absolute inset-0 opacity-30"
+          className="absolute left-1/4 top-1/4 w-1/3 h-1/3 rounded-full opacity-20 blur-3xl"
+          style={{ background: 'radial-gradient(circle, rgba(45,212,191,0.4) 0%, rgba(45,212,191,0) 70%)' }}
           animate={{
-            background: [
-              "radial-gradient(circle at 20% 30%, rgba(76, 29, 149, 0.6) 0%, transparent 50%)",
-              "radial-gradient(circle at 70% 60%, rgba(14, 116, 144, 0.6) 0%, transparent 50%)",
-              "radial-gradient(circle at 30% 70%, rgba(124, 58, 237, 0.6) 0%, transparent 50%)",
-              "radial-gradient(circle at 80% 20%, rgba(22, 78, 99, 0.6) 0%, transparent 50%)"
-            ]
+            scale: [1, 1.2, 1],
+            opacity: [0.15, 0.2, 0.15],
           }}
           transition={{
-            duration: 15,
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        
+        <motion.div 
+          className="absolute right-1/4 bottom-1/4 w-1/3 h-1/3 rounded-full opacity-20 blur-3xl"
+          style={{ background: 'radial-gradient(circle, rgba(56,189,248,0.4) 0%, rgba(56,189,248,0) 70%)' }}
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.1, 0.2, 0.1],
+          }}
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 2
+          }}
+        />
+        
+        {/* Low-poly mesh effect */}
+        <div className="absolute inset-0 opacity-5">
+          {[...Array(8)].map((_, i) => (
+            <svg 
+              key={i} 
+              width={`${Math.random() * 20 + 10}%`} 
+              height={`${Math.random() * 20 + 10}%`}
+              viewBox="0 0 100 100"
+              style={{
+                position: 'absolute',
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                transform: `rotate(${Math.random() * 360}deg)`,
+              }}
+            >
+              <polygon 
+                points="50,10 90,30 80,70 20,70 10,30"
+                fill="none"
+                stroke="rgba(255,255,255,0.3)"
+                strokeWidth="0.5"
+              />
+            </svg>
+          ))}
+        </div>
+        
+        {/* Subtle animated light beam */}
+        <motion.div 
+          className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/5 to-transparent w-full h-screen"
+          animate={{
+            x: ["-100%", "100%"],
+          }}
+          transition={{
+            duration: 12,
             repeat: Infinity,
             ease: "linear"
           }}
         />
-        
-        {/* Subtle aurora effect */}
-        <div className="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-[#4338ca]/10 to-transparent" />
-        <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-[#0f766e]/10 to-transparent" />
-        
-        {/* Animated cosmic dust particles */}
-        {[...Array(8)].map((_, i) => (
-          <motion.div
-            key={i + "dust"}
-            className="absolute w-32 h-32 rounded-full opacity-10"
-            style={{
-              background: i % 2 === 0 
-                ? "radial-gradient(circle, rgba(99, 102, 241, 0.5) 0%, rgba(99, 102, 241, 0) 70%)" 
-                : "radial-gradient(circle, rgba(14, 165, 233, 0.5) 0%, rgba(14, 165, 233, 0) 70%)",
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              x: [0, Math.random() * 100 - 50],
-              y: [0, Math.random() * 100 - 50],
-              opacity: [0.05, 0.15, 0.05],
-              scale: [1, 1.5, 1],
-            }}
-            transition={{
-              duration: 20 + Math.random() * 10,
-              repeat: Infinity,
-              ease: "linear"
-            }}
-          />
-        ))}
       </div>
       
       <div className="container px-4 sm:px-6 mx-auto">
