@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
+
+import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Linkedin, Github, Instagram, Twitter, Gamepad } from 'lucide-react';
+import { Menu, Linkedin, Github, Instagram, Twitter, Gamepad } from 'lucide-react';
 import { useIsMobile } from '../hooks/use-mobile';
+import { isElementInViewport } from '../lib/utils';
 
 interface NavbarProps {
   showIcons?: boolean;
@@ -14,6 +16,7 @@ const Navbar: React.FC<NavbarProps> = ({ showIcons = true }) => {
   const [showSocialIcons, setShowSocialIcons] = useState(false);
   const [hideNavbar, setHideNavbar] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [activeSection, setActiveSection] = useState('home');
 
   useEffect(() => {
     const checkSidebar = () => {
@@ -25,6 +28,18 @@ const Navbar: React.FC<NavbarProps> = ({ showIcons = true }) => {
     window.addEventListener('resize', checkSidebar);
     return () => window.removeEventListener('resize', checkSidebar);
   }, [isMobile, showIcons]);
+
+  const checkActiveSection = useCallback(() => {
+    const sections = ['home', 'skills', 'experience', 'projects', 'education', 'contact'];
+    
+    // Find the first section that is currently in viewport
+    for (const section of sections) {
+      if (isElementInViewport(section)) {
+        setActiveSection(section);
+        break;
+      }
+    }
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -43,11 +58,24 @@ const Navbar: React.FC<NavbarProps> = ({ showIcons = true }) => {
       }
 
       setLastScrollY(currentScrollY);
+      checkActiveSection();
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [lastScrollY]);
+  }, [lastScrollY, checkActiveSection]);
+
+  // Run checkActiveSection on mount and when route changes
+  useEffect(() => {
+    checkActiveSection();
+    
+    // Small delay to ensure DOM elements are fully loaded
+    const timer = setTimeout(() => {
+      checkActiveSection();
+    }, 500);
+    
+    return () => clearTimeout(timer);
+  }, [checkActiveSection]);
 
   const navLinks = [
     { name: 'Home', href: '#home' },
@@ -75,7 +103,7 @@ const Navbar: React.FC<NavbarProps> = ({ showIcons = true }) => {
         }}
         transition={{ duration: 0.3 }}
         className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-          scrolled ? 'glassmorphism py-2 px-3 sm:py-3 sm:px-4' : 'bg-transparent py-3 px-3 sm:py-6 sm:px-4'
+          scrolled ? 'backdrop-blur-xl bg-background/70 border-b border-border/10 shadow-lg py-2 px-3 sm:py-3 sm:px-4' : 'backdrop-blur-sm bg-background/30 py-3 px-3 sm:py-6 sm:px-4'
         }`}
       >
         <div className="container mx-auto flex justify-between items-center">
@@ -92,16 +120,25 @@ const Navbar: React.FC<NavbarProps> = ({ showIcons = true }) => {
           {/* Desktop Navigation */}
           {!isMobile && (
             <div className="hidden md:flex items-center space-x-8">
-              {navLinks.map((link, index) => (
+              {navLinks.map((link, index) => {
+                const isActive = activeSection === link.href.substring(1);
+                return (
                 <motion.a
                   key={index}
                   href={link.href}
-                  className="text-foreground hover:text-primary transition-colors"
+                  className={`relative text-foreground hover:text-primary transition-colors py-1 px-1
+                    after:content-[''] after:absolute after:w-full after:h-0.5 after:bg-primary after:left-0 after:bottom-0
+                    after:transition-all after:duration-300
+                    ${isActive 
+                      ? 'text-primary after:scale-x-100' 
+                      : 'after:scale-x-0 hover:after:scale-x-100'
+                    }
+                  `}
                   whileHover={{ y: -2 }}
                 >
                   {link.name}
                 </motion.a>
-              ))}
+              )})}
             </div>
           )}
 
@@ -139,11 +176,21 @@ const Navbar: React.FC<NavbarProps> = ({ showIcons = true }) => {
                 <Gamepad className="w-8 h-8 sm:w-10 sm:h-10" />
               </motion.div>
               
-              {navLinks.map((link, index) => (
+              {navLinks.map((link, index) => {
+                const isActive = activeSection === link.href.substring(1);
+                return (
                 <motion.a
                   key={index}
                   href={link.href}
-                  className="text-lg sm:text-xl font-medium text-foreground hover:text-primary transition-colors px-4 py-2"
+                  className={`text-lg sm:text-xl font-medium transition-colors px-4 py-2 relative
+                    ${isActive ? 'text-primary' : 'text-foreground hover:text-primary'}
+                    after:content-[''] after:absolute after:w-full after:h-0.5 after:bg-primary after:left-0 after:bottom-0
+                    after:transition-all after:duration-300
+                    ${isActive 
+                      ? 'text-primary after:scale-x-100' 
+                      : 'after:scale-x-0 hover:after:scale-x-100'
+                    }
+                  `}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 + index * 0.1 }}
@@ -153,7 +200,7 @@ const Navbar: React.FC<NavbarProps> = ({ showIcons = true }) => {
                 >
                   {link.name}
                 </motion.a>
-              ))}
+              )})}
               
               <motion.div 
                 className="flex space-x-5 mt-6 pt-6 border-t border-border/30 w-64 justify-center"
@@ -167,7 +214,7 @@ const Navbar: React.FC<NavbarProps> = ({ showIcons = true }) => {
                     href={item.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-8 h-8 sm:w-10 sm:h-10 rounded-full glassmorphism flex items-center justify-center text-foreground hover:text-primary"
+                    className="w-8 h-8 sm:w-10 sm:h-10 rounded-full backdrop-blur-xl bg-background/50 border border-border/20 flex items-center justify-center text-foreground hover:text-primary"
                     whileHover={{ scale: 1.1, y: -5 }}
                     whileTap={{ scale: 0.95 }}
                     initial={{ scale: 0 }}
