@@ -104,8 +104,8 @@ const Navbar: React.FC<NavbarProps> = ({ showIcons = true }) => {
         transition={{ duration: 0.3 }}
         className={`fixed top-0 w-full z-50 transition-all duration-300 ${
           scrolled ? 
-            'bg-gradient-to-r from-[#030712] via-[#0f172a] to-[#030712] backdrop-blur-xl border-b border-indigo-500/20 shadow-lg py-2 px-3 sm:py-3 sm:px-4' : 
-            'bg-gradient-to-r from-[#030712]/90 via-[#0f172a]/90 to-[#030712]/90 backdrop-blur-md py-3 px-3 sm:py-6 sm:px-4'
+            'bg-gradient-to-r from-[#1A1F2C]/85 to-[#2d3748]/85 backdrop-blur-xl border-b border-primary/20 shadow-lg py-2 px-3 sm:py-3 sm:px-4' : 
+            'bg-gradient-to-r from-[#1A1F2C]/60 to-[#2d3748]/60 backdrop-blur-md py-3 px-3 sm:py-6 sm:px-4'
         }`}
       >
         <div className="container mx-auto flex justify-between items-center">
@@ -162,7 +162,7 @@ const Navbar: React.FC<NavbarProps> = ({ showIcons = true }) => {
       <AnimatePresence>
         {isMobile && mobileMenuOpen && (
           <motion.div
-            className="fixed inset-0 bg-gradient-to-br from-[#0f172a]/95 to-[#030712]/95 backdrop-blur-lg z-40 md:hidden flex flex-col items-center justify-center"
+            className="fixed inset-0 bg-gradient-to-br from-[#1A1F2C]/95 to-[#2d3748]/95 backdrop-blur-lg z-40 md:hidden flex flex-col items-center justify-center"
             initial={{ opacity: 0, x: '-100%' }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: '100%' }}
