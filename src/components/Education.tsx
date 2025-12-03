@@ -8,7 +8,7 @@ const timelineItems = [
     year: "2021 - Present",
     degree: "B.E. Artificial Intelligence and Data Science",
     institution: "GLOBAL ACADEMY OF TECHNOLOGY",
-    description: "CGPA: 8.0. Focusing on machine learning, deep learning, and data analytics.",
+    description: "CGPA: 8.3. Focusing on machine learning, deep learning, and data analytics.",
     icon: <GraduationCap className="w-5 h-5" />
   },
   {
